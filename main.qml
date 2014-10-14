@@ -11,17 +11,20 @@ Window {
     width: 640
     height: 960
     title: "4Stones"
-
-    Grid{
-        id: board;
-        gridLength: 5;
-        countToWin: 4;
-    }
+    objectName: "theWindow"
 
     property int turn: 1;
     property color turnColor: blue;
     property color blue: "#3359E7"
     property color red: "#FC2833"
+    property bool isVisible: false
+
+    property Grid board: Grid{
+        id: board;
+        objectName: "boardo"
+        gridLength: 5;
+        countToWin: 4;
+    }
 
     Component { //This is the component for the tiles
         id: tileDelegate
@@ -53,25 +56,27 @@ Window {
                         hoverEnabled: true
                         anchors.fill: parent
                         onClicked:{
-                            if (!mainMenu.visible && board.grid[index] === 0){
+                            if (isVisible && board.valueFromIndex(index) === 0){
                                 lastMoveCheck();
                                 board.placePiece(index, turn);
-                                turn = (turn === 1) ? 2 : 1;
                                 lastMoveCheck();
-                                if (board.checkWin() === true) winDialog.visible = true;
+                                if (board.checkWin(turn) === true) winDialog.visible = true;
+                                turn = (turn === 1) ? 2 : 1;
                             }
                             function lastMoveCheck(){
-                                if (board.grid[board.lastMove] !== 0){
-                                    if (board.grid[board.lastMove] === 1) stone.color = blue;
-                                    else stone.color = red;
-                                    stone.border.width = 1;
-                                    turnColor = (board.grid[board.lastMove] === 2) ? blue : red;
-                                    stone.opacity = 1;
-                                }
+                                //console.log(board.lastMove);
+                                console.log(board.valueFromIndex(board.lastMove));
+//                                if (board.valueFromIndex(board.lastMove) !== 0){
+//                                    if (board.valueFromIndex(board.lastMove) === 1) stone.color = blue;
+//                                    else stone.color = red;
+//                                    stone.border.width = 1;
+//                                    turnColor = (board.valueFromIndex(board.lastMove) === 2) ? blue : red;
+//                                    stone.opacity = 1;
+//                                }
                             }
                         }
                         onEntered: {
-                            if(board.grid[index] === 0){
+                            if(isVisible && board.valueFromIndex(index) === 0){
                                 if (turn === 1) stone.color = Qt.lighter(blue, 1.3);
                                 else stone.color =  Qt.lighter(red, 1.3);
                                 stone.border.width = 1;
@@ -79,13 +84,13 @@ Window {
                             }
                         }
                         onExited: {
-                            if(board.grid[index] === 0) animateOpacityDown.start();
+                            if(isVisible && board.valueFromIndex(index) === 0) animateOpacityDown.start();
                         }
 
-                        NumberAnimation { id:animateOpacityUp; target: stone; property: "opacity"; to: 1.0; duration: 250 }
+                        NumberAnimation { id:animateOpacityUp; target: stone; property: "opacity"; to: 1.0; duration: 350 }
 
-                        NumberAnimation { id:animateOpacityDown; target: stone; property: "opacity"; to: 0; duration: 250; onRunningChanged: {
-                                if (!animateOpacityDown.running) { stone.color = "transparent"; stone.border.width = 0; }}
+                        NumberAnimation { id:animateOpacityDown; target: stone; property: "opacity"; to: 0; duration: 150; onRunningChanged: {
+                                if (!animateOpacityDown.running) { stone.color = "transparent"; stone.border.width = 0; stone.opacity = 0}}
                         }
                     }
                 }
@@ -96,6 +101,7 @@ Window {
 
     Image{ //Background, uses image for now
         id: background
+        objectName: "tileDelegate"
         z: 0
         height: parent.height
         width: parent.width
@@ -256,6 +262,10 @@ Window {
         z: 100
         color: Qt.rgba(0,0,0,0.75)
         visible: false
+
+        onVisibleChanged: {
+            isVisible = !visible
+        }
     }
 
     Login{
@@ -266,5 +276,8 @@ Window {
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
         anchors.verticalCenter: mainWindow.verticalCenter
+        onVisibleChanged: {
+            isVisible = !visible
+        }
     }
 }

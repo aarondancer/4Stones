@@ -3,6 +3,7 @@
 Player::Player(QObject *parent) :
     QObject(parent)
 {
+
 }
 
 int Player::getWins() const
@@ -34,6 +35,6 @@ void Player::setDraws(int value)
 }
 
 void Player::makeMove(int index){
-    //_grid[index] = player;
+
 }
 

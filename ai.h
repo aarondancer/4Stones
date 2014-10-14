@@ -4,7 +4,7 @@
 #import "player.h"
 //#import <QObject>
 
-class AI : Player
+class AI : public Player
 {
 
 public:

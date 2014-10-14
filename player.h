@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <QObject>
+#include "global.h"
 
 class Player : public QObject
 {
