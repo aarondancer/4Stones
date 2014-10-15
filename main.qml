@@ -115,17 +115,12 @@ Window {
         antialiasing: true
 
         Column{ //Column for stacked layout
-            width: parent.width - 20
-            height: parent.height - 20
+            width: parent.width
+            height: parent.height
             spacing: 10
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
 
-            Rectangle{ //Spacer
-                height: (parent.height/2 - gridView.height) / 2
-                width: parent.width
-                color: "transparent"
-            }
 
             Row{ //This is the top quarter. Row for side-by-side layout
                 width: (parent.height / 2 < parent.width ? parent.height / 2 : parent.width)
@@ -164,12 +159,6 @@ Window {
                 }
             }
 
-            Rectangle{ //Spacer
-                height: (parent.height/2 - gridView.height) / 2
-                width: parent.width
-                color: "transparent"
-            }
-
             Rectangle{ //Rectangle houses the grid, provides the outer border
                 width: (parent.height / 2 < parent.width ? parent.height / 2 : parent.width) + border.width
                 height: width
@@ -196,50 +185,29 @@ Window {
                 }
             }
 
-            Row{ //Undo button area
-                height: 20
-                Rectangle{
-                    color: "transparent"
-                    height: 10
-                    width: (mainWindow.width - gridView.width) / 2
-                }
-
-                Label{
-                    text: "↩"
-                    width: gridView.width
-                    height: parent.height
-                    font.pixelSize: height * 2.5
-                    MouseArea{
-                        onClicked: {}
-                    }
-                }
-            }
-
-            Rectangle{ //Spacer
-                height: (parent.height/2 - gridView.height) + 10
-                width: parent.width
-                color: "transparent"
-            }
-
-            Rectangle{ //Rectangle houses How-to text. Still working out the dynamicness #engrish
-                width: gridView.width
-                height: howTo.height
+            Text{
+                text: "↩"
+                height: 50
+                font.pixelSize: height
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: "transparent"
-
-                Text{ //how-to text
-                    id: howTo
-                    //anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    height: Text.contentHeight
-                    width: parent.width
-                    horizontalAlignment: Text.AlignHCenter
-                    text: "<html><b><u>How to play:</b></u> Players take turns placing stones. The first player to get 4 stones in a row wins!</html>"
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: ((mainWindow.width > mainWindow.height)? mainWindow.height :mainWindow.width) / 32
-                    font.family: "Helvetica"
+                anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
+                MouseArea{
+                    onClicked: {}
                 }
             }
+
+            Text{ //how-to text
+                id: howTo
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: Text.contentHeight
+                width: gridView.width
+                horizontalAlignment: Text.AlignHCenter
+                text: "<html><b><u>How to play:</b></u> Players take turns placing stones. The first player to get 4 stones in a row wins!</html>"
+                wrapMode: Text.WordWrap
+                font.pixelSize: ((mainWindow.width > mainWindow.height)? mainWindow.height :mainWindow.width) / 32
+                font.family: "Helvetica"
+            }
+
         }
     }
 
