@@ -248,8 +248,7 @@ Window {
         title: "Winner!"
         text: "Winner!"
         informativeText: "Player " + ((turn == 1) ? 2 : 1) + " wins!"
-        onAccepted: {
-        }
+        onAccepted: ;
     }
 
     MainMenu{ //Main Menu
@@ -257,13 +256,11 @@ Window {
         z: 100
         color: Qt.rgba(0,0,0,0.75)
         visible: false
+        onVisibleChanged: isVisible = !visible;
 
-        onVisibleChanged: {
-            isVisible = !visible
-        }
     }
 
-    Login{
+    Login{ //Login View
         id: login
         z: 200
         visible: true
@@ -271,8 +268,7 @@ Window {
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
         anchors.verticalCenter: mainWindow.verticalCenter
-        onVisibleChanged: {
-            isVisible = !visible
-        }
+        onVisibleChanged: isVisible = !visible;
+
     }
 }
