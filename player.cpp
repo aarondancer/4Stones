@@ -33,8 +33,18 @@ void Player::setDraws(int value)
 {
     _draws = value;
 }
+int Player::getNumber() const
+{
+    return _number;
+}
+
+void Player::setNumber(int number)
+{
+    _number = number;
+}
+
 
 void Player::makeMove(int index){
-
+    board->placePiece(index, _number);
 }
 
