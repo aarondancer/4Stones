@@ -11,13 +11,13 @@ Window {
     width: 640
     height: 960
     title: "4Stones"
-    objectName: "theWindow"
 
     property int turn: 1;
     property color turnColor: blue;
     property color blue: "#3359E7"
     property color red: "#FC2833"
     property bool isVisible: false
+    property string backgroundSource: "kite.jpg"
 
     property Grid board: Grid{
         id: board;
@@ -59,20 +59,18 @@ Window {
                             if (isVisible && board.valueFromIndex(index) === 0){
                                 lastMoveCheck();
                                 board.placePiece(index, turn);
-                                lastMoveCheck();
+                                   lastMoveCheck();
                                 if (board.checkWin(turn) === true) winDialog.visible = true;
                                 turn = (turn === 1) ? 2 : 1;
                             }
                             function lastMoveCheck(){
-                                //console.log(board.lastMove);
-                                console.log(board.valueFromIndex(board.lastMove));
-//                                if (board.valueFromIndex(board.lastMove) !== 0){
-//                                    if (board.valueFromIndex(board.lastMove) === 1) stone.color = blue;
-//                                    else stone.color = red;
-//                                    stone.border.width = 1;
-//                                    turnColor = (board.valueFromIndex(board.lastMove) === 2) ? blue : red;
-//                                    stone.opacity = 1;
-//                                }
+                                if (board.valueFromIndex(board.lastMove) !== 0){
+                                    if (board.valueFromIndex(board.lastMove) === 1) stone.color = blue;
+                                    else stone.color = red;
+                                    stone.border.width = 1;
+                                    turnColor = (board.valueFromIndex(board.lastMove) === 2) ? blue : red;
+                                    stone.opacity = 1;
+                                }
                             }
                         }
                         onEntered: {
@@ -101,11 +99,10 @@ Window {
 
     Image{ //Background, uses image for now
         id: background
-        objectName: "tileDelegate"
         z: 0
         height: parent.height
         width: parent.width
-        source: "forest.jpg"
+        source: backgroundSource
         fillMode: Image.PreserveAspectCrop
     }
 
