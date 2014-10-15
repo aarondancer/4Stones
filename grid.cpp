@@ -30,7 +30,7 @@ bool Grid::checkWin(int player){
     }
     if (count >= _countToWin - 1) return true;
 
-    //U->D Diagonal
+    // \-Diagonal
     count = 0;
     while (startR > 0 && startC > 0){
         startC--; startR--;
@@ -43,7 +43,7 @@ bool Grid::checkWin(int player){
     }
     if (count >= _countToWin - 1) return true;
 
-    //D->U Diagonal
+    // /-Diagonal
     count = 0;
     startR = indexToRow(_lastMove); startC = indexToColumn(_lastMove);
     while (startR > 0 && startC < _gridLength - 1){
