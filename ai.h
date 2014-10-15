@@ -2,7 +2,6 @@
 #define AI_H
 
 #import "player.h"
-//#import <QObject>
 
 class AI : public Player
 {

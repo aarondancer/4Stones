@@ -1,17 +1,17 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QQmlComponent>
-#include <QDebug>
+//#include <QQmlContext>
+//#include <QQmlComponent>
+//#include <QDebug>
 //#include "grid.h"
-#include <stdlib.h>
+//#include <stdlib.h>
 //#include <iostream>
 #include <QtQml>
-#include <QObject>
+//#include <QObject>
 #include "ai.h"
 #include "player.h"
 #include <QQuickView>
-#include <QQuickItem>
+//#include <QQuickItem>
 
 QList<Player*> players;
 
@@ -29,20 +29,7 @@ int main(int argc, char *argv[])
     engine.load(QUrl("qrc:/main.qml"));
 
     QQuickWindow *W = (QQuickWindow *)engine.rootObjects().first();
-    Grid *board = W->findChild<Grid*>("boardo");
-
-
-    //if (G) qDebug() << "woo!";
-
-//    QQmlEngine e;
-//    QQmlComponent component(&e, QUrl("qrc:/main.qml"));
-//    QObject *object = component.create();
-//    Grid *board = object->findChild<Grid*>("boardo");
-
-//    qDebug() << component.errors();
-
-
-
+    board = W->findChild<Grid*>("boardo");
 
     return app.exec();
 
