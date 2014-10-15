@@ -13,8 +13,6 @@
 #include <QQuickView>
 //#include <QQuickItem>
 
-QList<Player*> players;
-
 void createOpponent(int difficulty);
 
 int main(int argc, char *argv[])
