@@ -15,6 +15,8 @@
 
 void createOpponent(int difficulty);
 
+QList< Player* > players;
+
 int main(int argc, char *argv[])
 {
     createOpponent(0);
@@ -36,6 +38,7 @@ int main(int argc, char *argv[])
 void createOpponent(int difficulty){
     switch(difficulty){
         Player* temp;
+        temp->setNumber(players.count() + 1);
         case 0:
             temp = new Player();
             players.append(temp);
@@ -53,6 +56,5 @@ void createOpponent(int difficulty){
             players.append(temp);
             break;
         default: break;
-
     }
 }

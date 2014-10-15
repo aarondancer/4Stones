@@ -5,6 +5,5 @@
 #import "grid.h"
 
 extern Grid* board;
-extern QList<Player*> players;
 
 #endif // GLOBAL_H
