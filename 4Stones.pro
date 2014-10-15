@@ -26,3 +26,5 @@ HEADERS += \
 
 LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin
+
+CONFIG += c++11
