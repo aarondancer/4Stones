@@ -17,7 +17,7 @@ Window {
     property color blue: "#3359E7"
     property color red: "#FC2833"
     property bool isVisible: false
-    property string backgroundSource: "kite.jpg"
+    property string backgroundSource: "forest.jpg"
 
     property Grid board: Grid{
         id: board;
@@ -59,24 +59,22 @@ Window {
                             if (isVisible && board.valueFromIndex(index) === 0){
                                 lastMoveCheck();
                                 board.placePiece(index, turn);
-                                   lastMoveCheck();
-                                if (board.checkWin(turn) === true) winDialog.visible = true;
+                                lastMoveCheck();
+                                winDialog.visible = board.checkWin(turn);
                                 turn = (turn === 1) ? 2 : 1;
                             }
                             function lastMoveCheck(){
                                 if (board.valueFromIndex(board.lastMove) !== 0){
-                                    if (board.valueFromIndex(board.lastMove) === 1) stone.color = blue;
-                                    else stone.color = red;
-                                    stone.border.width = 1;
+                                    stone.color = (board.valueFromIndex(board.lastMove) === 1) ? blue : red;
                                     turnColor = (board.valueFromIndex(board.lastMove) === 2) ? blue : red;
+                                    stone.border.width = 1;
                                     stone.opacity = 1;
                                 }
                             }
                         }
                         onEntered: {
                             if(isVisible && board.valueFromIndex(index) === 0){
-                                if (turn === 1) stone.color = Qt.lighter(blue, 1.3);
-                                else stone.color =  Qt.lighter(red, 1.3);
+                                stone.color = (turn === 1) ? Qt.lighter(blue, 1.3) : Qt.lighter(red, 1.3);
                                 stone.border.width = 1;
                                 animateOpacityUp.start();
                             }
