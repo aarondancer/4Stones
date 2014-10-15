@@ -4,6 +4,6 @@
 
 #import "grid.h"
 
-//extern
+extern Grid* board;
 
 #endif // GLOBAL_H
