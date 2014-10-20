@@ -1,7 +1,7 @@
 #ifndef MEDIUMAI_H
 #define MEDIUMAI_H
 
-#import "ai.h"
+#include "ai.h"
 
 class MediumAI : public AI
 {

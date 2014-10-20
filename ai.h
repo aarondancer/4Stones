@@ -1,7 +1,7 @@
 #ifndef AI_H
 #define AI_H
 
-#import "player.h"
+#include "player.h"
 
 class AI : public Player
 {
