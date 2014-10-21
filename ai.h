@@ -1,14 +1,21 @@
 #ifndef AI_H
 #define AI_H
 
-#import "player.h"
+#include <QObject>
+#include "global.h"
 
-class AI : public Player
-{
+class AI: public QObject{
+    //Q_OBJECT
+    Q_PROPERTY(short difficulty)
+    public:
+        explicit AI(QObject *parent = 0);
+        Q_INVOKABLE void makeMove();
 
-public:
-    AI();
-    Q_INVOKABLE void makeMove(int index);
+        short getDifficulty() const;
+        void setDifficulty(short value);
+
+    private:
+        short _difficulty;
 };
 
 #endif // AI_H
