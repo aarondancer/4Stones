@@ -2,7 +2,7 @@
 //DOES NOT provide a GUI
 
 #include "grid.h"
-//#include <QDebug>
+#include <QDebug>
 
 Grid::Grid(QObject *parent) : QObject(parent)
 {
@@ -13,6 +13,7 @@ Grid::Grid(QObject *parent) : QObject(parent)
 }
 
 bool Grid::checkWin(int player){
+    bool isWin;
     //Horizontal
     int count = 0, startR = indexToRow(_lastMove), startC = indexToColumn(_lastMove), last = _grid[startR][0];
     for (int column = 1; column < _gridLength; column++){
@@ -20,7 +21,14 @@ bool Grid::checkWin(int player){
         last = _grid[startR][column];
     }
     last = _grid[0][startC];
-    if (count >= _countToWin - 1) return true;
+
+    //if (count >= _countToWin - 1) return true;
+    isWin = (count >= _countToWin - 1);
+    if (isWin) {
+        qDebug() << "horizontal win";
+        return true;
+    }
+
 
     //Vertical
     count = 0;
@@ -28,7 +36,13 @@ bool Grid::checkWin(int player){
         if (_grid[row][startC] == last && last == player) count++;
         last = _grid[row][startC];
     }
-    if (count >= _countToWin - 1) return true;
+    //if (count >= _countToWin - 1) return true;
+    isWin = (count >= _countToWin - 1);
+    if (isWin) {
+        qDebug() << "vertical win";
+        return true;
+    }
+
 
     // \-Diagonal
     count = 0;
@@ -41,7 +55,12 @@ bool Grid::checkWin(int player){
         last = _grid[startR][startC];
         startC++; startR++;
     }
-    if (count >= _countToWin - 1) return true;
+    //if (count >= _countToWin - 1) return true;
+    isWin = (count >= _countToWin - 1);
+    if (isWin) {
+        qDebug() << "\-diag win";
+        return true;
+    }
 
     // /-Diagonal
     count = 0;
@@ -55,7 +74,12 @@ bool Grid::checkWin(int player){
         last = _grid[startR][startC];
         startR++; startC--;
     }
-    if (count >= _countToWin - 1) return true;
+    //if (count >= _countToWin - 1) return true;
+    isWin = (count >= _countToWin - 1);
+    if (isWin) {
+        qDebug() << "/-diag win";
+        return true;
+    }
 
     return false;
 
