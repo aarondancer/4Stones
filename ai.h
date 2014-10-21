@@ -4,17 +4,22 @@
 #include <QObject>
 #include "global.h"
 
-class AI: public QObject{
-    //Q_OBJECT
+class AI : public QObject
+{
+    Q_OBJECT
     Q_PROPERTY(int difficulty READ getDifficulty WRITE setDifficulty)
-    public:
-        explicit AI(QObject *parent = 0);
-        Q_INVOKABLE void makeMove() const;
-        Q_INVOKABLE int getDifficulty() const;
-        Q_INVOKABLE void setDifficulty(int value);
+public:
+    explicit AI(QObject *parent = 0);
+    Q_INVOKABLE int makeMove();
+    Q_INVOKABLE int getDifficulty() const;
+    Q_INVOKABLE void setDifficulty(int value);
+signals:
 
-    private:
-        int _difficulty;
+public slots:
+
+private:
+    int _difficulty;
+
 };
 
 #endif // AI_H

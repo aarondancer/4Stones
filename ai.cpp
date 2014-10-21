@@ -1,27 +1,30 @@
 #include "ai.h"
-#include <ctime>
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
-#include <QDebug>
+//#include <QDebug>
 
-AI::AI(QObject *parent) : QObject(parent)
+
+AI::AI(QObject *parent) :
+    QObject(parent)
 {
-    qDebug() << "I'm an Ai";
 }
 
-void AI::makeMove() const{
+int randomMove(){
+    srand(time(NULL));
+    int random_integer = rand() % 24 + 0;
+    while (board->valueFromIndex(random_integer)!=0){
+        random_integer = rand() % 24 + 0;
+    }
+    board->placePiece(random_integer, 2);
+    return random_integer;
+}
+
+int AI::makeMove(){
     switch(_difficulty){
         case 1:
-            srand((unsigned)time(0));
-            int random_integer;
-            int lowest=0, highest=board->getGridLength() * board->getGridLength() - 1;
-            int range=(highest-lowest)+1;
-            random_integer = lowest+int(range*rand()/(RAND_MAX + 1.0));
-
-            if (board->valueFromIndex(random_integer)==0){
-                board->placePiece(random_integer, 2);
-            }
-            break;
+        return randomMove();
+        break;
     }
 }
 
@@ -35,4 +38,3 @@ void AI::setDifficulty(int value)
 {
     _difficulty = value;
 }
-

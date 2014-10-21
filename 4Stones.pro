@@ -5,8 +5,8 @@ QT += qml quick
 SOURCES += main.cpp \
     grid.cpp \
     player.cpp \
-    ai.cpp \
-    global.cpp
+    global.cpp \
+    ai.cpp
 
 RESOURCES += qml.qrc
 
@@ -19,8 +19,8 @@ include(deployment.pri)
 HEADERS += \
     grid.h \
     player.h \
-    ai.h \
-    global.h
+    global.h \
+    ai.h
 
 LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin
