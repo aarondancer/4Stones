@@ -9,7 +9,7 @@ AI::AI(QObject *parent) : QObject(parent)
     qDebug() << "I'm an Ai";
 }
 
-void AI::makeMove(){
+void AI::makeMove() const{
     switch(_difficulty){
         case 1:
             srand((unsigned)time(0));
@@ -24,12 +24,14 @@ void AI::makeMove(){
             break;
     }
 }
-short AI::getDifficulty() const
+
+
+int AI::getDifficulty() const
 {
     return _difficulty;
 }
 
-void AI::setDifficulty(short value)
+void AI::setDifficulty(int value)
 {
     _difficulty = value;
 }

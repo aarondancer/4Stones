@@ -35,6 +35,11 @@ Window {
     property AI computer: AI{
         id: computer
         objectName: "computero"
+
+    }
+
+    function meh(){
+        computer.difficulty = 1;
     }
 
     Component { //This is the component for the tiles
@@ -73,6 +78,7 @@ Window {
                                 lastMoveCheck();
                                 winDialog.visible = board.checkWin(turn);
                                 turn = (turn === 1) ? 2 : 1;
+                                if (turn === 2) computer.makeMove();
                             }
                             function lastMoveCheck(){
                                 if (board.valueFromIndex(board.lastMove) !== 0){

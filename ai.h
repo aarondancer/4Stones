@@ -6,16 +6,15 @@
 
 class AI: public QObject{
     //Q_OBJECT
-    Q_PROPERTY(short difficulty)
+    Q_PROPERTY(int difficulty READ getDifficulty WRITE setDifficulty)
     public:
         explicit AI(QObject *parent = 0);
-        Q_INVOKABLE void makeMove();
-
-        short getDifficulty() const;
-        void setDifficulty(short value);
+        Q_INVOKABLE void makeMove() const;
+        Q_INVOKABLE int getDifficulty() const;
+        Q_INVOKABLE void setDifficulty(int value);
 
     private:
-        short _difficulty;
+        int _difficulty;
 };
 
 #endif // AI_H
