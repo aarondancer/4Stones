@@ -2,7 +2,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#import "grid.h"
+#include "grid.h"
 
 extern Grid* board;
 
