@@ -2,7 +2,7 @@
 //DOES NOT provide a GUI
 
 #include "grid.h"
-#include <QDebug>
+//#include <QDebug>
 
 Grid::Grid(QObject *parent) : QObject(parent)
 {
