@@ -1,9 +1,9 @@
 #include "player.h"
+#include <QDebug>
 
-Player::Player(QObject *parent) :
-    QObject(parent)
+Player::Player(QObject *parent) : QObject(parent)
 {
-
+    qDebug() << "I'm a player!";
 }
 
 int Player::getWins() const
@@ -41,10 +41,5 @@ int Player::getNumber() const
 void Player::setNumber(int number)
 {
     _number = number;
-}
-
-
-void Player::makeMove(int index){
-    board->placePiece(index, _number);
 }
 

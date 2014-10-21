@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include <QObject>
-#include "global.h"
 
 class Player : public QObject
 {
@@ -12,7 +11,6 @@ class Player : public QObject
 
 public:
     explicit Player(QObject *parent = 0);
-    void makeMove(int index);
 
     int getWins() const;
     void setWins(int value);
