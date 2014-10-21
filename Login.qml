@@ -24,8 +24,6 @@ Rectangle {
         }
     }
 
-
-
     Column{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
@@ -44,7 +42,7 @@ Rectangle {
                 source: "4Stones.png"
             }
             Glow {
-                   anchors.fill: logo
+                   anchors.fill: parent
                    radius: 50
                    samples: 16
                    color: "white"
