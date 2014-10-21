@@ -1,2 +1,10 @@
 
 *.o
+
+Makefile
+
+moc_ai.cpp
+
+qrc_qml.cpp
+
+4Stones.app/Contents/MacOS/4Stones
