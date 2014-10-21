@@ -1,8 +1,12 @@
 #ifndef AI_H
 #define AI_H
 
+<<<<<<< HEAD
 #include <QObject>
 #include "global.h"
+=======
+#include "player.h"
+>>>>>>> FETCH_HEAD
 
 class AI: public QObject{
     //Q_OBJECT
