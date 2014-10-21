@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 import com.FourStones.qmlcomponents 1.0
 import QtQuick.Controls 1.2
+import QtGraphicalEffects 1.0
 
 Window {
     id: mainWindow
@@ -24,6 +25,16 @@ Window {
         objectName: "boardo"
         gridLength: 5;
         countToWin: 4;
+    }
+
+    property Player player: Player{
+        id: player;
+        objectName: "playero"
+    }
+
+    property AI computer: AI{
+        id: computer
+        objectName: "computero"
     }
 
     Component { //This is the component for the tiles
@@ -115,16 +126,17 @@ Window {
         antialiasing: true
 
         Column{ //Column for stacked layout
-            width: parent.width
-            height: parent.height
+            width: parent.width - 20
+            height: mainWindow.height - 20
             spacing: 10
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-
+            //anchors.verticalCenterOffset: 200
 
             Row{ //This is the top quarter. Row for side-by-side layout
-                width: (parent.height / 2 < parent.width ? parent.height / 2 : parent.width)
-                height: (parent.height < parent.width ? parent.height : parent.width) / 4
+                id: topRow
+                width: (mainWindow.height / 2 < mainWindow.width ? mainWindow.height / 2 : mainWindow.width)
+                height: mainWindow.height / 4 - (undoButton.height / 4)
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Image{ //The logo
@@ -136,6 +148,7 @@ Window {
                     smooth: true
                     source: "4Stones.png"
                 }
+
 
                 Rectangle{ //Spacer to justify the menu button right
                     width: parent.width * 5/8
@@ -159,8 +172,11 @@ Window {
                 }
             }
 
+
+
             Rectangle{ //Rectangle houses the grid, provides the outer border
-                width: (parent.height / 2 < parent.width ? parent.height / 2 : parent.width) + border.width
+                id: gridBorder
+                width: (mainWindow.height / 2 < mainWindow.width ? mainWindow.height / 2 : mainWindow.width) + border.width
                 height: width
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.preferredHeight: width
@@ -186,8 +202,9 @@ Window {
             }
 
             Text{
+                id: undoButton
                 text: "↩"
-                height: 50
+                height: gridView.width / 8
                 font.pixelSize: height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
