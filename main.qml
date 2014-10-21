@@ -15,10 +15,13 @@ Window {
 
     property int turn: 1;
     property color turnColor: blue;
-    property color blue: "#3359E7"
-    property color red: "#FC2833"
+    property string blue: "#3359E7"
+    property string red: "#FC2833"
+    property color blueColor: "#3359E7"
+    property color redColor: "#FC2833"
     property bool isVisible: false
     property string backgroundSource: "forest.jpg"
+    property bool aiOn: true;
 
     property Grid board: Grid{
         id: board;
@@ -35,11 +38,7 @@ Window {
     property AI computer: AI{
         id: computer
         objectName: "computero"
-
-    }
-
-    function meh(){
-        computer.difficulty = 1;
+        difficulty: 1
     }
 
     Component { //This is the component for the tiles
@@ -56,14 +55,14 @@ Window {
                         id: stone
                         width: parent.height - 10
                         height: width
-                        color: "transparent"
+                        color: backcolor
                         border.color: "white"
-                        border.width: 0
+                        border.width: borderwidth
                         radius: width * 0.5
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
                         antialiasing: true
-                        opacity: 0;
+                        opacity: stoneopacity;
                     }
 
                     MouseArea { //Make the cell clickable
@@ -72,42 +71,166 @@ Window {
                         hoverEnabled: true
                         anchors.fill: parent
                         onClicked:{
-                            if (isVisible && board.valueFromIndex(index) === 0){
-                                lastMoveCheck();
-                                board.placePiece(index, turn);
-                                lastMoveCheck();
-                                winDialog.visible = board.checkWin(turn);
-                                turn = (turn === 1) ? 2 : 1;
-                                if (turn === 2) computer.makeMove();
-                            }
-                            function lastMoveCheck(){
-                                if (board.valueFromIndex(board.lastMove) !== 0){
-                                    stone.color = (board.valueFromIndex(board.lastMove) === 1) ? blue : red;
-                                    turnColor = (board.valueFromIndex(board.lastMove) === 2) ? blue : red;
-                                    stone.border.width = 1;
-                                    stone.opacity = 1;
+                            if(board.valueFromIndex(index) === 0){
+                                var p = gridView.model.get(index);
+                                if(turn === 1){
+                                    board.placePiece(index, 1);
+                                    p.backcolor = blue;
+                                    p.borderwidth = 1;
+                                    p.stoneopacity = 1;
+                                    turn = 2;
+                                    if (aiOn == true){
+                                        var i = computer.makeMove();
+                                        var a = gridView.model.get(i);
+                                        a.backcolor = red;
+                                        a.borderwidth = 1;
+                                        a.stoneopacity = 1;
+                                        turn = 1;
+                                    }
+                                }else if(turn === 2){
+                                    board.placePiece(index, 2);
+                                    p.backcolor = red;
+                                    p.borderwidth = 1;
+                                    p.stoneopacity = 1;
+                                    turn = 1;
                                 }
                             }
-                        }
-                        onEntered: {
-                            if(isVisible && board.valueFromIndex(index) === 0){
-                                stone.color = (turn === 1) ? Qt.lighter(blue, 1.3) : Qt.lighter(red, 1.3);
-                                stone.border.width = 1;
-                                animateOpacityUp.start();
-                            }
-                        }
-                        onExited: {
-                            if(isVisible && board.valueFromIndex(index) === 0) animateOpacityDown.start();
-                        }
-
-                        NumberAnimation { id:animateOpacityUp; target: stone; property: "opacity"; to: 1.0; duration: 350 }
-
-                        NumberAnimation { id:animateOpacityDown; target: stone; property: "opacity"; to: 0; duration: 150; onRunningChanged: {
-                                if (!animateOpacityDown.running) { stone.color = "transparent"; stone.border.width = 0; stone.opacity = 0}}
+                            var check = board.checkWin(1);
+                            winDialog.visible = check;
+                            if (winDialog.visible === false) winDialog.visible = board.checkWin(2);
                         }
                     }
                 }
             }
+    }
+
+    ListModel{
+        id: gridList
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
+        ListElement{
+            backcolor: "transparent"
+            borderwidth: 0;
+            stoneopacity: 0;
+        }
     }
 
     //The stuff below is actually on the view
@@ -200,7 +323,7 @@ Window {
                     boundsBehavior: Flickable.StopAtBounds; flow: GridView.FlowLeftToRight
                     cellHeight: width / board.gridLength; cellWidth: cellHeight
                     focus: true
-                    model: board.gridLength * board.gridLength
+                    model: gridList
                     delegate: tileDelegate
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
