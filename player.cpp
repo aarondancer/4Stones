@@ -1,9 +1,8 @@
 #include "player.h"
-#include <QDebug>
+//#include <QDebug>
 
 Player::Player(QObject *parent) : QObject(parent)
 {
-    qDebug() << "I'm a player!";
 }
 
 int Player::getWins() const
