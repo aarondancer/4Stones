@@ -21,7 +21,7 @@ Window {
     property color redColor: "#FC2833"
     property bool isVisible: false
     property string backgroundSource: "forest.jpg"
-    property bool aiOn: true;
+    property bool aiOn: false;
 
     property Grid board: Grid{
         id: board;
