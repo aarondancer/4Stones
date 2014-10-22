@@ -73,13 +73,16 @@ Window {
                         onClicked:{
                             if(board.valueFromIndex(index) === 0){
                                 var p = gridView.model.get(index);
+                                var check;
                                 if(turn === 1){
                                     board.placePiece(index, 1);
                                     p.backcolor = blue;
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = 2;
-                                    if (aiOn == true){
+                                    check = board.checkWin(1);
+                                    winDialog.visible = check;
+                                    if (aiOn == true && check === false){
                                         var i = computer.makeMove();
                                         var a = gridView.model.get(i);
                                         a.backcolor = red;
@@ -93,11 +96,10 @@ Window {
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = 1;
+                                    winDialog.visible = board.checkWin(2);
                                 }
+                                turnColor = (turn === 2) ? red : blue;
                             }
-                            var check = board.checkWin(1);
-                            winDialog.visible = check;
-                            if (winDialog.visible === false) winDialog.visible = board.checkWin(2);
                         }
                     }
                 }
@@ -337,6 +339,7 @@ Window {
                 font.pixelSize: height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
+
                 MouseArea{
                     onClicked: {}
                 }
@@ -352,6 +355,7 @@ Window {
                 wrapMode: Text.WordWrap
                 font.pixelSize: ((mainWindow.width > mainWindow.height)? mainWindow.height :mainWindow.width) / 32
                 font.family: "Helvetica"
+                color: "white"
             }
 
         }

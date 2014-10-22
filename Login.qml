@@ -104,7 +104,7 @@ Rectangle {
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
                         font.weight: Font.Light
-                        font.pointSize: 20
+                        font.pointSize: control.height / 5
                         color: "white"
                         text: control.text
                         wrapMode: Text.WordWrap
@@ -138,7 +138,7 @@ Rectangle {
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
                         font.weight: Font.Light
-                        font.pointSize: 20
+                        font.pointSize: control.height / 5
                         color: "white"
                         text: control.text
                         wrapMode: Text.WordWrap
@@ -174,7 +174,7 @@ Rectangle {
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
                         font.weight: Font.Light
-                        font.pointSize: 20
+                        font.pointSize: control.height / 5
                         color: "white"
                         text: control.text
                         wrapMode: Text.WordWrap
