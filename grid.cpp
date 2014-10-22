@@ -68,7 +68,7 @@ bool Grid::checkWin(int player){
     while (startR > 0 && startC < _gridLength - 1){
         startR--; startC++;
     }
-    //last = _grid[startR][startC]; startR++; startC--;
+    last = _grid[startR][startC]; startR++; startC--;
     while(startR < _gridLength && startC >= 0){
         if (last == _grid[startR][startC] && last == player) count++;
         last = _grid[startR][startC];
