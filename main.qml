@@ -337,6 +337,7 @@ Window {
                 font.pixelSize: height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
+
                 MouseArea{
                     onClicked: {}
                 }
@@ -352,6 +353,7 @@ Window {
                 wrapMode: Text.WordWrap
                 font.pixelSize: ((mainWindow.width > mainWindow.height)? mainWindow.height :mainWindow.width) / 32
                 font.family: "Helvetica"
+                color: "white"
             }
 
         }
