@@ -13,75 +13,64 @@ Grid::Grid(QObject *parent) : QObject(parent)
 }
 
 bool Grid::checkWin(int player){
-    bool isWin;
+    bool isWin = false;
+    int count, startR, startC, last;
+
     //Horizontal
-    int count = 0, startR = indexToRow(_lastMove), startC = indexToColumn(_lastMove), last = _grid[startR][0];
-    for (int column = 1; column < _gridLength; column++){
-        if (_grid[startR][column] == last && last == player) count++;
-        last = _grid[startR][column];
+    if (!isWin) {
+        count = 0; startR = indexToRow(_lastMove); startC = 0; last = _grid[startR][startC];
+        for (int column = 1; column < _gridLength; column++){
+            if (_grid[startR][column] == last && last == player) count++;
+            last = _grid[startR][column];
+        }
+        isWin = (count >= _countToWin - 1);
+        if (isWin) qDebug() << "horizontal win";
     }
-    last = _grid[0][startC];
-
-    //if (count >= _countToWin - 1) return true;
-    isWin = (count >= _countToWin - 1);
-    if (isWin) {
-        qDebug() << "horizontal win";
-        return true;
-    }
-
 
     //Vertical
-    count = 0;
-    for (int row = 1; row < _gridLength; row++){
-        if (_grid[row][startC] == last && last == player) count++;
-        last = _grid[row][startC];
+    if (!isWin) {
+        count = 0; startR = 0; startC = indexToColumn(_lastMove); last = _grid[startR][startC];
+        for (int row = 1; row < _gridLength; row++){
+            if (_grid[row][startC] == last && last == player) count++;
+            last = _grid[row][startC];
+        }
+        isWin = (count >= _countToWin - 1);
+        if (isWin) qDebug() << "vertical win";
     }
-    //if (count >= _countToWin - 1) return true;
-    isWin = (count >= _countToWin - 1);
-    if (isWin) {
-        qDebug() << "vertical win";
-        return true;
-    }
-
 
     // \-Diagonal
-    count = 0;
-    while (startR > 0 && startC > 0){
-        startC--; startR--;
-    }
-    last = _grid[startR][startC]; startC++; startR++;
-    while (startC < _gridLength && startR < _gridLength){
-        if (last == _grid[startR][startC] && last == player) count++;
-        last = _grid[startR][startC];
-        startC++; startR++;
-    }
-    //if (count >= _countToWin - 1) return true;
-    isWin = (count >= _countToWin - 1);
-    if (isWin) {
-        qDebug() << "\-diag win";
-        return true;
+    if (!isWin) {
+        count = 0; startR = indexToRow(_lastMove); startC = indexToColumn(_lastMove);
+        while (startR > 0 && startC > 0) {
+            startR--; startC--; // move to start of diagonal; i.e.: upper-left-most cell
+        }
+        last = _grid[startR][startC]; startR++; startC++;
+        while (startC < _gridLength && startR < _gridLength){
+            if (_grid[startR][startC] == last && last == player) count++;
+            last = _grid[startR][startC];
+            startR++; startC++;
+        }
+        isWin = (count >= _countToWin - 1);
+        if (isWin) qDebug() << "\\-diag win";
     }
 
     // /-Diagonal
-    count = 0;
-    startR = indexToRow(_lastMove); startC = indexToColumn(_lastMove);
-    while (startR > 0 && startC < _gridLength - 1){
-        startR--; startC++;
-    }
-    //last = _grid[startR][startC]; startR++; startC--;
-    while(startR < _gridLength && startC >= 0){
-        if (last == _grid[startR][startC] && last == player) count++;
-        last = _grid[startR][startC];
-        startR++; startC--;
-    }
-    //if (count >= _countToWin - 1) return true;
-    isWin = (count >= _countToWin - 1);
-    if (isWin) {
-        qDebug() << "/-diag win";
-        return true;
+    if (!isWin) {
+        count = 0; startR = indexToRow(_lastMove); startC = indexToColumn(_lastMove);
+        while (startR > 0 && startC < _gridLength - 1) {
+            startR--; startC++; // move to start of diagonal; i.e.: upper-right-most cell
+        }
+        last = _grid[startR][startC]; startR++; startC--;
+        while(startR < _gridLength && startC >= 0){
+            if (_grid[startR][startC] == last && last == player) count++;
+            last = _grid[startR][startC];
+            startR++; startC--;
+        }
+        isWin = (count >= _countToWin - 1);
+        if (isWin) qDebug() << "/-diag win";
     }
 
-    return false;
+    return isWin;
 
     /*//Old 1D Algorithm
     const int steps[4] = {1, _gridLength, _gridLength + 1, _gridLength - 1}; //1 = Horizontal, _gridLength = Vertical, + 1 = Diagonal L->R, - 1 = Diagonal R->L
