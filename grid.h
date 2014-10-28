@@ -13,6 +13,8 @@ class Grid : public QObject
     Q_PROPERTY(int gridLength READ getGridLength WRITE setGridLength NOTIFY idkwhattodowithnotify) //Vertical length of the grid
     Q_PROPERTY(int lastMove READ getLastMove WRITE setLastMove NOTIFY idkwhattodowithnotify) //Location of the last stone placed. Used for win-checking optimization
     Q_PROPERTY(int countToWin READ getCountToWin WRITE setCountToWin NOTIFY idkwhattodowithnotify) //Number of stones needed in a row to win
+    Q_PROPERTY(int lastMoveX READ lastMoveX WRITE setLastMoveX NOTIFY idkwhattodowithnotify)
+    Q_PROPERTY(int lastMoveY READ lastMoveY WRITE setLastMoveY NOTIFY idkwhattodowithnotify)
 
 public:
     explicit Grid(QObject *parent = 0);
@@ -54,6 +56,12 @@ public:
     QList< QList<int> > _grid;
 
 
+    int lastMoveX() const;
+    void setLastMoveX(int lastMoveX);
+
+    int lastMoveY() const;
+    void setLastMoveY(int lastMoveY);
+
 signals:
     void idkwhattodowithnotify();
 
@@ -63,7 +71,8 @@ private:
     int _lastMove;
     int _gridLength;
     int _countToWin;
-
+    int _lastMoveX;
+    int _lastMoveY;
 };
 
 #endif // GRID_H

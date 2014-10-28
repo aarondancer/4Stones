@@ -100,6 +100,8 @@ bool Grid::checkWin(int player){
 
 void Grid::placePiece(const int index, const int player){
     _lastMove = index;
+    if (player == 1) _lastMoveX = _lastMove;
+    else _lastMoveO = _lastMove;
     _grid[indexToRow(index)][indexToColumn(index)] = player;
 }
 
@@ -118,6 +120,26 @@ int Grid::coordinateToIndex(int row, int column){
 int Grid::valueFromIndex(int index){
     return _grid[indexToRow(index)][indexToColumn(index)];
 }
+int Grid::lastMoveX() const
+{
+    return _lastMoveX;
+}
+
+void Grid::setLastMoveX(int lastMoveX)
+{
+    _lastMoveX = lastMoveX;
+}
+int Grid::lastMoveO() const
+{
+    return _lastMoveO;
+}
+
+void Grid::setlastMoveO(int lastMoveO)
+{
+    _lastMoveO = lastMoveO;
+}
+
+
 
 
 
