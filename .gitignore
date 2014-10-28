@@ -10,9 +10,4 @@ qrc_qml.cpp
 4Stones.app/Contents/MacOS/4Stones
 *.user
 *.062f3d7
-grid.o
-player.o
-qrc_qml.o
-4Stones.pro.user
 
-ai.o
