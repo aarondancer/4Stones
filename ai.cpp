@@ -22,8 +22,14 @@ int randomMove(){
 
 int AI::makeMove(){
     switch(_difficulty){
-        case 1:
+    case 1:
         return randomMove();
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    default:
         break;
     }
 }

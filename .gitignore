@@ -14,3 +14,5 @@ grid.o
 player.o
 qrc_qml.o
 4Stones.pro.user
+
+ai.o
