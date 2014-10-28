@@ -16,23 +16,32 @@ int randomMove(){
     while (board->valueFromIndex(random_integer)!=0){
         random_integer = rand() % 24 + 0;
     }
-    board->placePiece(random_integer, 2);
+    board->placePiece(random_integer, -1);
     return random_integer;
+}
+
+int maxAlgorithm(){
+
+}
+
+int minAlgorithm(){
+
 }
 
 int AI::makeMove(){
     switch(_difficulty){
-    case 1:
+    case 1: //Easy AI
+        minAlgorithm();
+        break;
+    case 2: //Medium AI
         return randomMove();
         break;
-    case 2:
-        break;
-    case 3:
-        break;
-    default:
+    case 3: //Hard AI
+        maxAlgorithm();
         break;
     }
 }
+
 
 
 int AI::getDifficulty() const

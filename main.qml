@@ -79,7 +79,7 @@ Window {
                                     p.backcolor = blue;
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
-                                    turn = 2;
+                                    turn = -1;
                                     check = board.checkWin(1);
                                     winDialog.visible = check;
                                     if (aiOn == true && check === false){
@@ -90,15 +90,15 @@ Window {
                                         a.stoneopacity = 1;
                                         turn = 1;
                                     }
-                                }else if(turn === 2){
-                                    board.placePiece(index, 2);
+                                }else if(turn === -1){
+                                    board.placePiece(index, -1);
                                     p.backcolor = red;
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = 1;
                                     winDialog.visible = board.checkWin(2);
                                 }
-                                turnColor = (turn === 2) ? red : blue;
+                                turnColor = (turn === -1) ? red : blue;
                             }
                         }
                     }
