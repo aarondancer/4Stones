@@ -21,3 +21,5 @@ moc_grid.o
 main.o
 
 global.o
+
+moc_grid.cpp

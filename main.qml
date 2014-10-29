@@ -21,7 +21,7 @@ Window {
     property color redColor: "#FC2833"
     property bool isVisible: false
     property string backgroundSource: "forest.jpg"
-    property bool aiOn: false;
+    property bool aiOn: true;
 
     property Grid board: Grid{
         id: board;
@@ -38,7 +38,7 @@ Window {
     property AI computer: AI{
         id: computer
         objectName: "computero"
-        difficulty: 1
+        difficulty: 2
     }
 
     Component { //This is the component for the tiles

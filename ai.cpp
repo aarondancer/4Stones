@@ -31,13 +31,13 @@ int minAlgorithm(){
 int AI::makeMove(){
     switch(_difficulty){
     case 1: //Easy AI
-        minAlgorithm();
+        return minAlgorithm();
         break;
     case 2: //Medium AI
         return randomMove();
         break;
     case 3: //Hard AI
-        maxAlgorithm();
+        return maxAlgorithm();
         break;
     }
 }
