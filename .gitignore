@@ -13,3 +13,11 @@ qrc_qml.cpp
 
 
 *.autosave
+
+*.o
+
+moc_grid.o
+
+main.o
+
+global.o
