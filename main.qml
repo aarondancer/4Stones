@@ -84,14 +84,18 @@ Window {
                                     winDialog.visible = check;
                                     if (aiOn == true && check === false){
                                         var i = computer.makeMove();
-                                        var a = gridView.model.get(i);
-                                        a.backcolor = red;
-                                        a.borderwidth = 1;
-                                        a.stoneopacity = 1;
+                                        var c = gridView.model.get(i);
+                                        c.backcolor = red;
+                                        c.borderwidth = 1;
+                                        c.stoneopacity = 1;
                                         turn = 1;
-                                    }
+                                        check = board.checkWin(-1)//
+                                    winDialog.visible = board.checkWin(-1);//
+                                   }
                                 }else if(turn === -1){
                                     board.placePiece(index, -1);
+                                    var i = computer.makeMove();
+                                    var p = gridView.model.get(i);
                                     p.backcolor = red;
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
