@@ -14,6 +14,13 @@ Grid::Grid(QObject *parent) : QObject(parent)
     for (int j = 0; j < 5; j++) _grid.append(temp);
 }
 
+bool Grid::isFilled(){
+    int count = 0;
+    for(int i = 0; i < 25; i++) if (valueFromIndex(i)) count++;
+    if (count == 25) return true;
+    return false;
+}
+
 bool Grid::checkWin(int player){
     bool isWin = false;
     int count, startR, startC, last;

@@ -53,6 +53,8 @@ public:
 
     Q_INVOKABLE int valueFromIndex(int index); //get the value from the 2D array given the index of the 1D array
 
+    Q_INVOKABLE bool isFilled();
+
     QList< QList<int> > _grid;
 
 

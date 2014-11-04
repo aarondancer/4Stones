@@ -6,7 +6,8 @@ SOURCES += main.cpp \
     grid.cpp \
     player.cpp \
     global.cpp \
-    ai.cpp
+    ai.cpp \
+    httprequestworker.cpp
 
 RESOURCES += qml.qrc
 
@@ -20,7 +21,8 @@ HEADERS += \
     grid.h \
     player.h \
     global.h \
-    ai.h
+    ai.h \
+    httprequestworker.h
 
 LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin
