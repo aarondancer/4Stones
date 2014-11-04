@@ -71,7 +71,7 @@ Window {
                         hoverEnabled: true
                         anchors.fill: parent
                         onClicked:{
-                            if(board.valueFromIndex(index) === 0){
+                            if(board.valueFromIndex(index) === 0 && !board.isFilled()){
                                 var p = gridView.model.get(index);
                                 var check;
                                 if(turn === 1){
@@ -82,7 +82,7 @@ Window {
                                     turn = -1;
                                     check = board.checkWin(1);
                                     winDialog.visible = check;
-                                    if (aiOn == true && check === false){
+                                    if (aiOn == true && check === false && !board.isFilled()){
                                         var i = computer.makeMove();
                                         var c = gridView.model.get(i);
                                         c.backcolor = red;

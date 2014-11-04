@@ -5,9 +5,7 @@
 //#include <QDebug>
 
 
-AI::AI(QObject *parent) :
-    QObject(parent)
-{
+AI::AI(QObject *parent) : QObject(parent) {
 }
 
 int randomMove(){
@@ -41,8 +39,6 @@ int AI::makeMove(){
         break;
     }
 }
-
-
 
 int AI::getDifficulty() const
 {
