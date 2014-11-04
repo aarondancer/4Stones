@@ -3,6 +3,8 @@
 
 #include "grid.h"
 #include <QDebug>
+#include "iostream"
+#include "string"
 
 Grid::Grid(QObject *parent) : QObject(parent)
 {
@@ -18,13 +20,16 @@ bool Grid::checkWin(int player){
 
     //Horizontal
     if (!isWin) {
+
         count = 0; startR = indexToRow(_lastMove); startC = 0; last = _grid[startR][startC];
         for (int column = 1; column < _gridLength; column++){
             if (_grid[startR][column] == last && last == player) count++;
             last = _grid[startR][column];
+         // std::cout << "Horizontal check win player " << player << "\n"<< "last"<< last << "\n";
         }
         isWin = (count >= _countToWin - 1);
         if (isWin) qDebug() << "horizontal win";
+
     }
 
     //Vertical
@@ -33,6 +38,7 @@ bool Grid::checkWin(int player){
         for (int row = 1; row < _gridLength; row++){
             if (_grid[row][startC] == last && last == player) count++;
             last = _grid[row][startC];
+                  // std::cout << "Vertical check win player " << player << "\n"<< "last"<< last << "\n";
         }
         isWin = (count >= _countToWin - 1);
         if (isWin) qDebug() << "vertical win";
@@ -52,6 +58,7 @@ bool Grid::checkWin(int player){
         }
         isWin = (count >= _countToWin - 1);
         if (isWin) qDebug() << "\\-diag win";
+               //std::cout << "diag\ check win player " << player << "\n"<< "last"<< last << "\n";
     }
 
     // /-Diagonal
@@ -68,6 +75,7 @@ bool Grid::checkWin(int player){
         }
         isWin = (count >= _countToWin - 1);
         if (isWin) qDebug() << "/-diag win";
+               //std::cout << "diag/ check win player " << player << "\n"<< "last"<< last << "\n";
     }
 
     return isWin;
