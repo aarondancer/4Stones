@@ -19,11 +19,11 @@ int randomMove(){
 }
 
 int maxAlgorithm(){
-
+    return 0;
 }
 
 int minAlgorithm(){
-
+    return 0;
 }
 
 int AI::makeMove(){
