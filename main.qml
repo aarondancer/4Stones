@@ -19,9 +19,9 @@ Window {
     property string red: "#FC2833"
     property color blueColor: "#3359E7"
     property color redColor: "#FC2833"
-    property bool isVisible: false
-    property string backgroundSource: "forest.jpg"
-    property bool aiOn: true;
+    property bool isVisible: false;
+    property string backgroundSource: "forest.jpg";
+    property bool aiOn: false;
 
     property Grid board: Grid{
         id: board;
@@ -82,25 +82,24 @@ Window {
                                     turn = -1;
                                     check = board.checkWin(1);
                                     winDialog.visible = check;
-                                    if (aiOn == true && check === false && !board.isFilled()){
+                                    if (aiOn === true && check === false && !board.isFilled()){
                                         var i = computer.makeMove();
                                         var c = gridView.model.get(i);
                                         c.backcolor = red;
                                         c.borderwidth = 1;
                                         c.stoneopacity = 1;
                                         turn = 1;
-                                        check = board.checkWin(-1)//
-                                    winDialog.visible = board.checkWin(-1);//
+                                        check = board.checkWin(-1);
+                                        winDialog.visible = board.checkWin(-1);
                                    }
-                                }else if(turn === -1){
+                                }
+                                else if(turn === -1){
                                     board.placePiece(index, -1);
-                                    var i = computer.makeMove();
-                                    var p = gridView.model.get(i);
                                     p.backcolor = red;
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = 1;
-                                    winDialog.visible = board.checkWin(2);
+                                    winDialog.visible = board.checkWin(-1);
                                 }
                                 turnColor = (turn === -1) ? red : blue;
                             }
