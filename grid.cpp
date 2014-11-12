@@ -154,7 +154,11 @@ void Grid::setlastMoveO(int lastMoveO)
     _lastMoveO = lastMoveO;
 }
 
-
+void Grid::reset(){
+  for(int i = 0; i < 25; i++) {
+      placePiece(i, 0);
+  }
+}
 
 
 

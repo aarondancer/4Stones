@@ -365,12 +365,22 @@ Window {
         }
     }
 
+    function reset()
+    {
+        gridView.reset();
+        for (var i = 0; i < 25; i++)
+        {
+            var space = gridView.model.get(i);
+            space.stoneopacity = 0;
+        }
+    }
+
     MessageDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
         id: winDialog
         title: "Winner!"
         text: "Winner!"
         informativeText: "Player " + ((turn == 1) ? 2 : 1) + " wins!"
-        onAccepted: ;
+        onAccepted: { reset(); }
     }
 
     MainMenu{ //Main Menu
@@ -393,4 +403,6 @@ Window {
         onVisibleChanged: isVisible = !visible;
 
     }
+
+
 }
