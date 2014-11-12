@@ -57,6 +57,7 @@ public:
 
     QList< QList<int> > _grid;
 
+    Q_INVOKABLE void reset();
 
     int lastMoveX() const;
     void setLastMoveX(int lastMoveX);
