@@ -19,9 +19,10 @@ Window {
     property string red: "#FC2833"
     property color blueColor: "#3359E7"
     property color redColor: "#FC2833"
-    property bool isVisible: false;
-    property string backgroundSource: "forest.jpg";
-    property bool aiOn: false;
+
+    property bool isVisible: false
+    property string backgroundSource: "forest.jpg"
+    property bool aiOn:true;
 
     property Grid board: Grid{
         id: board;
@@ -73,7 +74,7 @@ Window {
                         hoverEnabled: true
                         anchors.fill: parent
                         onClicked:{
-                            if(board.valueFromIndex(index) === 0 && !board.isFilled()){
+                            if(board.valueFromIndex(index) === 0 && !board.isFilled() && isVisible){
                                 var p = gridView.model.get(index);
                                 var check;
                                 if(turn === 1){
@@ -371,6 +372,7 @@ Window {
     function boardReset() {
         board.boardReset();
         for (var i = 0; i < 25; i++) {
+
             var space = gridView.model.get(i);
             space.stoneopacity = 0;
         }
@@ -382,6 +384,7 @@ Window {
         text: "Winner!"
         informativeText: "Player " + ((turn == 1) ? 2 : 1) + " wins!"
         onAccepted: {boardReset();}
+
     }
 
     MainMenu{ //Main Menu
@@ -390,6 +393,7 @@ Window {
         color: Qt.rgba(0,0,0,0.75)
         visible: false
         onVisibleChanged: isVisible = !visible;
+
     }
 
     Login{ //Login View
