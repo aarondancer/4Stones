@@ -57,7 +57,7 @@ public:
 
     QList< QList<int> > _grid;
 
-    Q_INVOKABLE void reset();
+    Q_INVOKABLE void boardReset();
 
     int lastMoveX() const;
     void setLastMoveX(int lastMoveX);

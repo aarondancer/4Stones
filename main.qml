@@ -104,7 +104,9 @@ Window {
                                     winDialog.visible = board.checkWin(-1);
                                 }
                                 turnColor = (turn === -1) ? red : blue;
+
                             }
+
                         }
                     }
                 }
@@ -366,11 +368,9 @@ Window {
         }
     }
 
-    function reset()
-    {
-        gridView.reset();
-        for (var i = 0; i < 25; i++)
-        {
+    function boardReset() {
+        board.boardReset();
+        for (var i = 0; i < 25; i++) {
             var space = gridView.model.get(i);
             space.stoneopacity = 0;
         }
@@ -381,7 +381,7 @@ Window {
         title: "Winner!"
         text: "Winner!"
         informativeText: "Player " + ((turn == 1) ? 2 : 1) + " wins!"
-        onAccepted: { reset(); }
+        onAccepted: {boardReset();}
     }
 
     MainMenu{ //Main Menu
