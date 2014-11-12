@@ -65,6 +65,8 @@ Window {
                         opacity: stoneopacity;
                     }
 
+
+
                     MouseArea { //Make the cell clickable
                         id: tileMouseArea
                         z: 1
@@ -378,7 +380,6 @@ Window {
         color: Qt.rgba(0,0,0,0.75)
         visible: false
         onVisibleChanged: isVisible = !visible;
-
     }
 
     Login{ //Login View
