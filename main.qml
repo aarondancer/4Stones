@@ -23,7 +23,7 @@ Window {
     property color blueColor: "#3359E7"
     property color redColor: "#FC2833"
 
-    property bool isVisible: false
+    property int menusOpen: 3;
     property string backgroundSource: "forest.jpg"
     property bool aiOn:true;
 
@@ -75,7 +75,7 @@ Window {
                         hoverEnabled: true
                         anchors.fill: parent
                         onClicked:{
-                            if(board.valueFromIndex(index) === 0 && !board.isFilled() && isVisible){
+                            if(board.valueFromIndex(index) === 0 && !board.isFilled() && menusOpen === 0){
                                 var p = gridView.model.get(index);
                                 var check;
                                 if(turn === 1){
@@ -87,8 +87,8 @@ Window {
                                     check = board.checkWin(1);
                                     winDialog.visible = check;
                                     if (aiOn === true && check === false && !board.isFilled()){
-                                        aiMove();
-                                   }
+                                        TheForce.aiMove();
+                                    }
                                 }
                                 else if(turn === -1){
                                     board.placePiece(index, -1);
@@ -379,8 +379,7 @@ Window {
         z: 100
         color: Qt.rgba(0,0,0,0.75)
         visible: false
-        onVisibleChanged: isVisible = !visible;
-
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
     Login{ //Login View
@@ -391,8 +390,7 @@ Window {
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
         anchors.verticalCenter: mainWindow.verticalCenter
-        onVisibleChanged: isVisible = !visible;
-
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
     DifficultyMenu{
@@ -403,6 +401,7 @@ Window {
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
         anchors.verticalCenter: mainWindow.verticalCenter
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
     GoFirst{
@@ -413,6 +412,18 @@ Window {
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
         anchors.verticalCenter: mainWindow.verticalCenter
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
+    }
+
+    Settings{
+        id: settings
+        z: 101
+        visible: false
+        width: mainWindow.width
+        height: mainWindow.height
+        anchors.horizontalCenter: mainWindow.horizontalCenter
+        anchors.verticalCenter: mainWindow.verticalCenter
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
 
