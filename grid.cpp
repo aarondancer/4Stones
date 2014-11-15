@@ -35,7 +35,7 @@ bool Grid::checkWin(int player){
          // std::cout << "Horizontal check win player " << player << "\n"<< "last"<< last << "\n";
         }
         isWin = (count >= _countToWin - 1);
-        if (isWin) qDebug() << "horizontal win";
+        if (isWin) qDebug() << "Horizontal win";
 
     }
 
@@ -48,7 +48,7 @@ bool Grid::checkWin(int player){
                   // std::cout << "Vertical check win player " << player << "\n"<< "last"<< last << "\n";
         }
         isWin = (count >= _countToWin - 1);
-        if (isWin) qDebug() << "vertical win";
+        if (isWin) qDebug() << "Vertical win";
     }
 
     // \-Diagonal
@@ -64,7 +64,7 @@ bool Grid::checkWin(int player){
             startR++; startC++;
         }
         isWin = (count >= _countToWin - 1);
-        if (isWin) qDebug() << "\\-diag win";
+        if (isWin) qDebug() << "\\-Diag win";
                //std::cout << "diag\ check win player " << player << "\n"<< "last"<< last << "\n";
     }
 
@@ -81,7 +81,7 @@ bool Grid::checkWin(int player){
             startR++; startC--;
         }
         isWin = (count >= _countToWin - 1);
-        if (isWin) qDebug() << "/-diag win";
+        if (isWin) qDebug() << "/-Diag win";
                //std::cout << "diag/ check win player " << player << "\n"<< "last"<< last << "\n";
     }
 
@@ -158,5 +158,5 @@ void Grid::boardReset(){
     for(int i = 0; i < 25; i++) {
         placePiece(i, 0);
     }
-    qDebug() << "worked";
+    qDebug() << "Board Reset";
 }
