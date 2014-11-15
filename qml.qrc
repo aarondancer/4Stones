@@ -10,5 +10,6 @@
         <file>DifficultyMenu.qml</file>
         <file>theForce.js</file>
         <file>GoFirst.qml</file>
+        <file>Settings.qml</file>
     </qresource>
 </RCC>
