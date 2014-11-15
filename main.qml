@@ -5,12 +5,15 @@ import QtQuick.Layouts 1.1
 import com.FourStones.qmlcomponents 1.0
 import QtQuick.Controls 1.2
 import QtGraphicalEffects 1.0
+import "theForce.js" as TheForce
 
 Window {
     id: mainWindow
     visible: true
     width: 640
     height: 960
+    minimumHeight: 240;
+    minimumWidth: 240;
     title: "4Stones"
 
     property int turn: 1;
@@ -66,8 +69,6 @@ Window {
                         opacity: stoneopacity;
                     }
 
-
-
                     MouseArea { //Make the cell clickable
                         id: tileMouseArea
                         z: 1
@@ -86,14 +87,7 @@ Window {
                                     check = board.checkWin(1);
                                     winDialog.visible = check;
                                     if (aiOn === true && check === false && !board.isFilled()){
-                                        var i = computer.makeMove();
-                                        var c = gridView.model.get(i);
-                                        c.backcolor = red;
-                                        c.borderwidth = 1;
-                                        c.stoneopacity = 1;
-                                        turn = 1;
-                                        check = board.checkWin(-1);
-                                        winDialog.visible = board.checkWin(-1);
+                                        aiMove();
                                    }
                                 }
                                 else if(turn === -1){
@@ -369,23 +363,16 @@ Window {
         }
     }
 
-    function boardReset() {
-        board.boardReset();
-        for (var i = 0; i < 25; i++) {
-
-            var space = gridView.model.get(i);
-            space.stoneopacity = 0;
-        }
-    }
-
     MessageDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
         id: winDialog
         title: "Winner!"
         text: "Winner!"
         informativeText: "Player " + ((turn == 1) ? 2 : 1) + " wins!"
-        onAccepted: {boardReset();}
+        onAccepted: {TheForce.boardReset();}
 
     }
+
+    //All of the views are initialized here as objects
 
     MainMenu{ //Main Menu
         id: mainMenu
@@ -406,6 +393,26 @@ Window {
         anchors.verticalCenter: mainWindow.verticalCenter
         onVisibleChanged: isVisible = !visible;
 
+    }
+
+    DifficultyMenu{
+        id: difficultyMenu
+        z: 150
+        visible: true
+        width: mainWindow.width
+        height: mainWindow.height
+        anchors.horizontalCenter: mainWindow.horizontalCenter
+        anchors.verticalCenter: mainWindow.verticalCenter
+    }
+
+    GoFirst{
+        id: goFirst
+        z: 125
+        visible: true
+        width: mainWindow.width
+        height: mainWindow.height
+        anchors.horizontalCenter: mainWindow.horizontalCenter
+        anchors.verticalCenter: mainWindow.verticalCenter
     }
 
 
