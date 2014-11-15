@@ -29,5 +29,5 @@ function whoGoesFirst(player){ //Sets who goes first
     turn = player;
     turnColor = (turn === -1) ? red : blue;
     goFirst.visible = false;
-    if (player === -1) aiMove();
+    if (player === -1 && aiOn === true) aiMove();
 }
