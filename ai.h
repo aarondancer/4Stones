@@ -19,7 +19,6 @@ public slots:
 
 private:
     int _difficulty;
-
 };
 
 #endif // AI_H
