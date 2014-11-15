@@ -80,7 +80,7 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: {menu.visible = false}
+                onClicked: {settings.visible = true}
             }
         }
     }
