@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-//#include <QDebug>
+#include <QDebug>
 
 
 AI::AI(QObject *parent) : QObject(parent) {
@@ -37,6 +37,10 @@ int AI::makeMove(){
     case 3: //Hard AI
         return maxAlgorithm();
         break;
+
+    default:
+        return randomMove();
+        break;
     }
 }
 
@@ -48,4 +52,5 @@ int AI::getDifficulty() const
 void AI::setDifficulty(int value)
 {
     _difficulty = value;
+    qDebug() << _difficulty;
 }
