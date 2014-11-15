@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.2
+import "theForce.js" as TheForce
 
 Rectangle {
     id:loginView
@@ -66,9 +67,6 @@ Rectangle {
             height: usernameLabel.height + 10
             font.pixelSize: height - 15
             font.capitalization: Font.AllUppercase
-            onAccepted: {
-                loginView.visible = false;
-            }
 
             style: TextFieldStyle {
                     textColor: "black"
@@ -96,7 +94,7 @@ Rectangle {
                 text: "Login"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {loginView.visible = false;}
+                onClicked: {TheForce.showDifficulties();}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -130,7 +128,7 @@ Rectangle {
                 text: "Register"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {loginView.visible = false;}
+                onClicked: {TheForce.showDifficulties();}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -166,7 +164,7 @@ Rectangle {
                 text: "Play as Guest"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {loginView.visible = false;}
+                onClicked: {TheForce.showDifficulties();}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
