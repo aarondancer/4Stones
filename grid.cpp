@@ -129,12 +129,13 @@ int Grid::indexToColumn(int index){
 }
 
 int Grid::coordinateToIndex(int row, int column){
-    return ((row * _gridLength) + (column * _gridLength));
+    return ((row * _gridLength) + column);
 }
 
 int Grid::valueFromIndex(int index){
     return _grid[indexToRow(index)][indexToColumn(index)];
 }
+
 int Grid::lastMoveX() const
 {
     return _lastMoveX;
