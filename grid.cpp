@@ -9,6 +9,7 @@
 Grid::Grid(QObject *parent) : QObject(parent)
 {
     _lastMove = 0;
+    _moveCount = 0;
     QList<int> temp;
     for (int i = 0; i < 5; i++) temp.append(0);
     for (int j = 0; j < 5; j++) _grid.append(temp);
@@ -115,6 +116,7 @@ bool Grid::checkWin(int player){
 
 void Grid::placePiece(const int index, const int player){
     _lastMove = index;
+    _moveCount++;
     if (player == 1) _lastMoveX = _lastMove;
     else _lastMoveO = _lastMove;
     _grid[indexToRow(index)][indexToColumn(index)] = player;
@@ -129,7 +131,7 @@ int Grid::indexToColumn(int index){
 }
 
 int Grid::coordinateToIndex(int row, int column){
-    return ((row * _gridLength) + (column * _gridLength));
+    return (row * _gridLength) + column;
 }
 
 int Grid::valueFromIndex(int index){

@@ -35,6 +35,10 @@ public:
 
     void setCountToWin(const int count){ _countToWin = count; }
 
+    void setMoveCount(int moveCount) {_moveCount = moveCount;}
+
+    int getMoveCount() {return _moveCount;}
+
     //Player Related
 
     Q_INVOKABLE void placePiece(const int index, const int player);
@@ -76,6 +80,7 @@ private:
     int _countToWin;
     int _lastMoveX;
     int _lastMoveO;
+    int _moveCount;
 };
 
 #endif // GRID_H
