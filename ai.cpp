@@ -52,5 +52,5 @@ int AI::getDifficulty() const
 void AI::setDifficulty(int value)
 {
     _difficulty = value;
-    qDebug() << _difficulty;
+    qDebug() << "Difficulty setting:" << _difficulty;
 }
