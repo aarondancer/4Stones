@@ -20,15 +20,21 @@ int randomMove(){
 
 int mediumAi(){
 
-    int countsum, startR, gridlength,holdpos, holdneg, startC, bestcolumn;
+    int countsumrow, countsumcolumn, startR, gridlength,holdpos, holdneg, startC, bestcolumnvalue;
 
-    int bestcolumnvalue,column, bestdiag1,bestrow,bestrowvalue = 0;
+    int bestcolumn,column, bestdiag1,bestrow,bestrowvalue = 0;
 
-    countsum = 0; startR = 0; gridlength = 5, holdpos = 0, holdneg = 0;
+    countsumrow, bestcolumnvalue = 0;
+
+    startR = 0; gridlength = 5, holdpos = 0, holdneg = 0;
 
     int temp =0;
 
-    int counter = 0;
+    countsumcolumn = 0;
+
+   // int bestselection, bestsum =0;
+
+   // int counter = 0;
 
     bestrow = column, startC = 0;
 
@@ -46,43 +52,77 @@ int mediumAi(){
 
             for (int row = 0; row < gridlength; row++){   //counting row for best row value
 
-                if(countsum > holdpos){
+                if (countsumrow >= countsumcolumn){
 
-                    holdpos = countsum;
+                    if(countsumrow > holdpos){
+
+                        holdpos = countsumrow;
 
                     if(holdpos > abs(holdneg)){
 
-                    bestrow = row;
+                        bestrow = (row-1);
 
-                    bestrowvalue = holdpos;
+                        bestrowvalue = holdpos;
 
                     }
 
                 }
 
-                else if (countsum < holdneg){
+                else if (countsumrow < holdneg){
 
-                    holdneg = countsum;
+                    holdneg = countsumrow;
 
                     if (abs (holdneg)>=holdpos){
 
-                    bestrow=row;
+                        bestrow=(row-1);
 
-                    bestrowvalue = holdneg;
+                        bestcolumnvalue = holdneg;
+
+                    }
+                  }
+                }
+
+                else{
+
+                    if(countsumcolumn > holdpos){
+
+                        holdpos = countsumcolumn;
+
+                        if(holdpos > abs(holdneg)){
+
+                        bestcolumn = (row-1);    // find way to count column
+
+                        bestcolumnvalue = holdpos;
+
+                        }
 
                     }
 
+                    else if (countsumcolumn < holdneg){
 
+                        holdneg = countsumcolumn;
 
+                        if (abs (holdneg)>=holdpos){
+
+                        bestcolumn=(row-1);
+
+                        bestrowvalue = holdneg;
+
+                        }
+                      }
                 }
 
 
 
-                countsum = 0;
+                countsumrow = 0;
+
+                countsumcolumn = 0;
 
                 for(int column = 0;column <gridlength;column++){
 
-                countsum=countsum+(board->_grid[row][column]);
+                countsumrow=countsumrow+(board->_grid[row][column]);
+
+                countsumcolumn += (board->_grid[column][row]);
 
 
             }
@@ -90,7 +130,7 @@ int mediumAi(){
            }
 
 
-        temp = board->coordinateToIndex(bestrow,0);
+
         if (board->getMoveCount() <=1){
 
        if((board->_grid[2][2])==1 || (board->_grid[2][2])==-1){
@@ -101,31 +141,52 @@ int mediumAi(){
        else {temp = board->coordinateToIndex(2,2);}
 
 
-        }
+       }
 
-         int index=0;
-         for (int i=0;i<5;i++){
+        int index=0;
 
-            if ((board->_grid[2][2])==1 || (board->_grid[2][2])==-1){
+        if(board->getMoveCount()>1){
 
-                if ((board->_grid[3][3])==1 || (board->_grid[3][3])==-1){
+            if(abs(bestrowvalue)>abs(bestcolumnvalue)){
 
-                    if ((board->_grid[bestrow][i])==0){
+                for (int i=0;i<5;i++){
 
+                    if ((board->_grid[bestrow][i])==0){         //this is scanning row
 
+                        if((array[bestrow][i])>=(array[bestrow][index])){
 
-                    if((array[bestrow][i])>=(array[bestrow][index])){
+                        temp = board->coordinateToIndex(bestrow,i);
 
-                    temp = board->coordinateToIndex(bestrow,i);
+                        index =i;
 
-                    index =i;
+                        }
 
                     }
+                }
+            }
+
+                else{
+                    index =0;
+
+                    for (int i=0; i<gridlength; i++){
+
+                        if ((board->_grid[i][bestcolumn])==0){         //this is scanning row
+
+                            if((array[i][bestcolumn])>=(array[index][bestcolumn])){
+
+                            temp = board->coordinateToIndex(i,bestcolumn);
+
+                            index =i;
+
+                        }
+
+                    }
+                }
 
             }
-        }
-            }
-         }
+       }
+
+
 
 
        board->placePiece(temp, -1);
