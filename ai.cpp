@@ -20,34 +20,23 @@ int randomMove(){
 
 int mediumAi(){
 
-    int countsumrow, countsumcolumn, startR, gridlength,holdpos, holdneg, bestcolumnvalue;
+    int countsumrow, countsumcolumn, gridlength,holdpos, holdneg, bestcolumnvalue;
 
-    int bestcolumn, bestrow,bestrowvalue = 0;
+    int bestcolumn, bestrow, bestrowvalue = 0;
 
     countsumrow, bestcolumnvalue = 0;
 
-    startR = 0; gridlength = 5, holdpos = 0, holdneg = 0;
+    gridlength = 5, holdpos = 0, holdneg = 0;
 
     int temp =0;
 
     countsumrow = 0; countsumcolumn = 0;
-
-   // int bestselection, bestsum =0;
-
-   // int counter = 0;
-
-    //bestrow = column, startC = 0;
 
     int array[5][5] = { {3,4,3,4,3},
                         {4,6,6,6,4},
                         {3,6,8,6,3},
                         {4,6,6,6,4},
                         {3,4,3,4,3} };
-
-
-
-
-
 
 
             for (int row = 0; row < gridlength; row++){   //counting row for best row value
