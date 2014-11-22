@@ -79,6 +79,7 @@ int mediumAi(){    //when sum of row = 1 it will always put a stone on top left 
                         {3,4,3,4,3} };
 
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             for (int row = 0; row < gridlength; row++){   //counting row for best row value
 =======
@@ -108,6 +109,24 @@ int mediumAi(){    //when sum of row = 1 it will always put a stone on top left 
             if (abs (holdneg)>=holdpos){
 
                 bestrow=row-1;
+=======
+    /* for (int r=0; r<=1;r++){
+     *  for (int c=0; c<=1;c++){
+     *      if (r!=1 && c!=1){
+     *          int startR, startC =0;
+     *          while (startR<5&&startC<5){
+     *          sumdiagnal+=(board->_grid[startR][startC];
+     *          startR++;
+     *          startC++;
+     *          }
+
+
+
+
+
+
+    for (int row = 0; row < gridlength; row++){   //counting row for best row value
+>>>>>>> FETCH_HEAD
 
                 bestrowvalue = holdneg;
 
