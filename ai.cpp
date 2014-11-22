@@ -58,25 +58,25 @@ int mediumAi(){
 
                         holdpos = countsumrow;
 
-                    if(holdpos > abs(holdneg)){
+                        if(holdpos > abs(holdneg)){
 
-                        bestrow = (row-1);
+                            bestrow = (row-1);
 
-                        bestrowvalue = holdpos;
+                            bestrowvalue = holdpos;
 
                     }
 
                 }
 
-                else if (countsumrow < holdneg){
+                    else if (countsumrow < holdneg){
 
-                    holdneg = countsumrow;
+                        holdneg = countsumrow;
 
-                    if (abs (holdneg)>=holdpos){
+                        if (abs(holdneg)>=holdpos){
 
-                        bestrow=(row-1);
+                            bestrow=(row-1);
 
-                        bestcolumnvalue = holdneg;
+                            bestcolumnvalue = holdneg;
 
                     }
                   }
@@ -109,7 +109,7 @@ int mediumAi(){
                         bestrowvalue = holdneg;
 
                         }
-                      }
+                    }
                 }
 
 
@@ -147,9 +147,9 @@ int mediumAi(){
 
         if(board->getMoveCount()>1){
 
-            if(abs(bestrowvalue)>abs(bestcolumnvalue)){
+            if(abs(bestrowvalue)>=abs(bestcolumnvalue)){
 
-                for (int i=0;i<5;i++){
+                for (int i=0;i<gridlength;i++){
 
                     if ((board->_grid[bestrow][i])==0){         //this is scanning row
 
@@ -193,7 +193,7 @@ int mediumAi(){
 
        return temp;
 
-       qDebug()<<bestrow;
+       qDebug() << "succesfull";
 
 }
 

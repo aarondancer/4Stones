@@ -131,7 +131,7 @@ int Grid::indexToColumn(int index){
 }
 
 int Grid::coordinateToIndex(int row, int column){
-    return (row * _gridLength) + column;
+    return ((row * _gridLength) + column);
 }
 
 int Grid::valueFromIndex(int index){
