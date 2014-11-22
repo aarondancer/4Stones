@@ -18,9 +18,26 @@ int randomMove(){
     return random_integer;
 }
 
-int mediumAi(){
+int mediumAi(){    //when sum of row = 1 it will always put a stone on top left corner-----bugg
 
+<<<<<<< Updated upstream
     int countsumrow, countsumcolumn, gridlength,holdpos, holdneg, bestcolumnvalue;
+=======
+<<<<<<< Updated upstream
+    int countsumrow, countsumcolumn, startR, gridlength,holdpos, holdneg, bestcolumnvalue;
+=======
+<<<<<<< Updated upstream
+    int countsumrow, countsumcolumn, startR, gridlength,holdpos, holdneg, startC, bestcolumnvalue;
+=======
+<<<<<<< Updated upstream
+    int countsum, startR, gridlength,holdpos, holdneg, startC, bestcolumn;
+=======
+<<<<<<< Updated upstream
+    int countsumrow, countsumcolumn, startR, gridlength,holdpos, holdneg, startC, bestcolumnvalue;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
     int bestcolumn, bestrow, bestrowvalue = 0;
 
@@ -32,6 +49,29 @@ int mediumAi(){
 
     countsumrow = 0; countsumcolumn = 0;
 
+<<<<<<< Updated upstream
+=======
+   // int bestselection, bestsum =0;
+
+   // int counter = 0;
+
+<<<<<<< Updated upstream
+    //bestrow = column, startC = 0;
+=======
+    bestrow = column, startC = 0;
+=======
+    int countsumrow, holdpos, holdneg, countcolumnsum, bestcolumn =0;
+
+    int bestcolumnsum,column, bestdiag1,bestrow,bestrowvalue = 0;
+
+    int gridlength=5;
+
+    int temp =0;
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+
+>>>>>>> Stashed changes
     int array[5][5] = { {3,4,3,4,3},
                         {4,6,6,6,4},
                         {3,6,8,6,3},
@@ -39,9 +79,53 @@ int mediumAi(){
                         {3,4,3,4,3} };
 
 
+<<<<<<< Updated upstream
             for (int row = 0; row < gridlength; row++){   //counting row for best row value
+=======
+    for (int row = 0; row < gridlength; row++){   //counting row for best row value
 
+        // if (countsumrow > countcolumnsum){
+
+        if(countsumrow > holdpos){
+
+            holdpos = countsumrow;
+
+            if(holdpos > abs(holdneg)){
+
+                bestrow = (row-1);
+
+                bestrowvalue = holdpos;
+
+            }
+
+        }
+
+        else if (countsumrow < holdneg){
+>>>>>>> Stashed changes
+
+            holdneg = countsumrow;
+
+            if (abs (holdneg)>=holdpos){
+
+                bestrow=row-1;
+
+                bestrowvalue = holdneg;
+
+            }
+
+<<<<<<< Updated upstream
                 if (countsumrow >= countsumcolumn){
+=======
+        }
+                //}
+
+<<<<<<< Updated upstream
+                if(countsum > holdpos){
+=======
+<<<<<<< Updated upstream
+                if (countsumrow >= countsumcolumn){
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
                     if(countsumrow > holdpos){
 
@@ -51,19 +135,79 @@ int mediumAi(){
 
                             bestrow = (row-1);
 
+<<<<<<< Updated upstream
                             bestrowvalue = holdpos;
+=======
+<<<<<<< Updated upstream
+                        bestrowvalue = holdpos;
+=======
+<<<<<<< Updated upstream
+                    bestrowvalue = holdpos;
+=======
+                        bestrowvalue = holdpos;
+=======
+              //  else{
+
+/*
+                if(countcolumnsum > holdpos){
+
+                    holdpos = countcolumnsum;
+
+                    if(holdpos > abs(holdneg)){
+
+                    bestrow = (column-1);
+
+                    bestcolumnsum = holdpos;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
                     }
 
                 }
 
+<<<<<<< Updated upstream
                     else if (countsumrow < holdneg){
+=======
+<<<<<<< Updated upstream
+                else if (countsumrow < holdneg){
+=======
+<<<<<<< Updated upstream
+                else if (countsum < holdneg){
+=======
+<<<<<<< Updated upstream
+                else if (countsumrow < holdneg){
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
                         holdneg = countsumrow;
 
                         if (abs(holdneg)>=holdpos){
 
+<<<<<<< Updated upstream
                             bestrow=(row-1);
+=======
+<<<<<<< Updated upstream
+                        bestrow=(row-1);
+=======
+<<<<<<< Updated upstream
+                    bestrow=row;
+=======
+                        bestrow=(row-1);
+=======
+                if (countcolumnsum < holdneg){
+
+                    holdneg = countcolumnsum;
+
+                    if (abs (holdneg)>=holdpos){
+
+                    bestrow=(column-1);
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
                             bestcolumnvalue = holdneg;
 
@@ -81,7 +225,15 @@ int mediumAi(){
 
                         bestcolumn = (row-1);    // find way to count column
 
+<<<<<<< Updated upstream
                         bestcolumnvalue = holdpos;
+=======
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+                        bestcolumnvalue = holdpos;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
                         }
 
@@ -103,6 +255,7 @@ int mediumAi(){
 
 
 
+<<<<<<< Updated upstream
                 countsumrow = 0;
 
                 countsumcolumn = 0;
@@ -112,14 +265,59 @@ int mediumAi(){
                 countsumrow=countsumrow+(board->_grid[row][column]);
 
                 countsumcolumn += (board->_grid[column][row]);
+=======
+<<<<<<< Updated upstream
+                countsum = 0;
 
+                for(int column = 0;column <gridlength;column++){
+
+                countsum=countsum+(board->_grid[row][column]);
+=======
+                countsumrow = 0;
+
+                countsumcolumn = 0;
+=======
+                }
+
+           //     }
+*/
+                countsumrow = 0;
+                countcolumnsum =0;
+>>>>>>> Stashed changes
+
+                for(int column = 0;column <gridlength;column++){
+
+                countsumrow=countsumrow+(board->_grid[row][column]);
+<<<<<<< Updated upstream
+
+                countsumcolumn += (board->_grid[column][row]);
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+
+=======
+               // countcolumnsum+=(board->_grid[column][row]);
+>>>>>>> Stashed changes
 
             }
 
            }
 
 
+<<<<<<< Updated upstream
 
+=======
+<<<<<<< Updated upstream
+        temp = board->coordinateToIndex(bestrow,0);
+=======
+
+<<<<<<< Updated upstream
+=======
+
+
+        //temp = board->coordinateToIndex(bestrow,0);
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         if (board->getMoveCount() <=1){
 
        if((board->_grid[2][2])==1 || (board->_grid[2][2])==-1){
@@ -130,7 +328,30 @@ int mediumAi(){
        else {temp = board->coordinateToIndex(2,2);}
 
 
+<<<<<<< Updated upstream
        }
+=======
+<<<<<<< Updated upstream
+        }
+=======
+       }
+
+<<<<<<< Updated upstream
+        int index=0;
+
+        if(board->getMoveCount()>1){
+
+            if(abs(bestrowvalue)>abs(bestcolumnvalue)){
+
+                for (int i=0;i<5;i++){
+
+                    if ((board->_grid[bestrow][i])==0){         //this is scanning row
+
+                        if((array[bestrow][i])>=(array[bestrow][index])){
+
+                        temp = board->coordinateToIndex(bestrow,i);
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
         int index=0;
 
@@ -153,6 +374,7 @@ int mediumAi(){
                     }
                 }
             }
+<<<<<<< Updated upstream
 
                 else{
                     index =0;
@@ -176,13 +398,62 @@ int mediumAi(){
        }
 
 
+=======
+<<<<<<< Updated upstream
+        }
+            }
+         }
+=======
+       }
+
+
+=======
+      if (board->getMoveCount() >1){
+         for (int i=0;i<5;i++){
+
+             int index=0;
+
+           /*  if(bestrow == 0 && bestrowvalue == 0){
+
+                 for (int a =0; a<5;a++){
+                     for (int b =0;a<5;a++){
+                         if((array[bestrow][i])>=(array[bestrow][index])){
+
+                      temp = board->coordinateToIndex(bestrow,i);
+
+                      index =i;
+                         }
+                     }
+                 }*/
+
+
+
+             if ((board->_grid[bestrow][i])==0){
+
+                        if((array[bestrow][i])>=(array[bestrow][index])){
+
+                     temp = board->coordinateToIndex(bestrow,i);
+
+                     index =i;
+                        }
+
+        }
+            }
+}
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
        board->placePiece(temp, -1);
 
        return temp;
 
+<<<<<<< Updated upstream
        qDebug() << "succesfull";
+=======
+       qDebug()<<board->getMoveCount();
+>>>>>>> Stashed changes
 
 }
 
