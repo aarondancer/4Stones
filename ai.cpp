@@ -39,7 +39,22 @@ int mediumAi(){
                         {3,4,3,4,3} };
 
 
-            for (int row = 0; row < gridlength; row++){   //counting row for best row value
+    /* for (int r=0; r<=1;r++){
+     *  for (int c=0; c<=1;c++){
+     *      if (r!=1 && c!=1){
+     *          int startR, startC =0;
+     *          while (startR<5&&startC<5){
+     *          sumdiagnal+=(board->_grid[startR][startC];
+     *          startR++;
+     *          startC++;
+     *          }
+
+
+
+
+
+
+    for (int row = 0; row < gridlength; row++){   //counting row for best row value
 
                 if (countsumrow >= countsumcolumn){
 
