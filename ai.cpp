@@ -20,9 +20,9 @@ int randomMove(){
 
 int mediumAi(){
 
-    int countsumrow, countsumcolumn, startR, gridlength,holdpos, holdneg, startC, bestcolumnvalue;
+    int countsumrow, countsumcolumn, startR, gridlength,holdpos, holdneg, bestcolumnvalue;
 
-    int bestcolumn,column, bestrow,bestrowvalue = 0;
+    int bestcolumn, bestrow,bestrowvalue = 0;
 
     countsumrow, bestcolumnvalue = 0;
 
@@ -30,13 +30,13 @@ int mediumAi(){
 
     int temp =0;
 
-    countsumcolumn = 0;
+    countsumrow = 0; countsumcolumn = 0;
 
    // int bestselection, bestsum =0;
 
    // int counter = 0;
 
-    bestrow = column, startC = 0;
+    //bestrow = column, startC = 0;
 
     int array[5][5] = { {3,4,3,4,3},
                         {4,6,6,6,4},
@@ -210,7 +210,7 @@ int minAlgorithm(){
 int AI::makeMove(){
     switch(_difficulty){
     case 1: //Easy AI
-        return minAlgorithm();
+        return randomMove();
         break;
     case 2: //Medium AI
         return mediumAi();
