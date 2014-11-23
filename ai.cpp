@@ -18,328 +18,384 @@ int randomMove(){
     return random_integer;
 }
 
-int mediumAi(){
-
-    int countsumrow=0;int countsumcolumn=0; int startR=0; int gridlength=5;int holdpos=0; int holdneg=0; int startC=0; int bestcolumnvalue=0;
-
-    int bestcolumn=0;int bestrow = 0;int bestrowvalue = 0; int countsumdiagnal =0;
-
-    int temp =0; int bestdiagnal1value=0;int bestdiagnal2value=0;int bestdiagnal3value=0;
-
-    int bestdiagnal4value=0; int bestdiagnal5value=0; int bestdiagnal6value=0;
-
-
-
-
-    int array[5][5] = { {3,4,3,4,3},
-                        {4,6,6,6,4},
-                        {3,6,8,6,3},
-                        {4,6,6,6,4},
-                        {3,4,3,4,3} };
-
-
+int mediumAi() {
+    int countsumrow=0;
+    int countsumcolumn=0;
+    int startR=0;
+    int bestdiagoverall=0;
+    int diagnacoor=0;
+    int gridlength=5;
+    int holdpos=0;
+    int holdneg=0;
+    int startC=0;
+    int bestcolumnvalue=0;
+    int bestcolumn=0;
+    int bestrow = 0;
+    int bestrowvalue = 0;
+    int countsumdiagnal =0;
+    int temp =0;
+    int bestdiagnal1value=0;
+    int bestdiagnal2value=0;
+    int bestdiagnal3value=0;
+    int bestdiagnal4value=0;
+    int bestdiagnal5value=0;
+    int bestdiagnal6value=0;
+    int array[5][5] = { {
+            3,4,3,4,3
+        }
+        , {
+            4,6,6,6,4
+        }
+        , {
+            3,6,8,6,3
+        }
+        , {
+            4,6,6,6,4
+        }
+        , {
+            3,4,3,4,3
+        }
+    }
+    ;
     for (int r=0; r<=1;r++) {
-            for (int c=0; c<=1;c++) {
-
-                countsumdiagnal = 0;
-                if (r==1 && c==1) {
-                    break;
-                }
-                else {
-                    startR=r;
-                    startC =c;
-                    if ((r==0)&&(c==0)){
+        for (int c=0; c<=1;c++) {
+            countsumdiagnal = 0;
+            if (r==1 && c==1) {
+                break;
+            } else {
+                startR=r;
+                startC =c;
+                if ((r==0)&&(c==0)) {
                     while (startR<5&&startC<5) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC++;
-
                     }
-                    }
-                    else if ((r==0)&&(c==1)){
+                } else if ((r==0)&&(c==1)) {
                     while (startR<4&&startC<5) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC++;
-
                     }
-                    }
-                    else if ((r==1)&&(c==0)){
+                } else if ((r==1)&&(c==0)) {
                     while (startR<5&&startC<4) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC++;
-
                     }
-                    }
-                    if (r==0&&c==0) {
-                        if(countsumdiagnal > holdpos) {
-                            holdpos =  countsumdiagnal;
-                            if(holdpos > abs(holdneg)) {
-                                bestdiagnal1value = holdpos;
-                            }
-                        } else if (countsumdiagnal < holdneg) {
-                            holdneg = countsumdiagnal;
-                            if (abs(holdneg)>=holdpos) {
-                                bestdiagnal1value = holdneg;
-                            }
+                }
+                if (r==0&&c==0) {
+                    if(countsumdiagnal > holdpos) {
+                        holdpos =  countsumdiagnal;
+                        if(holdpos >= abs(holdneg)) {
+                            bestdiagnal1value = holdpos;
+                        }
+                    } else if (countsumdiagnal < holdneg) {
+                        holdneg = countsumdiagnal;
+                        if (abs(holdneg)>holdpos) {
+                            bestdiagnal1value = holdneg;
                         }
                     }
-                    else if (r==0&&c==1) {
-                        if(countsumdiagnal > holdpos) {
-                            holdpos =  countsumdiagnal;
-                            if(holdpos > abs(holdneg)) {
-                                bestdiagnal2value = holdpos;
-                            }
-                        } else if (countsumdiagnal < holdneg) {
-                            holdneg = countsumdiagnal;
-                            if (abs(holdneg)>=holdpos) {
-                                bestdiagnal2value = holdneg;
-                            }
+                } else if (r==0&&c==1) {
+                    if(countsumdiagnal > holdpos) {
+                        holdpos =  countsumdiagnal;
+                        if(holdpos >= abs(holdneg)) {
+                            bestdiagnal2value = holdpos;
+                        }
+                    } else if (countsumdiagnal < holdneg) {
+                        holdneg = countsumdiagnal;
+                        if (abs(holdneg)>holdpos) {
+                            bestdiagnal2value = holdneg;
                         }
                     }
-                    else if (r==1&&c==0) {
-                        if(countsumdiagnal > holdpos) {
-                            holdpos =  countsumdiagnal;
-                            if(holdpos > abs(holdneg)) {
-                                bestdiagnal3value = holdpos;
-                            }
-                        } else if (countsumdiagnal < holdneg) {
-                            holdneg = countsumdiagnal;
-                            if (abs(holdneg)>=holdpos) {
-                                bestdiagnal3value = holdneg;
-                            }
+                } else if (r==1&&c==0) {
+                    if(countsumdiagnal > holdpos) {
+                        holdpos =  countsumdiagnal;
+                        if(holdpos >= abs(holdneg)) {
+                            bestdiagnal3value = holdpos;
+                        }
+                    } else if (countsumdiagnal < holdneg) {
+                        holdneg = countsumdiagnal;
+                        if (abs(holdneg)>holdpos) {
+                            bestdiagnal3value = holdneg;
                         }
                     }
                 }
             }
         }
-
-
+    }
     for (int r=0; r<=1;r++) {
-            //start diagnal on the other side of the board
-            for (int c=4; c>=3;c--) {
-
-                countsumdiagnal = 0;
-                if (r==1 && c==3) {
-                    break;
+        //start diagnal on the other side of the board
+        for (int c=4; c>=3;c--) {
+            countsumdiagnal = 0;
+            if (r==1 && c==3) {
+                break;
+            } else {
+                int startR = r, startC =c;
+                if ((r==0)&&(c==4)) {
+                    while (startR<5&&startC>=0) {
+                        countsumdiagnal+=(board->_grid[startR][startC]);
+                        startR++;
+                        startC--;
+                    }
+                } else if ((r==0)&&(c==3)) {
+                    while (startR<4&&startC>=0) {
+                        countsumdiagnal+=(board->_grid[startR][startC]);
+                        startR++;
+                        startC--;
+                    }
+                } else if ((r==1)&&(c==4)) {
+                    while (startR<5&&startC>0) {
+                        countsumdiagnal+=(board->_grid[startR][startC]);
+                        startR++;
+                        startC--;
+                    }
                 }
-                else {
-                    int startR = r, startC =c;
-                    if ((r==0)&&(c==4)){
-                        while (startR<5&&startC>=0) {
-                            countsumdiagnal+=(board->_grid[startR][startC]);
-                            startR++;
-                            startC--;
+                if (r==0&&c==4) {
+                    if(countsumdiagnal > holdpos) {
+                        holdpos =  countsumdiagnal;
+                        if(holdpos >= abs(holdneg)) {
+                            bestdiagnal4value = holdpos;
+                        }
+                    } else if (countsumdiagnal < holdneg) {
+                        holdneg = countsumdiagnal;
+                        if (abs(holdneg)>holdpos) {
+                            bestdiagnal4value = holdneg;
                         }
                     }
-                    else if ((r==0)&&(c==3)){
-                        while (startR<4&&startC>=0) {
-                            countsumdiagnal+=(board->_grid[startR][startC]);
-                            startR++;
-                            startC--;
+                } else if (r==0&&c==3) {
+                    if(countsumdiagnal > holdpos) {
+                        holdpos =  countsumdiagnal;
+                        if(holdpos >= abs(holdneg)) {
+                            bestdiagnal5value = holdpos;
+                        }
+                    } else if (countsumdiagnal < holdneg) {
+                        holdneg = countsumdiagnal;
+                        if (abs(holdneg)>holdpos) {
+                            bestdiagnal5value = holdneg;
                         }
                     }
-                    else if ((r==1)&&(c==4)){
-                        while (startR<5&&startC>0) {
-                            countsumdiagnal+=(board->_grid[startR][startC]);
-                            startR++;
-                            startC--;
+                } else if (r==1&&c==4) {
+                    if(countsumdiagnal > holdpos) {
+                        holdpos =  countsumdiagnal;
+                        if(holdpos >= abs(holdneg)) {
+                            bestdiagnal6value = holdpos;
                         }
-                    }
-                    if (r==0&&c==4) {
-                        if(countsumdiagnal > holdpos) {
-                            holdpos =  countsumdiagnal;
-                            if(holdpos > abs(holdneg)) {
-                                bestdiagnal4value = holdpos;
-                            }
-                        }
-                        else if (countsumdiagnal < holdneg) {
-                            holdneg = countsumdiagnal;
-                            if (abs(holdneg)>=holdpos) {
-                                bestdiagnal4value = holdneg;
-                            }
-                        }
-                    }
-                    else if (r==0&&c==3) {
-                        if(countsumdiagnal > holdpos) {
-                            holdpos =  countsumdiagnal;
-                            if(holdpos > abs(holdneg)) {
-                                bestdiagnal5value = holdpos;
-                            }
-                        }
-                        else if (countsumdiagnal < holdneg) {
-                            holdneg = countsumdiagnal;
-                            if (abs(holdneg)>=holdpos) {
-                                bestdiagnal5value = holdneg;
-                            }
-                        }
-                    }
-                    else if (r==1&&c==4) {
-                        if(countsumdiagnal > holdpos) {
-                            holdpos =  countsumdiagnal;
-                            if(holdpos > abs(holdneg)) {
-                                bestdiagnal6value = holdpos;
-                            }
-                        }
-                        else if (countsumdiagnal < holdneg) {
-                            holdneg = countsumdiagnal;
-                            if (abs(holdneg)>=holdpos) {
-                                bestdiagnal6value = holdneg;
-                            }
+                    } else if (countsumdiagnal < holdneg) {
+                        holdneg = countsumdiagnal;
+                        if (abs(holdneg)>holdpos) {
+                            bestdiagnal6value = holdneg;
                         }
                     }
                 }
             }
         }
+    }
 
-
-
-
-    for (int row = 0; row <= gridlength; row++){   //counting row for best row value
-
-                if ((abs(countsumrow)) >= (abs(countsumcolumn))){
-
-                    if(countsumrow > holdpos){
-
-                        holdpos = countsumrow;
-
-                        if(holdpos > abs(holdneg)){
-
-                            bestrow = (row-1);
-
-                            bestrowvalue = holdpos;
-
-                        }
-
-                    }
-
-                    else if (countsumrow < holdneg){
-
-                        holdneg = countsumrow;
-
-                        if (abs (holdneg)>=holdpos){
-
-                            bestrow=(row-1);
-
-                            bestrowvalue = holdneg;
-
-                        }
-                    }
+    if((abs(bestdiagnal1value)>=abs(bestdiagnal2value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal3value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal4value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal5value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal6value))) {
+        bestdiagoverall=bestdiagnal1value;
+        diagnacoor = board->coordinateToIndex(0,0);
+    } else if((abs(bestdiagnal2value)>abs(bestdiagnal1value))&&(abs(bestdiagnal2value)>=abs(bestdiagnal3value))&&(abs(bestdiagnal2value)>=abs(bestdiagnal4value))&&(abs(bestdiagnal2value)>=abs(bestdiagnal5value))&&(abs(bestdiagnal2value)>=abs(bestdiagnal6value))) {
+        bestdiagoverall = bestdiagnal2value;
+        diagnacoor = board->coordinateToIndex(0,1);
+    } else if((abs(bestdiagnal3value)>abs(bestdiagnal1value))&&(abs(bestdiagnal3value)>abs(bestdiagnal2value))&&(abs(bestdiagnal3value)>=abs(bestdiagnal4value))&&(abs(bestdiagnal3value)>=abs(bestdiagnal5value))&&(abs(bestdiagnal3value)>=abs(bestdiagnal6value))) {
+        bestdiagoverall = bestdiagnal3value;
+        diagnacoor = board->coordinateToIndex(1,0);
+    } else if((abs(bestdiagnal4value)>abs(bestdiagnal1value))&&(abs(bestdiagnal4value)>abs(bestdiagnal2value))&&(abs(bestdiagnal4value)>abs(bestdiagnal3value))&&(abs(bestdiagnal4value)>=abs(bestdiagnal5value))&&(abs(bestdiagnal4value)>=abs(bestdiagnal6value))) {
+        bestdiagoverall = bestdiagnal4value;
+        diagnacoor = board->coordinateToIndex(0,4);
+    } else if((abs(bestdiagnal5value)>abs(bestdiagnal1value))&&(abs(bestdiagnal5value)>abs(bestdiagnal2value))&&(abs(bestdiagnal5value)>abs(bestdiagnal3value))&&(abs(bestdiagnal5value)>abs(bestdiagnal4value))&&(abs(bestdiagnal5value)>=abs(bestdiagnal6value))) {
+        bestdiagoverall = bestdiagnal5value;
+        diagnacoor = board->coordinateToIndex(0,3);
+    } else if((abs(bestdiagnal6value)>abs(bestdiagnal1value))&&(abs(bestdiagnal6value)>abs(bestdiagnal2value))&&(abs(bestdiagnal6value)>abs(bestdiagnal3value))&&(abs(bestdiagnal6value)>abs(bestdiagnal4value))&&(abs(bestdiagnal6value)>abs(bestdiagnal5value))) {
+        bestdiagoverall = bestdiagnal6value;
+        diagnacoor = board->coordinateToIndex(1,4);
+    }
+    for (int row = 0; row <= gridlength; row++) {
+        //counting row for best row value
+        if ((abs(countsumrow)) >= (abs(countsumcolumn))) {
+            if(countsumrow > holdpos) {
+                holdpos = countsumrow;
+                if(holdpos > abs(holdneg)) {
+                    bestrow = (row-1);
+                    bestrowvalue = holdpos;
                 }
-
-                else{
-
-                    if(countsumcolumn > holdpos){
-
-                        holdpos = countsumcolumn;
-
-                        if(holdpos > abs(holdneg)){
-
-                            bestcolumn = (row-1);    // find way to count column
-
-                            bestcolumnvalue = holdpos;
-
-                        }
-
-                    }
-
-                    else if (countsumcolumn < holdneg){
-
-                        holdneg = countsumcolumn;
-
-                        if (abs (holdneg)>=holdpos){
-
-                            bestcolumn=(row-1);
-
-                            bestcolumnvalue = holdneg;
-
-                        }
-                      }
+            } else if (countsumrow < holdneg) {
+                holdneg = countsumrow;
+                if (abs (holdneg)>=holdpos) {
+                    bestrow=(row-1);
+                    bestrowvalue = holdneg;
                 }
-
-
-
-                countsumrow = 0;
-
-                countsumcolumn = 0;
-                if (row < gridlength) {
-                            for (int column = 0;column <gridlength;column++) {
-                                countsumrow=countsumrow+(board->_grid[row][column]);
-                                countsumcolumn += (board->_grid[column][row]);
-                            }
-                        }
-                    }
-
-
-
-        if (board->getMoveCount() <=1){
-
-       if((board->_grid[2][2])==1 || (board->_grid[2][2])==-1){
-
+            }
+        } else {
+            if(countsumcolumn > holdpos) {
+                holdpos = countsumcolumn;
+                if(holdpos > abs(holdneg)) {
+                    bestcolumn = (row-1);
+                    // find way to count column
+                    bestcolumnvalue = holdpos;
+                }
+            } else if (countsumcolumn < holdneg) {
+                holdneg = countsumcolumn;
+                if (abs (holdneg)>=holdpos) {
+                    bestcolumn=(row-1);
+                    bestcolumnvalue = holdneg;
+                }
+            }
+        }
+        countsumrow = 0;
+        countsumcolumn = 0;
+        if (row < gridlength) {
+            for (int column = 0;column <gridlength;column++) {
+                countsumrow=countsumrow+(board->_grid[row][column]);
+                countsumcolumn += (board->_grid[column][row]);
+            }
+        }
+    }
+    if (board->getMoveCount() <=1) {
+        if((board->_grid[2][2])==1 || (board->_grid[2][2])==-1) {
             temp = board->coordinateToIndex(3,3);
-       }
+        } else {
+            temp = board->coordinateToIndex(2,2);
+        }
+    }
 
-       else {temp = board->coordinateToIndex(2,2);}
-
-
-       }
-
-        int index=0;
-
-        if(board->getMoveCount()>1){
-
-            if(abs(bestrowvalue)>=abs(bestcolumnvalue)){
-
-                for (int i=0;i<gridlength;i++){
-
-                    if ((board->_grid[bestrow][i])==0){         //this is scanning row
-
-                        if((array[bestrow][i])>=(array[bestrow][index])){
-
+    if(board->getMoveCount()>1) {
+        if((abs(bestrowvalue)>=abs(bestcolumnvalue))&&(abs(bestrowvalue)>=abs(bestdiagoverall))) {
+            int index=0;
+            for (int i=0;i<gridlength;i++) {
+                if ((board->_grid[bestrow][i])==0) {
+                    //this is scanning row
+                    if((array[bestrow][i])>=(array[bestrow][index])) {
                         temp = board->coordinateToIndex(bestrow,i);
-
                         index =i;
-
-                        }
-
                     }
                 }
             }
-
-                else{
-                    index =0;
-
-                    for (int i=0; i<gridlength; i++){
-
-                        if ((board->_grid[i][bestcolumn])==0){         //this is scanning column
-
-                            if((array[i][bestcolumn])>=(array[i][bestcolumn])){
-
-                            temp = board->coordinateToIndex(i,bestcolumn);
-
-                            index =i;
-
-                        }
-
+        } else if((abs(bestcolumnvalue)>abs(bestrowvalue))&&(abs(bestcolumnvalue)>abs(bestdiagoverall))) {
+            int index =0;
+            for (int i=0; i<gridlength; i++) {
+                if ((board->_grid[i][bestcolumn])==0) {
+                    //this is scanning column
+                    if((array[i][bestcolumn])>=(array[index][bestcolumn])) {
+                        temp = board->coordinateToIndex(i,bestcolumn);
+                        index =i;
                     }
                 }
-
             }
-       }
+        } else if((abs(bestdiagoverall)>abs(bestcolumnvalue))&&(abs(bestdiagoverall)>abs(bestrowvalue))) {
+            int Row=0;
+            int Column=0;
+            Row = board->indexToRow(diagnacoor);
+            Column = board->indexToColumn(diagnacoor);
+            int index = 0;
+            int index1=0;
+            if ((Row == 0)&&(Column==0)) {
+                int c=Row;
+                int d=Column;
+                index = Row;
+                index1 = Column;
+                while(c<5&&d<5) {
+                    if((board->_grid[c][d])==0) {
+                        if((array[c][d])>=(array[index][index1])) {
+                            temp = board->coordinateToIndex(c,d);
+                            index = c;
+                            index1=d;
+                            c++;
+                            d++;
+                        }
+                    }
+                }
+            } else if ((Row == 0)&&(Column==1)) {
+                int c=Row;
+                int d=Column;
+                index=Row;
+                index1=Column;
+                while(c<4&&d<5) {
+                    if((board->_grid[c][d])==0) {
+                        if((array[c][d])>=(array[index][index1])) {
+                            temp = board->coordinateToIndex(c,d);
+                            index = c;
+                            index1=d;
+                            c++;
+                            d++;
+                        }
+                    }
+                }
+            } else if ((Row == 1)&&(Column==0)) {
+                int c=Row;
+                int d=Column;
+                index = c;
+                index1 = d;
+                while(c<5&&d<4) {
+                    if((board->_grid[c][d])==0) {
+                        if((array[c][d])>=(array[index][index1])) {
+                            temp = board->coordinateToIndex(c,d);
+                            index = c;
+                            index1=d;
+                            c++;
+                            d++;
+                        }
+                    }
+                }
+            } else if ((Row == 0)&&(Column==4)) {
+                int c=Row;
+                int d=Column;
+                index =c;
+                index1 = d;
+                while(c<5&&d>=0) {
+                    if((board->_grid[c][d])==0) {
+                        if((array[c][d])>=(array[index][index1])) {
+                            temp = board->coordinateToIndex(c,d);
+                            index = c;
+                            index1=d;
+                            c++;
+                            d--;
+                        }
+                    }
+                }
+            } else if ((Row == 0)&&(Column==3)) {
+                int c=Row;
+                int d=Column;
+                index=c;
+                index1 =d;
+                while(c<4&&d>=0) {
+                    if((board->_grid[c][d])==0) {
+                        if((array[c][d])>=(array[index][index1])) {
+                            temp = board->coordinateToIndex(c,d);
+                            index = c;
+                            index1=d;
+                            c++;
+                            d--;
+                        }
+                    }
+                }
+            } else if ((Row == 1)&&(Column==4)) {
+                int c=Row;
+                int d=Column;
+                index =c;
+                index=d;
+                while(c<5&&d>0) {
+                    if((board->_grid[c][d])==0) {
+                        if((array[c][d])>=(array[index][index1])) {
+                            temp = board->coordinateToIndex(c,d);
+                            index = c;
+                            index1=d;
+                            c++;
+                            d--;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    board->placePiece(temp, -1);
 
+    return temp;
 
-
-
-       board->placePiece(temp, -1);
-
-       return temp;
-
-       qDebug()<<bestrow;
+    qDebug()<<bestrow;
 
 }
-
-
 
 int maxAlgorithm(){
     return 0;
