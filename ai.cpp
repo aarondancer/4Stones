@@ -62,11 +62,12 @@ int mediumAi() {
             countsumdiagnal = 0;
             if (r==1 && c==1) {
                 break;
-            } else {
+            }
+            else {
                 startR=r;
                 startC =c;
                 if ((r==0)&&(c==0)) {
-                    while (startR<5&&startC<5) {
+                    while ((startR<5)&&(startC<5)) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC++;
@@ -124,6 +125,7 @@ int mediumAi() {
             }
         }
     }
+
     for (int r=0; r<=1;r++) {
         //start diagnal on the other side of the board
         for (int c=4; c>=3;c--) {
@@ -272,7 +274,7 @@ int mediumAi() {
                     }
                 }
             }
-        } else if((abs(bestcolumnvalue)>abs(bestrowvalue))&&(abs(bestcolumnvalue)>abs(bestdiagoverall))) {
+        } else if((abs(bestcolumnvalue)>abs(bestrowvalue))&&(abs(bestcolumnvalue)>=abs(bestdiagoverall))) {
             int index =0;
             for (int i=0; i<gridlength; i++) {
                 if ((board->_grid[i][bestcolumn])==0) {
@@ -301,10 +303,11 @@ int mediumAi() {
                             temp = board->coordinateToIndex(c,d);
                             index = c;
                             index1=d;
-                            c++;
-                            d++;
+
                         }
                     }
+                    c++;
+                    d++;
                 }
             } else if ((Row == 0)&&(Column==1)) {
                 int c=Row;
@@ -317,10 +320,11 @@ int mediumAi() {
                             temp = board->coordinateToIndex(c,d);
                             index = c;
                             index1=d;
-                            c++;
-                            d++;
+
                         }
                     }
+                    c++;
+                    d++;
                 }
             } else if ((Row == 1)&&(Column==0)) {
                 int c=Row;
@@ -333,10 +337,11 @@ int mediumAi() {
                             temp = board->coordinateToIndex(c,d);
                             index = c;
                             index1=d;
-                            c++;
-                            d++;
+
                         }
                     }
+                    c++;
+                    d++;
                 }
             } else if ((Row == 0)&&(Column==4)) {
                 int c=Row;
@@ -349,10 +354,11 @@ int mediumAi() {
                             temp = board->coordinateToIndex(c,d);
                             index = c;
                             index1=d;
-                            c++;
-                            d--;
+
                         }
                     }
+                    c++;
+                    d--;
                 }
             } else if ((Row == 0)&&(Column==3)) {
                 int c=Row;
@@ -365,10 +371,11 @@ int mediumAi() {
                             temp = board->coordinateToIndex(c,d);
                             index = c;
                             index1=d;
-                            c++;
-                            d--;
+
                         }
                     }
+                    c++;
+                    d--;
                 }
             } else if ((Row == 1)&&(Column==4)) {
                 int c=Row;
@@ -381,14 +388,16 @@ int mediumAi() {
                             temp = board->coordinateToIndex(c,d);
                             index = c;
                             index1=d;
-                            c++;
-                            d--;
+
                         }
                     }
+                    c++;
+                    d--;
                 }
             }
         }
     }
+
     board->placePiece(temp, -1);
 
     return temp;
@@ -396,6 +405,7 @@ int mediumAi() {
     qDebug()<<bestrow;
 
 }
+
 
 int maxAlgorithm(){
     return 0;
