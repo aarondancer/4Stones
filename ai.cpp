@@ -19,7 +19,7 @@ int randomMove(){
 }
 
 int mediumAi() {
-    int countsumrow=0;
+    int countsumrow=0;                          // declare local variable to be used
     int countsumcolumn=0;
     int startR=0;
     int bestdiagoverall=0;
@@ -40,7 +40,7 @@ int mediumAi() {
     int bestdiagnal4value=0;
     int bestdiagnal5value=0;
     int bestdiagnal6value=0;
-    int array[5][5] = { {
+    int array[5][5] = { {                   //array weight used to put x and o on the grid base on score
             3,4,3,4,3
         }
         , {
@@ -57,35 +57,35 @@ int mediumAi() {
         }
     }
     ;
-    for (int r=0; r<=1;r++) {
+    for (int r=0; r<=1;r++) {               //start of calculating sum of diagnally
         for (int c=0; c<=1;c++) {
             countsumdiagnal = 0;
-            if (r==1 && c==1) {
+            if (r==1 && c==1) {             //breaks if come to this coordinate while in loop
                 break;
             }
             else {
                 startR=r;
                 startC =c;
-                if ((r==0)&&(c==0)) {
+                if ((r==0)&&(c==0)) {       //sum of diagnal 1
                     while ((startR<5)&&(startC<5)) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC++;
                     }
-                } else if ((r==0)&&(c==1)) {
+                } else if ((r==0)&&(c==1)) {        //sum of diagnal 2
                     while (startR<4&&startC<5) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC++;
                     }
-                } else if ((r==1)&&(c==0)) {
+                } else if ((r==1)&&(c==0)) {            //sum of diagnal 3
                     while (startR<5&&startC<4) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC++;
                     }
                 }
-                if (r==0&&c==0) {
+                if (r==0&&c==0) {                   //store the sum of diagnal 1
                     if(countsumdiagnal > holdpos) {
                         holdpos =  countsumdiagnal;
                         if(holdpos >= abs(holdneg)) {
@@ -97,7 +97,7 @@ int mediumAi() {
                             bestdiagnal1value = holdneg;
                         }
                     }
-                } else if (r==0&&c==1) {
+                } else if (r==0&&c==1) {            //store sum of diagnal 2
                     if(countsumdiagnal > holdpos) {
                         holdpos =  countsumdiagnal;
                         if(holdpos >= abs(holdneg)) {
@@ -109,7 +109,7 @@ int mediumAi() {
                             bestdiagnal2value = holdneg;
                         }
                     }
-                } else if (r==1&&c==0) {
+                } else if (r==1&&c==0) {            //store of sum of diagnal 3
                     if(countsumdiagnal > holdpos) {
                         holdpos =  countsumdiagnal;
                         if(holdpos >= abs(holdneg)) {
@@ -126,7 +126,7 @@ int mediumAi() {
         }
     }
 
-    for (int r=0; r<=1;r++) {
+    for (int r=0; r<=1;r++) {                  //start of calculating the other side sum of diagnal
         //start diagnal on the other side of the board
         for (int c=4; c>=3;c--) {
             countsumdiagnal = 0;
@@ -134,26 +134,26 @@ int mediumAi() {
                 break;
             } else {
                 int startR = r, startC =c;
-                if ((r==0)&&(c==4)) {
+                if ((r==0)&&(c==4)) {           //sum of diagnal 4
                     while (startR<5&&startC>=0) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC--;
                     }
-                } else if ((r==0)&&(c==3)) {
+                } else if ((r==0)&&(c==3)) {        //sum of diagnal 5
                     while (startR<4&&startC>=0) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC--;
                     }
-                } else if ((r==1)&&(c==4)) {
+                } else if ((r==1)&&(c==4)) {        //sum of diagnal 6
                     while (startR<5&&startC>0) {
                         countsumdiagnal+=(board->_grid[startR][startC]);
                         startR++;
                         startC--;
                     }
                 }
-                if (r==0&&c==4) {
+                if (r==0&&c==4) {               //store of sum of diagnal 4
                     if(countsumdiagnal > holdpos) {
                         holdpos =  countsumdiagnal;
                         if(holdpos >= abs(holdneg)) {
@@ -165,7 +165,7 @@ int mediumAi() {
                             bestdiagnal4value = holdneg;
                         }
                     }
-                } else if (r==0&&c==3) {
+                } else if (r==0&&c==3) {            //store of sum of diagnal 5
                     if(countsumdiagnal > holdpos) {
                         holdpos =  countsumdiagnal;
                         if(holdpos >= abs(holdneg)) {
@@ -177,7 +177,7 @@ int mediumAi() {
                             bestdiagnal5value = holdneg;
                         }
                     }
-                } else if (r==1&&c==4) {
+                } else if (r==1&&c==4) {            //store of sum of diagnal 6
                     if(countsumdiagnal > holdpos) {
                         holdpos =  countsumdiagnal;
                         if(holdpos >= abs(holdneg)) {
@@ -193,6 +193,8 @@ int mediumAi() {
             }
         }
     }
+
+    //test if which diagnal has the greatest value and store the starting cell of that coordinate
 
     if((abs(bestdiagnal1value)>=abs(bestdiagnal2value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal3value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal4value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal5value))&&(abs(bestdiagnal1value)>=abs(bestdiagnal6value))) {
         bestdiagoverall=bestdiagnal1value;
@@ -213,9 +215,9 @@ int mediumAi() {
         bestdiagoverall = bestdiagnal6value;
         diagnacoor = board->coordinateToIndex(1,4);
     }
-    for (int row = 0; row <= gridlength; row++) {
+    for (int row = 0; row <= gridlength; row++) {           //start of row and column calculation
         //counting row for best row value
-        if ((abs(countsumrow)) >= (abs(countsumcolumn))) {
+        if ((abs(countsumrow)) >= (abs(countsumcolumn))) {  //store row value
             if(countsumrow > holdpos) {
                 holdpos = countsumrow;
                 if(holdpos > abs(holdneg)) {
@@ -230,7 +232,7 @@ int mediumAi() {
                 }
             }
         } else {
-            if(countsumcolumn > holdpos) {
+            if(countsumcolumn > holdpos) {              //store column value
                 holdpos = countsumcolumn;
                 if(holdpos > abs(holdneg)) {
                     bestcolumn = (row-1);
@@ -254,7 +256,7 @@ int mediumAi() {
             }
         }
     }
-    if (board->getMoveCount() <=1) {
+    if (board->getMoveCount() <=1) {                        //start of game put x/0 at these coordinate
         if((board->_grid[2][2])==1 || (board->_grid[2][2])==-1) {
             temp = board->coordinateToIndex(3,3);
         } else {
@@ -262,7 +264,7 @@ int mediumAi() {
         }
     }
 
-    if(board->getMoveCount()>1) {
+    if(board->getMoveCount()>1) {                           //after first move, enter the algorithm and calculate where to put base on the score plus array weight above
         if((abs(bestrowvalue)>=abs(bestcolumnvalue))&&(abs(bestrowvalue)>=abs(bestdiagoverall))) {
             int index=0;
             for (int i=0;i<gridlength;i++) {
