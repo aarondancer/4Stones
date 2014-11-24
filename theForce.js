@@ -5,13 +5,16 @@ function aiMove(){
     c.borderwidth = 1;
     c.stoneopacity = 1;
     turn = 1;
+    turnColor = blue;
     winDialog.visible = board.checkWin(-1);
 }
 
-function boardReset() {
+function boardReset() {//Clear the board
     board.boardReset(); //Calls the C++ function of board to reset the 2D backend
     for (var i = 0; i < 25; i++)
         gridView.model.get(i).stoneopacity = 0; //Changes the opacity of everything on the board to 0 "Clearing" the board
+    initializeBoard(board.getFirstPlayer());
+    mainMenu.visible = false;
 }
 
 function selectDifficulty(difficulty){
@@ -26,8 +29,13 @@ function showDifficulties(){
 }
 
 function whoGoesFirst(player){ //Sets who goes first
-    turn = player;
-    turnColor = (turn === -1) ? red : blue;
+    board.setFirstPlayer(player);
+    initializeBoard(player);
     goFirst.visible = false;
-    if (player === -1 && aiOn === true) aiMove();
+}
+
+function initializeBoard(firstPlayer){//Set the turn and color to correspond to "firstPlayer"
+    turn = firstPlayer;
+    turnColor = (turn === -1) ? red : blue;
+    if (turn === -1 && aiOn === true) aiMove(); //If "firstPlayer" is AI, then AI makes first move
 }
