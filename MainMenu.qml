@@ -1,6 +1,8 @@
 import QtQuick 2.3
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
+import "theForce.js" as TheForce
+
 
 Rectangle {
     id: menu
@@ -67,7 +69,7 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: {menu.visible = false}
+                onClicked: {TheForce.boardReset(); /*menu.visible = false;*/}
             }
         }
         Label{

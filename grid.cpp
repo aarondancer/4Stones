@@ -9,16 +9,14 @@
 Grid::Grid(QObject *parent) : QObject(parent)
 {
     _lastMove = 0;
+    _moveCount = 0;
     QList<int> temp;
     for (int i = 0; i < 5; i++) temp.append(0);
     for (int j = 0; j < 5; j++) _grid.append(temp);
 }
 
 bool Grid::isFilled(){
-    int count = 0;
-    for(int i = 0; i < 25; i++) if (valueFromIndex(i)) count++;
-    if (count == 25) return true;
-    return false;
+    return (_moveCount == 25);
 }
 
 bool Grid::checkWin(int player){
@@ -115,6 +113,7 @@ bool Grid::checkWin(int player){
 
 void Grid::placePiece(const int index, const int player){
     _lastMove = index;
+    _moveCount++;
     if (player == 1) _lastMoveX = _lastMove;
     else _lastMoveO = _lastMove;
     _grid[indexToRow(index)][indexToColumn(index)] = player;
@@ -156,8 +155,21 @@ void Grid::setlastMoveO(int lastMoveO)
 }
 
 void Grid::boardReset(){
-    for(int i = 0; i < 25; i++) {
-        placePiece(i, 0);
+    _lastMove = 0;
+    _moveCount = 0; // reset move counter
+    for(int i = 0; i < (_gridLength * _gridLength); i++) {
+        //placePiece(i, 0); // replaced with statement below b/c placePiece() has additional logic that is not necessary for this funtion
+        _grid[indexToRow(i)][indexToColumn(i)] = 0;
     }
-    qDebug() << "Board Reset";
+    qDebug() << "Board Reset.  First player: " << _firstPlayer;
 }
+
+int Grid::getFirstPlayer() const {
+    return _firstPlayer;
+}
+
+void Grid::setFirstPlayer(int player) {
+    _firstPlayer = player;
+    qDebug() << "First player set: " << _firstPlayer;
+}
+
