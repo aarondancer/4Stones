@@ -1,6 +1,5 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
-import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.2
 import "theForce.js" as TheForce
 
@@ -28,28 +27,17 @@ Rectangle {
     Column{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -logo.height / 4
         spacing: 20
-        Rectangle{
-            width: logo.width
-            height: logo.width
-            color: "transparent"
-            Image{ //The logo
-                id: logo
-                width: usernameField.width
-                height: width
-                fillMode: Image.PreserveAspectFit
-                smooth: true
-                source: "4Stones.png"
-            }
-            Glow {
-                   anchors.fill: parent
-                   radius: 50
-                   samples: 16
-                   color: "white"
-                   source: logo
-            }
+
+        Image{ //The logo
+            id: logo
+            width: usernameField.width * .75
+            height: width
+            fillMode: Image.PreserveAspectFit
+            smooth: true
+            source: "4Stones.png"
         }
+
 
         Label{
             id: usernameLabel
@@ -66,7 +54,6 @@ Rectangle {
             width: usernameLabel.width
             height: usernameLabel.height + 10
             font.pixelSize: height - 15
-            font.capitalization: Font.AllUppercase
 
             style: TextFieldStyle {
                     textColor: "black"
@@ -82,6 +69,7 @@ Rectangle {
             anchors.horizontalCenter: usernameField.horizontalCenter
             width: usernameField.width
             height : usernameField.height * 2
+            id: buttonRow
 
             Rectangle{
                 color: "transparent"
@@ -94,7 +82,7 @@ Rectangle {
                 text: "Login"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {TheForce.showDifficulties();}
+                onClicked: {player.getSetPlayer(usernameField.text);}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -108,12 +96,12 @@ Rectangle {
                         wrapMode: Text.WordWrap
                     }
                     background: Rectangle {
-                            width: control.width
-                            height:  control.height
-                            border.width: control.activeFocus ? 2 : 1
-                            border.color: "white"
-                            radius: width *0.5
-                            color: (control.hovered) ? blue : Qt.lighter(blue, 1.2)
+                        width: control.width
+                        height:  control.height
+                        border.width: control.activeFocus ? 2 : 1
+                        border.color: "white"
+                        radius: width * 0.5
+                        color: (control.hovered) ? blue : Qt.lighter(blue, 1.2)
                     }
                 }
             }
