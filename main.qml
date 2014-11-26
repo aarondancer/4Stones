@@ -23,7 +23,7 @@ Window {
     property color blueColor: "#3359E7"
     property color redColor: "#FC2833"
 
-    property int menusOpen: 3;
+    property int menusOpen: 1;
     property string backgroundSource: "forest.jpg"
     property bool aiOn:true;
 
@@ -37,6 +37,7 @@ Window {
     property Player player: Player{
         id: player;
         objectName: "playero"
+        onSetPlayerFinished: {TheForce.showDialog("Login", "Would you like to proceed and login as " + player.username + "?", false, true, true)}
     }
 
     property AI computer: AI{
@@ -85,7 +86,7 @@ Window {
                                     p.stoneopacity = 1;
                                     turn = -1;
                                     check = board.checkWin(1);
-                                    winDialog.visible = check;
+                                    if (check) TheForce.showWinDialog(1);
                                     if (aiOn === true && check === false && !board.isFilled()){
                                         TheForce.aiMove();
                                     }
@@ -96,10 +97,9 @@ Window {
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = 1;
-                                    winDialog.visible = board.checkWin(-1);
+                                    if (board.checkWin(-1)) TheForce.showWinDialog(2);
                                 }
                                 turnColor = (turn === -1) ? red : blue;
-
                             }
 
                         }
@@ -269,7 +269,7 @@ Window {
             Row{ //This is the top quarter. Row for side-by-side layout
                 id: topRow
                 width: (mainWindow.height / 2 < mainWindow.width ? mainWindow.height / 2 : mainWindow.width)
-                height: mainWindow.height / 4 - (undoButton.height / 4)
+                height: mainWindow.height / 4 - (howToSpacer.height / 4)
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Image{ //The logo
@@ -300,7 +300,7 @@ Window {
                         z: 1
                         hoverEnabled: true
                         anchors.fill: parent
-                        onClicked: {if (!mainMenu.visible) mainMenu.visible = !mainMenu.visible;}
+                        onClicked: {if (menusOpen === 0) if (!mainMenu.visible) mainMenu.visible = !mainMenu.visible;}
                     }
                 }
             }
@@ -334,11 +334,11 @@ Window {
                 }
             }
 
-            Text{
-                id: undoButton
-                text: "↩"
+            Rectangle{
+                id: howToSpacer
                 height: gridView.width / 8
-                font.pixelSize: height
+                width: 1;
+                color: "transparent"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
 
@@ -363,13 +363,21 @@ Window {
         }
     }
 
-    MessageDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
         id: winDialog
         title: "Winner!"
-        text: "Winner!"
-        informativeText: "Player " + ((turn == 1) ? 2 : 1) + " wins!"
-        onAccepted: {TheForce.boardReset();}
+        visible: false;
+        z: 1010;
+        onCanceled: {visible = false; TheForce.boardReset();}
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
+    }
 
+    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+        id: dialog
+        visible: false;
+        z: 1010;
+        onCanceled: {visible = false;}
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
     //All of the views are initialized here as objects
@@ -396,7 +404,7 @@ Window {
     DifficultyMenu{
         id: difficultyMenu
         z: 150
-        visible: true
+        visible: false
         width: mainWindow.width
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
@@ -407,7 +415,7 @@ Window {
     GoFirst{
         id: goFirst
         z: 125
-        visible: true
+        visible: false
         width: mainWindow.width
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
@@ -417,7 +425,7 @@ Window {
 
     Settings{
         id: settings
-        z: 101
+        z: 105
         visible: false
         width: mainWindow.width
         height: mainWindow.height
@@ -426,5 +434,5 @@ Window {
         onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
-
+    onMenusOpenChanged: console.log("Menus Open: " + menusOpen);
 }
