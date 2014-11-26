@@ -1,13 +1,14 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick \
+    widgets
 
 SOURCES += main.cpp \
     grid.cpp \
     player.cpp \
     global.cpp \
     ai.cpp \
-    httprequestworker.cpp
+    parserequestworker.cpp
 
 RESOURCES += qml.qrc
 
@@ -22,7 +23,7 @@ HEADERS += \
     player.h \
     global.h \
     ai.h \
-    httprequestworker.h
+    parserequestworker.h
 
 LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin
