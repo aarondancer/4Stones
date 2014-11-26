@@ -23,3 +23,7 @@ main.o
 global.o
 
 moc_grid.cpp
+
+moc_player.cpp
+
+moc_player.o

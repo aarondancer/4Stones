@@ -15,6 +15,7 @@ class Grid : public QObject
     Q_PROPERTY(int countToWin READ getCountToWin WRITE setCountToWin NOTIFY idkwhattodowithnotify) //Number of stones needed in a row to win
     Q_PROPERTY(int lastMoveX READ lastMoveX WRITE setLastMoveX NOTIFY idkwhattodowithnotify)
     Q_PROPERTY(int lastMoveO READ lastMoveO WRITE setlastMoveO NOTIFY idkwhattodowithnotify)
+    Q_PROPERTY(int firstPlayer READ getFirstPlayer WRITE setFirstPlayer) //"Who goes first?"
 
 public:
     explicit Grid(QObject *parent = 0);
@@ -35,9 +36,12 @@ public:
 
     void setCountToWin(const int count){ _countToWin = count; }
 
-    void setMoveCount(int moveCount) {_moveCount = moveCount;}
+    void setMoveCount(int moveCount) { _moveCount = moveCount; }
 
-    int getMoveCount() {return _moveCount;}
+    int getMoveCount() { return _moveCount; }
+
+    Q_INVOKABLE int getFirstPlayer() const;
+    Q_INVOKABLE void setFirstPlayer(int player);
 
     //Player Related
 
@@ -81,6 +85,7 @@ private:
     int _lastMoveX;
     int _lastMoveO;
     int _moveCount;
+    int _firstPlayer;
 };
 
 #endif // GRID_H
