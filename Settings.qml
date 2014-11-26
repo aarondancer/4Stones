@@ -8,6 +8,31 @@ Rectangle {
     id: settings
     property int divisor: (height < width ? height : width)
 
+    ListModel {
+        id: backgroundModel
+        ListElement {
+            image: "forest.jpg"
+        }
+        ListElement {
+            image: "kite.jpg"
+        }
+        ListElement {
+            image: "ripples.png"
+        }
+    }
+
+    Component {
+         id: backgroundDelegate
+         Column {
+             id: wrapper
+             Image {
+                 width: 64;
+                 height: 64
+                 source: image
+             }
+         }
+    }
+
     Image{ //Background, uses image for now
         id: settingsBackground
         z: 0
@@ -26,8 +51,26 @@ Rectangle {
         }
     }
 
-    Text{
-        font.pixelSize: divisor / 2
+    Label{
+        id: settingsLabel
+        font.pointSize: divisor / 4
         text: "Settings"
+        color: "white"
+        x: -30;
+        font.weight: Font.Light
+        font.family: "Helvetica Neue"
+    }
+
+    PathView{
+        id: backgroundSelection
+        height: settings.height - settingsLabel.height
+        width: settings.width
+        model: backgroundModel
+        delegate: delegate
+        path: Path {
+            startX: 120; startY: 100
+            PathQuad { x: 120; y: 25; controlX: 260; controlY: 75 }
+            PathQuad { x: 120; y: 100; controlX: -20; controlY: 75 }
+        }
     }
 }
