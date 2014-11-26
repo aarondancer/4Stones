@@ -1,32 +1,32 @@
-#include "httprequestworker.h"
+#include "parserequestworker.h"
 #include <QDateTime>
 #include <QUrl>
 #include <QFileInfo>
 #include <QBuffer>
 
 
-HttpRequestInput::HttpRequestInput() {
+ParseRequestInput::ParseRequestInput() {
     initialize();
 }
 
-HttpRequestInput::HttpRequestInput(QString v_url_str, QString v_http_method) {
+ParseRequestInput::ParseRequestInput(QString v_url_str, QString v_http_method) {
     initialize();
     url_str = v_url_str;
     http_method = v_http_method;
 }
 
-void HttpRequestInput::initialize() {
+void ParseRequestInput::initialize() {
     var_layout = NOT_SET;
     url_str = "";
     http_method = "GET";
 }
 
-void HttpRequestInput::add_var(QString key, QString value) {
+void ParseRequestInput::add_var(QString key, QString value) {
     vars[key] = value;
 }
 
-void HttpRequestInput::add_file(QString variable_name, QString local_filename, QString request_filename, QString mime_type) {
-    HttpRequestInputFileElement file;
+void ParseRequestInput::add_file(QString variable_name, QString local_filename, QString request_filename, QString mime_type) {
+    ParseRequestInputFileElement file;
     file.variable_name = variable_name;
     file.local_filename = local_filename;
     file.request_filename = request_filename;
@@ -34,14 +34,14 @@ void HttpRequestInput::add_file(QString variable_name, QString local_filename, Q
     files.append(file);
 }
 
-HttpRequestWorker::HttpRequestWorker(QObject *parent) : QObject(parent), manager(NULL) {
+ParseRequestWorker::ParseRequestWorker(QObject *parent) : QObject(parent), manager(NULL) {
     qsrand(QDateTime::currentDateTime().toTime_t());
 
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(on_manager_finished(QNetworkReply*)));
 }
 
-QString HttpRequestWorker::http_attribute_encode(QString attribute_name, QString input) {
+QString ParseRequestWorker::http_attribute_encode(QString attribute_name, QString input) {
     // result structure follows RFC 5987
     bool need_utf_encoding = false;
     QString result = "";
@@ -69,7 +69,7 @@ QString HttpRequestWorker::http_attribute_encode(QString attribute_name, QString
     return QString("%1=\"%2\"; %1*=utf-8''%3").arg(attribute_name, result, result_utf8);
 }
 
-void HttpRequestWorker::execute(HttpRequestInput *input) {
+void ParseRequestWorker::execute(ParseRequestInput *input) {
 
     // reset variables
 
@@ -141,7 +141,7 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         }
 
         // add files
-        for (QList<HttpRequestInputFileElement>::iterator file_info = input->files.begin(); file_info != input->files.end(); file_info++) {
+        for (QList<ParseRequestInputFileElement>::iterator file_info = input->files.begin(); file_info != input->files.end(); file_info++) {
             QFileInfo fi(file_info->local_filename);
 
             // ensure necessary variables are available
@@ -208,6 +208,8 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
 
     if (input->var_layout == URL_ENCODED) request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     else if (input->var_layout == MULTIPART) request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + boundary);
+    request.setRawHeader(QByteArray("X-Parse-Application-Id"), QByteArray("BCb5kAR9qnajuBhXpzoA8e8dOdzOdMds04sEUJJd"));
+    request.setRawHeader(QByteArray("X-Parse-REST-API-Key"), QByteArray("HTLcJvA8j7o0kfCUmnx5qfpS2Th3uKCZjhxcXgTs"));
 
     if (input->http_method == "GET") manager->get(request);
     else if (input->http_method == "POST") manager->post(request, request_content);
@@ -221,7 +223,7 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
 
 }
 
-void HttpRequestWorker::on_manager_finished(QNetworkReply *reply) {
+void ParseRequestWorker::on_manager_finished(QNetworkReply *reply) {
     error_type = reply->error();
     if (error_type == QNetworkReply::NoError) response = reply->readAll();
     else error_str = reply->errorString();

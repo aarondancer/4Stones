@@ -1,17 +1,16 @@
-#ifndef HTTPREQUESTWORKER_H
-#define HTTPREQUESTWORKER_H
+#ifndef ParseRequestWORKER_H
+#define ParseRequestWORKER_H
 
 #include <QObject>
 #include <QString>
 #include <QMap>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QDebug>
 
+enum ParseRequestVarLayout {NOT_SET, ADDRESS, URL_ENCODED, MULTIPART};
 
-enum HttpRequestVarLayout {NOT_SET, ADDRESS, URL_ENCODED, MULTIPART};
-
-
-class HttpRequestInputFileElement {
+class ParseRequestInputFileElement {
 
 public:
     QString variable_name;
@@ -21,25 +20,24 @@ public:
 
 };
 
-class HttpRequestInput {
+class ParseRequestInput {
 
 public:
     QString url_str;
     QString http_method;
-    HttpRequestVarLayout var_layout;
+    ParseRequestVarLayout var_layout;
     QMap<QString, QString> vars;
-    QList<HttpRequestInputFileElement> files;
+    QList<ParseRequestInputFileElement> files;
 
-    HttpRequestInput();
-    HttpRequestInput(QString v_url_str, QString v_http_method);
+    ParseRequestInput();
+    ParseRequestInput(QString v_url_str, QString v_http_method);
     void initialize();
     void add_var(QString key, QString value);
     void add_file(QString variable_name, QString local_filename, QString request_filename, QString mime_type);
 
 };
 
-
-class HttpRequestWorker : public QObject {
+class ParseRequestWorker : public QObject {
     Q_OBJECT
 
 public:
@@ -47,13 +45,13 @@ public:
     QNetworkReply::NetworkError error_type;
     QString error_str;
 
-    explicit HttpRequestWorker(QObject *parent = 0);
+    explicit ParseRequestWorker(QObject *parent = 0);
 
     QString http_attribute_encode(QString attribute_name, QString input);
-    void execute(HttpRequestInput *input);
+    void execute(ParseRequestInput *input);
 
 signals:
-    void on_execution_finished(HttpRequestWorker *worker);
+    void on_execution_finished(ParseRequestWorker *worker);
 
 private:
     QNetworkAccessManager *manager;
@@ -63,4 +61,4 @@ private slots:
 
 };
 
-#endif // HTTPREQUESTWORKER_H
+#endif // ParseRequestWORKER_H
