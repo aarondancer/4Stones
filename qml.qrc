@@ -11,5 +11,7 @@
         <file>theForce.js</file>
         <file>GoFirst.qml</file>
         <file>Settings.qml</file>
+        <file>Parse.js</file>
+        <file>FSDialog.qml</file>
     </qresource>
 </RCC>
