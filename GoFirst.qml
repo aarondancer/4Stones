@@ -86,7 +86,7 @@ Rectangle {
                     color: (control.hovered) ? red : Qt.lighter(red, 1.2)
                 }
             }
-
         }
     }
+    onVisibleChanged: TheForce.initWhoGoesFirst();
 }
