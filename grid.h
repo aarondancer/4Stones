@@ -51,6 +51,9 @@ public:
 
     Q_INVOKABLE bool checkWin(int player); //Win-checking algorithm. Only checks areas within range given by countToWin of the lastMove
 
+    //Q_INVOKABLE static int eval_grid(bool only_win);// Evaluates and determines best score for stone placement
+
+
     //1D-2D bridge
 
     Q_INVOKABLE int indexToRow(int index); //Returns the respective row of 2D array given index of 1D array
@@ -62,6 +65,8 @@ public:
     Q_INVOKABLE int valueFromIndex(int index); //get the value from the 2D array given the index of the 1D array
 
     Q_INVOKABLE bool isFilled();
+
+    Q_INVOKABLE bool moveIsValid(int index);
 
     QList< QList<int> > _grid;
 

@@ -4,6 +4,12 @@
 #include <iostream>
 #include <QDebug>
 
+#define SIZE 5
+#define MAX_DEPTH 3
+
+static unsigned int  best_move[2];
+inline static int    abs_sub(int, int);
+static int           negamax(int, int);
 
 AI::AI(QObject *parent) : QObject(parent) {
 }
@@ -408,6 +414,141 @@ int mediumAi() {
 
 }
 
+inline static int abs_sub(int minuend, int subtrahend)
+{
+    if(!minuend)
+    {
+        return 0;
+    }
+    return (abs(minuend) - subtrahend) * minuend/abs(minuend);
+}
+
+static int eval_grid(bool only_win) // Determines all possible moves to a specific depth
+{
+    int eval            = 0;
+    int sum[2*SIZE+2]   = {0};
+    int count[2*SIZE+2] = {0};
+
+    for(unsigned int i=0; i<SIZE*SIZE; i++) // Generates list of possible moves
+    {
+        sum[i/SIZE]        += /*_grid[indexToRow(i)][indexToColumn(i)];*/board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i)));//_grid[indexToRow(i)][indexToColumn(i)];
+        sum[i/SIZE+SIZE]   += /*_grid[indexToColumn(i)][indexToRow(i)];*/board->valueFromIndex(board->coordinateToIndex(board->indexToColumn(i), board->indexToRow(i)));//grid[i%SIZE][i/SIZE];
+        count[i/SIZE]      += /*_grid[indexToRow(i)][indexToColumn(i)] !=0;*/board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) !=0;//grid[i/SIZE][i%SIZE] != 0;
+        count[i/SIZE+SIZE] += /*_grid[indexToColumn(i)][indexToRow(i)] !=0;*/board->valueFromIndex(board->coordinateToIndex(board->indexToColumn(i), board->indexToRow(i))) !=0;//grid[i%SIZE][i/SIZE] != 0;
+        //std::cout << "Check me out forreal:::::: " << _grid[indexToRow(i)][indexToColumn(i)] << "\n";
+        //std::cout << "Or check me out::::::: " << board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) << "\n";
+
+    }
+
+    for(unsigned int i=0; i<SIZE; i++) // Evaluates individual lines
+    {
+        sum[2*SIZE]     += /*_grid[i][i];*/board->valueFromIndex(board->coordinateToIndex(i, i));//grid[i][i];
+        count[2*SIZE]   += /*_grid[i][i] !=0;*/board->valueFromIndex(board->coordinateToIndex(i, i)) != 0;//grid[i][i] != 0;
+        sum[2*SIZE+1]   += /*_grid[i][SIZE-1-i];*/board->valueFromIndex(board->coordinateToIndex(i, SIZE-1-i));//grid[i][SIZE-1-i];
+        count[2*SIZE+1] += /*_grid[i][SIZE-1-i] !=0;*/board->valueFromIndex(board->coordinateToIndex(i, SIZE-1-i)) !=0;//grid[i][SIZE-1-i] != 0;
+        //std::cout << "Or check me out::::::: " << board->valueFromIndex(board->coordinateToIndex(i, i)) << "\n";
+    }
+
+    for(unsigned int i=0; i<2*SIZE+2; i++) // Determines best possible score based on # of stone
+    {
+        if(abs(sum[i]) == 4)
+        {
+            if(only_win)
+                return (1000 * sum[i]) / SIZE;
+            eval += (1000 * sum[i]) / SIZE;
+        }
+        else if(only_win)
+            continue;
+        else if(sum[i] != 0 && abs(sum[i]) == count[i])
+            eval += sum[i];
+    }
+
+    return eval;
+}
+
+static int negamax(int depth, int sign)
+    {
+        int max = -INT_MAX;
+        //cout << "Depth = " << depth << endl;
+        //int temp;//
+        //int place;//
+
+        if(depth == MAX_DEPTH)
+            //return sign*abs_sub(board->checkWin(false),depth);
+           return sign * abs_sub(eval_grid(false), depth);
+
+        //cout << "abs_sub::: " << sign * abs_sub(board->eval_grid(false), depth) << endl;
+
+        for(unsigned int i=0; i<SIZE*SIZE; i++)
+        {
+            int val;
+
+
+            if(board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) != 0)
+                continue;
+
+
+           // // board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) = sign;
+
+            board->placePiece(board->coordinateToIndex(board->indexToRow(i),board->indexToColumn(i)),sign);
+
+
+
+            val = -negamax(depth+1, -sign);
+
+
+           // // board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i)) = 0;
+            board->placePiece(board->coordinateToIndex(board->indexToRow(i),board->indexToColumn(i)),0);
+
+            std::cout << "val: " << val << "\n";
+            std::cout << "max: " << max << "\n";
+
+            if(val >= max)
+            {
+               if(val == max && rand()%2)
+                    continue;
+
+                max = val;
+                if(depth == 0)
+                {
+                    //best_move[0] = ROW(i);
+                    best_move[0] = board->indexToRow(i);
+                    //best_move[1] = COL(i);
+                    best_move[1] = board->indexToColumn(i);
+                    //printf("best move is: %u:%u\n", best_move[0],
+                      //      best_move[1]);
+                            //std::cout << "Printing max: " << max << "\n";
+                }
+            }
+        }
+
+
+        //place = board->coordinateToIndex(board->indexToRow(best_move[0]), board->indexToColumn(best_move[1]));
+        //board->placePiece(place,-1);
+        //printf("best move final loop is: %u:%u\n", best_move[0], best_move[1]);
+
+        //return max;
+        //cout << "placePiece: " << place << endl;
+        return max;
+
+    }
+
+
+int hardAI()
+{
+    unsigned int row, col, index;
+
+           // negamax(depth, sign);
+           //return negamax(0,-1);
+           negamax(0,-1);
+           row = best_move[0];
+           col = best_move[1];
+           std::cout << "ROW:::: " << row << "   COL::::" << col << "\n";
+           index = board->coordinateToIndex(row,col);
+           std::cout << "index::::: " << index << "\n";
+           board->placePiece(index, -1);
+           return index;
+}
 
 int maxAlgorithm(){
     return 0;
@@ -426,7 +567,7 @@ int AI::makeMove(){
         return mediumAi();
         break;
     case 3: //Hard AI
-        return maxAlgorithm();
+        return hardAI();
         break;
 
     default:
