@@ -82,7 +82,7 @@ Rectangle {
                 text: "Login"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {player.getSetPlayer(usernameField.text);}
+                onClicked: {player.loginPlayer(usernameField.text);}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -103,7 +103,7 @@ Rectangle {
                         radius: width * 0.5
                         color: (control.hovered) ? blue : Qt.lighter(blue, 1.2)
                     }
-                }
+                }               
             }
             Rectangle{
                 color: "transparent"
@@ -116,7 +116,7 @@ Rectangle {
                 text: "Register"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {TheForce.showDifficulties();}
+                onClicked: {player.registerPlayer(usernameField.text);}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -176,6 +176,129 @@ Rectangle {
                 }
             }
         }
+    }
+
+    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+        id: loginSuccessDialog
+        title: "Login"
+        message: "Would you like to proceed and login as " + usernameField.text + "?"
+        cancel: false
+        accept: true
+        decline: true
+        visible: false
+        z: 1010
+
+        onAccepted: {
+            visible = false;
+            TheForce.showDifficulties();
+            enable();
+        }
+
+        onDeclined: {
+            visible = false;
+            usernameField.text = "";
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+        id: loginFailedDialog
+        title: "Login Failed"
+        message: "The username " + usernameField.text + " does not exist. Please register or try again."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+        id: registerSuccessDialog
+        title: "Success!"
+        message: "The username " + usernameField.text + " has been successfully registered successfully!"
+        cancel: false
+        accept: true
+        acceptText: "Continue"
+        decline: false
+        visible: false
+        z: 1010
+
+        onAccepted: {
+            visible = false;
+            enable();
+            TheForce.showDifficulties();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+        id: registerFailedDialog
+        title: "Registration Failed"
+        message: "The username " + usernameField.text + " is either invalid or already taken. Please try another username or login."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    function loginSuccess(){
+        loginSuccessDialog.visible = true;
+        disable();
+    }
+
+    function loginFailed(){
+        loginFailedDialog.visible = true;
+        disable();
+    }
+
+    function registerSuccess(){
+        registerSuccessDialog.visible = true;
+        disable();
+    }
+
+    function registerFailed(){
+        registerFailedDialog.visible = true;
+        disable();
+    }
+
+    function disable(){
+        usernameField.enabled = false;
+        loginButton.enabled = false;
+        registerButton.enabled = false;
+        guestButton.enabled = false;
+    }
+
+    function enable(){
+        usernameField.enabled = true;
+        loginButton.enabled = true;
+        registerButton.enabled = true;
+        guestButton.enabled = true;
+    }
+
+    function noInternet(){
+        usernameField.enabled = false;
+        loginButton.enabled = false;
+        registerButton.enabled = false;
     }
 
 }
