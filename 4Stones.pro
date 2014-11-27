@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     player.cpp \
     global.cpp \
     ai.cpp \
-    parserequestworker.cpp
+    parserequestworker.cpp \
+    line.cpp
 
 RESOURCES += qml.qrc
 
@@ -23,7 +24,8 @@ HEADERS += \
     player.h \
     global.h \
     ai.h \
-    parserequestworker.h
+    parserequestworker.h \
+    line.h
 
 LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin

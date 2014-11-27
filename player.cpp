@@ -1,7 +1,5 @@
 #include "player.h"
 #include <QDebug>
-#include <pthread.h>
-#include <unistd.h>
 #include <QMessageBox>
 #include <QQuickView>
 
