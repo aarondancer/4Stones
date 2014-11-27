@@ -3,12 +3,12 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 import "theForce.js" as TheForce
 
-
 Rectangle {
     id: menu
     width: parent.width
     height: parent.height
-    property int divisor: (parent.height < parent.width ? parent.height : parent.width)
+    property int divisor: (height < width ? height : width)
+
     Column{
         spacing: 12
         anchors.verticalCenter: parent.verticalCenter
@@ -46,6 +46,22 @@ Rectangle {
                 onClicked: {menu.visible = false}
             }
         }
+
+        Label{
+            id: historyButton
+            text: "History"
+            color: "white"
+            font.pixelSize: divisor / 12
+            font.family: "Helvetica"
+            font.weight: Font.Light
+            MouseArea{
+                z: 1
+                hoverEnabled: true
+                anchors.fill: parent
+                onClicked: { history.visible = true }
+            }
+        }
+
         Label{
             text: "New Game"
             color: "white"
@@ -56,9 +72,11 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: {menu.visible = false}
+                onClicked: { menu.visible = false }
             }
         }
+
+
         Label{
             text: "Restart"
             color: "white"
@@ -69,9 +87,10 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: {TheForce.boardReset(); /*menu.visible = false;*/}
+                onClicked: { TheForce.boardReset(); /*menu.visible = false;*/ }
             }
         }
+
         Label{
             text: "Settings"
             color: "white"
@@ -82,8 +101,12 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: {settings.visible = true}
+                onClicked: { settings.visible = true }
             }
         }
+    }
+
+    function hideHistory(){
+        historyButton.visible = false
     }
 }
