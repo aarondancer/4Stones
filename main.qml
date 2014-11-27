@@ -33,7 +33,7 @@ Window {
         countToWin: 4;
     }
 
-    property Player player: Player{
+    Player{
         id: player;
         objectName: "playero"
         onLoginFinished: login.loginSuccess();
@@ -98,8 +98,8 @@ Window {
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = 1;
-                                    if (board.checkWin(-1)) winDialog.showWinDialog(2);
                                 }
+                                if(board.checkWin(-1)) winDialog.showWinDialog(2);
                                 turnColor = (turn === -1) ? red : blue;
                             }
 
@@ -298,6 +298,17 @@ Window {
         id: goFirst
         z: 125
         visible: false
+        width: mainWindow.width
+        height: mainWindow.height
+        anchors.horizontalCenter: mainWindow.horizontalCenter
+        anchors.verticalCenter: mainWindow.verticalCenter
+        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
+    }
+
+    History{
+        id: history
+        z: 1050
+        visible :false
         width: mainWindow.width
         height: mainWindow.height
         anchors.horizontalCenter: mainWindow.horizontalCenter
