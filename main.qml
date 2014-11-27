@@ -100,6 +100,7 @@ Window {
                                     turn = 1;
                                     if (board.checkWin(-1)) winDialog.showWinDialog(2);
                                 }
+                                if(board.checkWin(-1)) winDialog.showWinDialog(2);
                                 turnColor = (turn === -1) ? red : blue;
                             }
 
