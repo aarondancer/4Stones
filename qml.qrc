@@ -13,5 +13,7 @@
         <file>Settings.qml</file>
         <file>Parse.js</file>
         <file>FSDialog.qml</file>
+        <file>History.qml</file>
+        <file>back arrow.svg</file>
     </qresource>
 </RCC>
