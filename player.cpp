@@ -5,6 +5,10 @@
 Player::Player(QObject *parent) : QObject(parent)
 {
     _username = "";
+    _wins = 0;
+    _losses = 0;
+    _draws = 0;
+
 }
 
 int Player::getWins() const
