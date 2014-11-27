@@ -9,8 +9,8 @@
 #include "player.h"
 #include <QQuickView>
 
-Player* player;
-AI* computer;
+//Player* player;
+//AI* computer;
 
 int main(int argc, char *argv[])
 {
@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
 
     QQuickWindow *W = (QQuickWindow *)engine.rootObjects().first();
     board = W->findChild<Grid*>("boardo");
-    player = W->findChild<Player*>("playero");
-    computer = W->findChild<AI*>("aio");
+//    player = W->findChild<Player*>("playero");
+//    computer = W->findChild<AI*>("aio");
 
     return app.exec();
 
