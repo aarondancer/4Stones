@@ -82,7 +82,13 @@ Rectangle {
                 text: "Login"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {player.loginPlayer(usernameField.text);}
+                onClicked: {
+                    if (nameIsValid() === true){
+                        player.loginPlayer(usernameField.text);
+                    }else{
+                        loginFailed();
+                    }
+                }
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -116,7 +122,13 @@ Rectangle {
                 text: "Register"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {player.registerPlayer(usernameField.text);}
+                onClicked: {
+                    if (nameIsValid() === true){
+                        player.registerPlayer(usernameField.text);
+                    }else{
+                        registerFailed();
+                    }
+                }
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -152,7 +164,7 @@ Rectangle {
                 text: "Play as Guest"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {TheForce.showDifficulties();}
+                onClicked: {TheForce.showDifficulties(); mainMenu.hideHistory();}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -206,7 +218,7 @@ Rectangle {
     FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
         id: loginFailedDialog
         title: "Login Failed"
-        message: "The username " + usernameField.text + " does not exist. Please register or try again."
+        message: "The username " + usernameField.text + " does not exist or is invalid. Please register or try again."
         cancel: true
         cancelText: "Okay"
         accept: false
@@ -299,6 +311,15 @@ Rectangle {
         usernameField.enabled = false;
         loginButton.enabled = false;
         registerButton.enabled = false;
+    }
+
+    function nameIsValid(){
+        var validcharacters = '1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var username = usernameField.text;
+        for (var i = 0, l = username.length; i < l; ++i) {
+            if (validcharacters.indexOf(username.substr(i, 1)) == -1) return false;
+        }
+        return true;
     }
 
 }
