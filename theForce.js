@@ -20,7 +20,6 @@ function boardReset() {//Clear the board
 function selectDifficulty(difficulty){
     computer.difficulty = difficulty; //Set the difficulty level of the AI
     difficultyMenu.visible = false; //Hide the difficulty selection menu
-    if (difficulty === 4) aiOn = false; //If the selection was to play against friend, then turn the AI off
     goFirst.visible = true;
 }
 
@@ -31,9 +30,8 @@ function showDifficulties(){
 
 function whoGoesFirst(player){ //Sets who goes first
     board.setFirstPlayer(player);
-    initializeBoard(player);
     goFirst.visible = false;
-    if (player === -1 && aiOn === true && turn === -1) aiMove();
+    initializeBoard(player);
 }
 
 function initWhoGoesFirst(){
@@ -53,22 +51,8 @@ function initWhoGoesFirst(){
     }
 }
 
-function showWinDialog(p){
-    winDialog.message = "Player " + p + " wins!";
-    winDialog.visible = true;
-}
-
-function showDialog(title, message, cancel, decline, accept){
-    dialog.title = title;
-    dialog.message = message;
-    dialog.cancel = cancel;
-    dialog.decline = decline;
-    dialog.accept = accept;
-    dialog.visible = true;
-}
-
 function initializeBoard(firstPlayer){//Set the turn and color to correspond to "firstPlayer"
     turn = firstPlayer;
     turnColor = (turn === -1) ? red : blue;
-    if (turn === -1 && aiOn === true) aiMove(); //If "firstPlayer" is AI, then AI makes first move
+    if (turn === -1 && computer.difficulty !== 4) aiMove(); //If "firstPlayer" is AI, then AI makes first move
 }
