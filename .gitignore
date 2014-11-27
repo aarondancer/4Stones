@@ -35,3 +35,13 @@ moc_player.o
 moc_parsejsonhelper.cpp
 
 moc_parserequestworker.cpp
+
+*.DebugDevice
+
+*.DebugSimulator
+
+*.ReleaseDevice
+
+*.ReleaseSimulator
+
+moc_parsehelper.cpp
