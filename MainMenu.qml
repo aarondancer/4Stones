@@ -79,7 +79,9 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: { menu.visible = false }
+                onClicked: {
+                    TheForce.showDifficulties();
+                }
             }
         }
 
@@ -95,7 +97,9 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: { TheForce.boardReset(); /*menu.visible = false;*/ }
+                onClicked: {
+                    TheForce.boardReset();
+                }
             }
         }
 

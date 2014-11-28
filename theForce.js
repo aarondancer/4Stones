@@ -31,7 +31,7 @@ function showDifficulties(){
 function whoGoesFirst(player){ //Sets who goes first
     board.setFirstPlayer(player);
     goFirst.visible = false;
-    initializeBoard(player);
+    boardReset();
 }
 
 function initWhoGoesFirst(){
