@@ -7,8 +7,6 @@ Makefile
 
 qrc_qml.cpp
 
-4Stones.app/Contents/MacOS/4Stones
-
 *.user
 
 *.062f3d7
