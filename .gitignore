@@ -1,40 +1,19 @@
 
 *.o
 
-Makefile
+moc_*
 
-moc_ai.cpp
+Makefile
 
 qrc_qml.cpp
 
 4Stones.app/Contents/MacOS/4Stones
+
 *.user
+
 *.062f3d7
 
-
 *.autosave
-
-*.o
-
-moc_grid.o
-
-main.o
-
-global.o
-
-moc_grid.cpp
-
-moc_player.cpp
-
-moc_player.o
-
-moc_player.cpp
-
-moc_player.o
-
-moc_parsejsonhelper.cpp
-
-moc_parserequestworker.cpp
 
 *.DebugDevice
 
@@ -43,5 +22,3 @@ moc_parserequestworker.cpp
 *.ReleaseDevice
 
 *.ReleaseSimulator
-
-moc_parsehelper.cpp
