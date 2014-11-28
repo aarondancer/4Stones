@@ -237,7 +237,6 @@ Window {
 
     FSDialog {
         id: winDialog
-        title: "Winner!"
         visible: false;
         decline: false;
         accept: false;
@@ -246,8 +245,19 @@ Window {
         z: 1010;
         onCanceled: {visible = false; TheForce.boardReset();}
         onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
+
         function showWinDialog(p){
+            winDialog.title = "Winner!";
             winDialog.message = "Player " + p + " wins!";
+            if (p === 1){
+                if (player.username !== "") player.updatePlayer(1,0,0);
+            }else if (p === 2){
+                if (player.username !== "") player.updatePlayer(0,1,0);
+            }else if (p === 3){
+                winDialog.title = "It's a tie!"
+                winDialog.message = "Looks like nobody wins"
+                if (player.username !== "") player.updatePlayer(0,0,1);
+            }
             winDialog.visible = true;
         }
     }
