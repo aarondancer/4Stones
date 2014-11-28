@@ -7,6 +7,10 @@ void ParseHelper::setContentLength(int size){
     request.setRawHeader("Content-Length", QByteArray(QString::number(size).toUtf8()));
 }
 
+void ParseHelper::setSession(QString session){
+    request.setRawHeader("X-Parse-Session-Token", QByteArray(session.toUtf8()));
+}
+
 ParseHelper::ParseHelper(QObject *parent) : QObject(parent)
 {
     request.setRawHeader("User-Agent", "4Stones");
@@ -46,4 +50,22 @@ void ParseHelper::handleLogin(QNetworkReply* reply){
 
 void ParseHelper::handleRegister(QNetworkReply* reply){
     emit registerFinished((reply->errorString() == "Unknown error"), reply);
+}
+
+void ParseHelper::updatePlayer(QString id, QString session, int wins, int losses, int draws){
+    setSession(session);
+//    connect(netManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(handleUpdate(QNetworkReply*)));
+    request.setUrl(QUrl("https://api.parse.com/1/users/" + id));
+    QJsonObject json;
+    json.insert("win", wins);
+    json.insert("loss", losses);
+    json.insert("draw", draws);
+    QByteArray jsonString = QJsonDocument(json).toJson();
+    setContentLength(jsonString.size());
+    netManager->put(request, jsonString);
+}
+
+void ParseHelper::handleUpdate(QNetworkReply *reply){
+    qDebug() << reply->readAll();
+    qDebug() << reply->errorString();
 }

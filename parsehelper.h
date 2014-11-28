@@ -17,11 +17,13 @@ public:
 
     void login(QString username);
     void registerPlayer(QString username);
+    void updatePlayer(QString id, QString session, int wins, int losses, int draws);
 
 private:
     QNetworkAccessManager* netManager = new QNetworkAccessManager(this);
     QNetworkRequest request;
     void setContentLength(int size);
+    void setSession(QString session);
 
 signals:
     void loginFinished(bool exists, QNetworkReply* reply);
@@ -30,6 +32,7 @@ signals:
 public slots:
     void handleLogin(QNetworkReply* reply);
     void handleRegister(QNetworkReply* reply);
+    void handleUpdate(QNetworkReply* reply);
 };
 
 #endif // PARSEHELPER_H
