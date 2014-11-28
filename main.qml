@@ -305,17 +305,6 @@ Window {
         onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
-    History{
-        id: history
-        z: 1050
-        visible :false
-        width: mainWindow.width
-        height: mainWindow.height
-        anchors.horizontalCenter: mainWindow.horizontalCenter
-        anchors.verticalCenter: mainWindow.verticalCenter
-        onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
-    }
-
     Settings{
         id: settings
         z: 105
