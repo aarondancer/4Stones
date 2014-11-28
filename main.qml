@@ -88,8 +88,10 @@ Window {
                                     turn = -1;
                                     check = board.checkWin(1);
                                     if (check) winDialog.showWinDialog(1);
+                                    if (board.isFilled()) winDialog.showWinDialog(3);
                                     if (computer.difficulty !== 4 && check === false && !board.isFilled()){
                                         TheForce.aiMove();
+                                        if (board.isFilled()) winDialog.showWinDialog(3);
                                     }
                                 }
                                 else if(turn === -1){
@@ -100,6 +102,7 @@ Window {
                                     turn = 1;
                                 }
                                 if(board.checkWin(-1)) winDialog.showWinDialog(2);
+                                if (board.isFilled()) winDialog.showWinDialog(3);
                                 turnColor = (turn === -1) ? red : blue;
                             }
 
