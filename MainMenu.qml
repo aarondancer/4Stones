@@ -34,6 +34,7 @@ Rectangle {
         }
 
         Label{
+            id: backButton
             text: "Back"
             color: "white"
             font.pixelSize: divisor / 12
@@ -58,11 +59,17 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: { history.visible = true }
+                onClicked: { /*history.visible = true*/
+                    historyLoader.visible = true;
+                    historyLoader.source = "History.qml"
+                    menusOpen = menusOpen + 1;
+                    disable();
+                }
             }
         }
 
         Label{
+            id: newGameButton
             text: "New Game"
             color: "white"
             font.pixelSize: divisor / 12
@@ -78,6 +85,7 @@ Rectangle {
 
 
         Label{
+            id: restartButton
             text: "Restart"
             color: "white"
             font.pixelSize: divisor / 12
@@ -92,6 +100,7 @@ Rectangle {
         }
 
         Label{
+            id: settingsButton
             text: "Settings"
             color: "white"
             font.pixelSize: divisor / 12
@@ -104,9 +113,52 @@ Rectangle {
                 onClicked: { settings.visible = true }
             }
         }
+
+        Label{
+            id: logoutButton
+            text: "Logout"
+            color: "white"
+            font.pixelSize: divisor / 12
+            font.family: "Helvetica"
+            font.weight: Font.Light
+            MouseArea{
+                z: 1
+                hoverEnabled: true
+                anchors.fill: parent
+                onClicked: { }
+            }
+        }
     }
+
+    Loader {
+        id: historyLoader
+        anchors.fill: parent
+    }
+
+    Connections {
+             target: historyLoader.item
+             onBack: { historyLoader.source = ""; menusOpen = menusOpen - 1; enable();}
+         }
 
     function hideHistory(){
         historyButton.visible = false
+    }
+
+    function disable(){
+        backButton.enabled = false;
+        restartButton.enabled = false;
+        newGameButton.enabled = false;
+        historyButton.enabled = false;
+        logoutButton.enabled = false;
+        settingsButton.enabled = false;
+    }
+
+    function enable(){
+        backButton.enabled = true;
+        restartButton.enabled = true;
+        newGameButton.enabled = true;
+        historyButton.enabled = true;
+        logoutButton.enabled = true;
+        settingsButton.enabled = true;
     }
 }
