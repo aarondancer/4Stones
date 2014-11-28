@@ -7,34 +7,10 @@ import "theForce.js" as TheForce
 Rectangle {
     id: settings
     property int divisor: (height < width ? height : width)
-
-    ListModel {
-        id: backgroundModel
-        ListElement {
-            image: "forest.jpg"
-        }
-        ListElement {
-            image: "kite.jpg"
-        }
-        ListElement {
-            image: "ripples.png"
-        }
-    }
-
-    Component {
-         id: backgroundDelegate
-         Column {
-             id: wrapper
-             Image {
-                 width: 64;
-                 height: 64
-                 source: image
-             }
-         }
-    }
+    signal back;
 
     Image{ //Background, uses image for now
-        id: settingsBackground
+        id: historyBackground
         z: 0
         height: parent.height
         width: parent.width
@@ -51,26 +27,46 @@ Rectangle {
         }
     }
 
-    Label{
-        id: settingsLabel
-        font.pointSize: divisor / 4
-        text: "Settings"
-        color: "white"
-        x: -30;
-        font.weight: Font.Light
-        font.family: "Helvetica Neue"
+    Rectangle{
+        width: backArrow.width
+        height: backArrow.height
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.left: parent.left
+        color: "transparent"
+        Image{
+            id: backArrow
+            source:"back arrow.svg"
+            sourceSize: Qt.size(width, width)
+            width: height
+            height: settingsLabel.paintedHeight
+            MouseArea{
+                anchors.fill: parent;
+                onClicked: { settings.back(); }
+            }
+        }
+
+        ColorOverlay{
+            source: backArrow
+            anchors.fill: backArrow
+            color: "white"
+        }
     }
 
-    PathView{
-        id: backgroundSelection
-        height: settings.height - settingsLabel.height
-        width: settings.width
-        model: backgroundModel
-        delegate: delegate
-        path: Path {
-            startX: 120; startY: 100
-            PathQuad { x: 120; y: 25; controlX: 260; controlY: 75 }
-            PathQuad { x: 120; y: 100; controlX: -20; controlY: 75 }
-        }
+    Label{
+        id: settingsLabel
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        font.pointSize: divisor / 8
+        text: "Settings"
+        color: "white"
+        font.weight: Font.Light
+        font.family: "Helvetica Neue"
+        font.letterSpacing: 5
+    }
+
+    Column{
+
     }
 }
