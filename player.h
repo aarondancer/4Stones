@@ -42,6 +42,7 @@ public:
 
     Q_INVOKABLE void loginPlayer(QString username);
     Q_INVOKABLE void registerPlayer(QString username);
+    Q_INVOKABLE void updatePlayer(int wins, int losses, int draws);
 
 signals:
     void usernameChanged();
@@ -65,6 +66,7 @@ private:
     int _number;
     QString _username;
     QString objectID;
+    QString session;
 };
 
 #endif // PLAYER_H

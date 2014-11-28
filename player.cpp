@@ -8,7 +8,7 @@ Player::Player(QObject *parent) : QObject(parent)
     _wins = 0;
     _losses = 0;
     _draws = 0;
-
+    objectID = "";
 }
 
 int Player::getWins() const
@@ -70,6 +70,8 @@ void Player::handleLogin(bool exists, QNetworkReply* reply){
     if (exists){
         QJsonObject json = QJsonDocument::fromJson(reply->readAll()).object();
         _username = json.value("username").toString();
+        objectID = json.value("objectId").toString();
+        session = json.value("sessionToken").toString();
         _wins = json.value("win").toInt();
         _losses = json.value("loss").toInt();
         _draws = json.value("draw").toInt();
@@ -84,6 +86,8 @@ void Player::handleRegister(bool exists, QNetworkReply* reply){
     if (exists){
         QJsonObject json = QJsonDocument::fromJson(reply->readAll()).object();
         _username = json.value("username").toString();
+        objectID = json.value("objectId").toString();
+        session = json.value("sessionToken").toString();
         _wins = 0;
         _losses = 0;
         _draws = 0;
@@ -92,4 +96,12 @@ void Player::handleRegister(bool exists, QNetworkReply* reply){
         _username = "";
         emit registerFailed();
     }
+}
+
+void Player::updatePlayer(int wins, int losses, int draws){
+    _wins += wins;
+    _losses += losses;
+    _draws += draws;
+    ParseHelper *p = new ParseHelper(this);
+    p->updatePlayer(objectID, session, _wins, _losses, _draws);
 }
