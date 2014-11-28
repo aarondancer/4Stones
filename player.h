@@ -15,7 +15,7 @@ class Player : public QObject{
     Q_PROPERTY(int losses READ getLosses WRITE setLosses NOTIFY lossesChanged)
     Q_PROPERTY(int draws READ getDraws WRITE setDraws NOTIFY drawsChanged)
     Q_PROPERTY(int number READ getNumber WRITE setNumber NOTIFY numberChanged)
-    Q_PROPERTY(QString username READ getUsername WRITE setUsername)
+    Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
 
 public:
     explicit Player(QObject *parent = 0);
@@ -44,6 +44,7 @@ public:
     Q_INVOKABLE void registerPlayer(QString username);
 
 signals:
+    void usernameChanged();
     void drawsChanged();
     void lossesChanged();
     void winsChanged();
