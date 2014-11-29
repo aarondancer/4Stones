@@ -117,7 +117,7 @@ Rectangle {
         id: settingsLabel
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: history.height / 48
         font.pointSize: divisor / 8
         text: "Settings"
         color: "white"
