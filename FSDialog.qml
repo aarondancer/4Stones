@@ -106,7 +106,7 @@ Rectangle {
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "white"
                             radius: width *0.5
-                            color: (control.hovered) ? "grey" : Qt.lighter("grey", 1.2)
+                            color: (!control.hovered) ? "grey" : Qt.lighter("grey", 1.2)
                     }
                 }
                 visible: cancel;
@@ -136,7 +136,7 @@ Rectangle {
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "white"
                             radius: width *0.5
-                            color: (control.hovered) ? red : Qt.lighter(red, 1.2)
+                            color: (!control.hovered) ? red : Qt.lighter(red, 1.2)
                     }
                 }
                 visible: decline;
@@ -166,7 +166,7 @@ Rectangle {
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "white"
                             radius: width *0.5
-                            color: (control.hovered) ? blue : Qt.lighter(blue, 1.2)
+                            color: (!control.hovered) ? blue : Qt.lighter(blue, 1.2)
                     }
                 }
                 visible: accept;
