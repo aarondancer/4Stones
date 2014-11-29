@@ -114,7 +114,7 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: { settings.visible = true }
+                onClicked: { settings.visible = true; disable();}
             }
         }
 
