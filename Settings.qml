@@ -67,7 +67,7 @@ Rectangle {
     }
 
     Image{ //Background, uses image for now
-        id: historyBackground
+        id: settingsBackground
         z: 0
         height: parent.height
         width: parent.width
@@ -117,7 +117,7 @@ Rectangle {
         id: settingsLabel
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: history.height / 48
+        anchors.topMargin: settings.height / 48
         font.pointSize: divisor / 8
         text: "Settings"
         color: "white"
