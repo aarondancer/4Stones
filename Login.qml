@@ -31,7 +31,7 @@ Rectangle {
 
         Image{ //The logo
             id: logo
-            width: usernameField.width * .75
+            width: usernameField.width
             height: width
             fillMode: Image.PreserveAspectFit
             smooth: true
@@ -73,7 +73,7 @@ Rectangle {
 
             Rectangle{
                 color: "transparent"
-                width: (usernameField.width - (loginButton.width * 3) - 20) / 2
+                width: ((usernameField.width / 3) - guestButton.height) / 2
                 height: 1
             }
 
@@ -113,7 +113,8 @@ Rectangle {
             }
             Rectangle{
                 color: "transparent"
-                width: 10
+                width: (usernameField.width / 3) - guestButton.height
+
                 height: 1
             }
 
@@ -155,7 +156,7 @@ Rectangle {
 
             Rectangle{
                 color: "transparent"
-                width: 10
+                width: (usernameField.width / 3) - guestButton.height
                 height: 1
             }
 
@@ -187,6 +188,12 @@ Rectangle {
                     }
                 }
             }
+        }
+
+        Rectangle{
+            color: "transparent"
+            width: 1;
+            height: login.height / 32
         }
     }
 
