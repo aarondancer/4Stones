@@ -67,7 +67,7 @@ Rectangle {
         font.letterSpacing: 5
     }
     Column{
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: historyLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         QChart{
             id: yummyPie;
@@ -96,22 +96,77 @@ Rectangle {
             text: "Wins: " + player.wins
             color: blue
             horizontalAlignment: Text.Center
-            font.pointSize: historyLabel.font.pointSize / 3
+            font.pointSize: historyLabel.font.pointSize / 2.5
         }
         Label{
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Losses: " + player.losses
             color: red
             horizontalAlignment: Text.Center
-            font.pointSize: historyLabel.font.pointSize / 3
+            font.pointSize: historyLabel.font.pointSize / 2.5
         }
         Label{
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Draws: " + player.draws
             color: "grey"
             horizontalAlignment: Text.Center
-            font.pointSize: historyLabel.font.pointSize / 3
+            font.pointSize: historyLabel.font.pointSize / 2.5
         }
+
+        Button{
+            id: deleteButton
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Delete " + player.username
+            width: height
+            height: divisor / 8
+            onClicked: {
+                deleteDialog.visible = true;
+            }
+
+            style: ButtonStyle{
+                label: Text {
+                    renderType: Text.NativeRendering
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.family: "Helvetica"
+                    font.weight: Font.Light
+                    font.pointSize: control.height / 6
+                    color: "white"
+                    text: control.text
+                    wrapMode: Text.WordWrap
+                }
+                background: Rectangle {
+                    width: control.width
+                    height:  control.height
+                    border.width: control.activeFocus ? 2 : 1
+                    border.color: "white"
+                    radius: width *0.5
+                    color: (!control.hovered) ? "grey" : Qt.lighter("grey")
+                }
+            }
+        }
+    }
+
+    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+        id: deleteDialog
+        title: "Are you sure?"
+        message: "Are you sure that you would like to delete the account: " + player.username + " ?";
+        cancel: true
+        accept: true
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+        }
+
+        onAcceptChanged: {
+            player.deletePlayer();
+            visible = false;
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
     }
 
     onVisibleChanged: init();
