@@ -85,7 +85,6 @@ void Player::handleLogin(bool exists, QNetworkReply* reply){
 void Player::handleRegister(bool exists, QNetworkReply* reply){
     if (exists){
         QJsonObject json = QJsonDocument::fromJson(reply->readAll()).object();
-        _username = json.value("username").toString();
         objectID = json.value("objectId").toString();
         session = json.value("sessionToken").toString();
         _wins = 0;
@@ -113,4 +112,10 @@ void Player::logout(){
     _wins = 0;
     _losses = 0;
     _draws = 0;
+}
+
+void Player::deletePlayer(){
+    ParseHelper *p = new ParseHelper(this);
+    p->deletePlayer(objectID, session);
+    logout();
 }
