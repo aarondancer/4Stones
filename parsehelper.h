@@ -18,6 +18,7 @@ public:
     void login(QString username);
     void registerPlayer(QString username);
     void updatePlayer(QString id, QString session, int wins, int losses, int draws);
+    void deletePlayer(QString id, QString session);
 
 private:
     QNetworkAccessManager* netManager = new QNetworkAccessManager(this);
