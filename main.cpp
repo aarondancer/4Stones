@@ -5,6 +5,7 @@
 #include <QtQml>
 #include "ai.h"
 #include "player.h"
+#include "appsettings.h"
 #include <QQuickView>
 
 int main(int argc, char *argv[])
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Grid>("com.FourStones.qmlcomponents", 1, 0, "Grid"); //Register the Grid class as a type that can be used in QML
     qmlRegisterType<Player>("com.FourStones.qmlcomponents", 1, 0, "Player");
     qmlRegisterType<AI>("com.FourStones.qmlcomponents", 1, 0, "AI");
+    qmlRegisterType<appSettings>("com.FourStones.qmlcomponents", 1, 0, "SettingsHelper");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl("qrc:/main.qml"));
