@@ -134,6 +134,7 @@ Rectangle {
                 hoverEnabled: true
                 anchors.fill: parent
                 onClicked: {
+                    login.loggedOut(player.username);
                     player.logout();
                     login.visible = true;
                 }

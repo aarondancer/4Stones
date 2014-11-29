@@ -69,3 +69,10 @@ void ParseHelper::handleUpdate(QNetworkReply *reply){
     qDebug() << reply->readAll();
     qDebug() << reply->errorString();
 }
+
+void ParseHelper::deletePlayer(QString id, QString session){
+    setSession(session);
+    request.setUrl(QUrl("https://api.parse.com/1/users/" + id));
+    netManager->deleteResource(request);
+}
+
