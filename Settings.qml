@@ -2,38 +2,67 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.2
+import com.FourStones.qmlcomponents 1.0
 import "theForce.js" as TheForce
 
 Rectangle {
     id: settings
     property int divisor: (height < width ? height : width)
-    signal back;
+    property bool loaded: false;
+
+    SettingsHelper{
+        id: settingsHelper
+        Component.onCompleted: {
+            for (var i = 0; i < wallpapers.count; i++){
+                if (wallpapers.get(i).image === getValue("background", "forest.jpg")){
+                    wallpaperSlider.currentIndex = i;
+                    backgroundSource = wallpapers.get(wallpaperSlider.currentIndex).image;
+                    loaded = true;
+                }
+            }
+        }
+    }
 
     ListModel {
         id: wallpapers
-        ListElement { image: "kite.jpg" }
-        ListElement { image: "ripples.png" }
-        ListElement { image: "forest.jpg" }
+        ListElement { name: "Kite"; image: "kite.jpg" }
+        ListElement { name: "Ripples"; image: "ripples.png" }
+        ListElement { name: "Forest"; image: "forest.jpg" }
     }
 
     Component {
         id: wallpaperDelegate
         Item {
-            width: settings.width; height: settings.height / 2
+            width: divisor; height: divisor
 
             Image {
                 id: wallpaper
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.leftMargin: divisor * 0.05
                 width: parent.width * 0.9
-                height: parent.height
                 fillMode: Image.PreserveAspectFit
                 source: image
                 smooth: true
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: coverFlow.currentIndex = index
+            Label{
+                id: wallpaperLabel
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: wallpaper.bottom
+                anchors.topMargin: divisor / 48
+                font.pointSize: divisor / 16
+                text: name
+                color: "white"
+                font.weight: Font.Light
+                font.family: "Helvetica"
+                font.letterSpacing: 5
             }
+
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: coverFlow.currentIndex = index
+//            }
         }
     }
 
@@ -70,7 +99,10 @@ Rectangle {
             height: settingsLabel.paintedHeight
             MouseArea{
                 anchors.fill: parent;
-                onClicked: { settings.back(); }
+                onClicked: {
+                    settings.visible = false;
+                    mainMenu.enable();
+                }
             }
         }
 
@@ -90,30 +122,48 @@ Rectangle {
         text: "Settings"
         color: "white"
         font.weight: Font.Light
-        font.family: "Helvetica Neue"
+        font.family: "Helvetica"
+        font.letterSpacing: 5
+    }
+
+    Label{
+        id: selectWallpaper
+        anchors.top: settingsLabel.bottom
+        anchors.topMargin: divisor / 32
+        anchors.left: settings.left
+        anchors.leftMargin: divisor * 0.05
+        font.pointSize: divisor / 12
+        text: "Wallpaper: "
+        color: "white"
+        font.weight: Font.Light
+        font.family: "Helvetica"
         font.letterSpacing: 5
     }
 
     ListView {
+        id: wallpaperSlider
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: settingsLabel.bottom
+        anchors.top: selectWallpaper.bottom
+        anchors.topMargin: divisor / 32
         Keys.onRightPressed: incrementCurrentIndex()
         Keys.onLeftPressed: decrementCurrentIndex()
         orientation: ListView.Horizontal
-        id: coverFlow
         focus: true
         model: wallpapers
         delegate: wallpaperDelegate
-        width: settings.width * 0.9
-        height: settings.height / 2
-        spacing: settings.width * 0.05
+        width: divisor
+        height: divisor / 2
+        spacing: divisor * 0.05
         interactive: true
         flickableDirection: Flickable.HorizontalFlick
         snapMode: ListView.SnapOneItem
         highlightRangeMode: ListView.StrictlyEnforceRange
-
+        highlightFollowsCurrentItem: true;
         onCurrentIndexChanged: {
-            backgroundSource = wallpapers.get(currentIndex).image
+            if (loaded) {
+                backgroundSource = wallpapers.get(currentIndex).image;
+                settingsHelper.setValue("background", backgroundSource);
+            }
         }
     }
 }
