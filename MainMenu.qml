@@ -135,6 +135,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     player.logout();
+                    login.visible = true;
                 }
             }
         }
