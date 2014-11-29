@@ -145,8 +145,8 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: selectWallpaper.bottom
         anchors.topMargin: divisor / 32
-        Keys.onRightPressed: incrementCurrentIndex()
-        Keys.onLeftPressed: decrementCurrentIndex()
+        Keys.onRightPressed: if (visible) incrementCurrentIndex()
+        Keys.onLeftPressed: if (visible) decrementCurrentIndex()
         orientation: ListView.Horizontal
         focus: true
         model: wallpapers
