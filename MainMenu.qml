@@ -50,7 +50,7 @@ Rectangle {
 
         Label{
             id: historyButton
-            text: "History"
+            text: player.username
             color: "white"
             font.pixelSize: divisor / 12
             font.family: "Helvetica"
@@ -65,6 +65,10 @@ Rectangle {
                     menusOpen = menusOpen + 1;
                     disable();
                 }
+            }
+
+            onTextChanged: {
+                visible = !(player.username === "");
             }
         }
 
@@ -114,7 +118,7 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: { settings.visible = true }
+                onClicked: { settings.visible = true; disable();}
             }
         }
 
@@ -129,7 +133,9 @@ Rectangle {
                 z: 1
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: { }
+                onClicked: {
+                    player.logout();
+                }
             }
         }
     }
@@ -140,9 +146,17 @@ Rectangle {
     }
 
     Connections {
-             target: historyLoader.item
-             onBack: { historyLoader.source = ""; menusOpen = menusOpen - 1; enable();}
-         }
+        target: historyLoader.item
+        onBack: {
+            historyLoader.source = "";
+            menusOpen = menusOpen - 1;
+            enable();
+        }
+    }
+
+    onVisibleChanged: {
+        historyButton.text = player.username;
+    }
 
     function hideHistory(){
         historyButton.visible = false

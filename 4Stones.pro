@@ -1,7 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick \
-    widgets
+QT += qml quick
 
 SOURCES += main.cpp \
     grid.cpp \
@@ -23,7 +22,8 @@ HEADERS += \
     player.h \
     global.h \
     ai.h \
-    parsehelper.h
+    parsehelper.h \
+    appsettings.h
 
 LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin

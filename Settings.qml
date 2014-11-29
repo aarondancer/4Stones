@@ -2,39 +2,72 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.2
+import com.FourStones.qmlcomponents 1.0
 import "theForce.js" as TheForce
 
 Rectangle {
     id: settings
     property int divisor: (height < width ? height : width)
+    property bool loaded: false;
+
+    SettingsHelper{
+        id: settingsHelper
+        Component.onCompleted: {
+            for (var i = 0; i < wallpapers.count; i++){
+                if (wallpapers.get(i).image === getValue("background", "forest.jpg")){
+                    wallpaperSlider.currentIndex = i;
+                    backgroundSource = wallpapers.get(wallpaperSlider.currentIndex).image;
+                    loaded = true;
+                }
+            }
+        }
+    }
 
     ListModel {
-        id: backgroundModel
-        ListElement {
-            image: "forest.jpg"
-        }
-        ListElement {
-            image: "kite.jpg"
-        }
-        ListElement {
-            image: "ripples.png"
-        }
+        id: wallpapers
+        ListElement { name: "Kite"; image: "kite.jpg" }
+        ListElement { name: "Ripples"; image: "ripples.png" }
+        ListElement { name: "Forest"; image: "forest.jpg" }
     }
 
     Component {
-         id: backgroundDelegate
-         Column {
-             id: wrapper
-             Image {
-                 width: 64;
-                 height: 64
-                 source: image
-             }
-         }
+        id: wallpaperDelegate
+        Item {
+            width: divisor; height: divisor
+
+            Image {
+                id: wallpaper
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.leftMargin: divisor * 0.05
+                width: parent.width * 0.9
+                fillMode: Image.PreserveAspectFit
+                source: image
+                smooth: true
+            }
+
+            Label{
+                id: wallpaperLabel
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: wallpaper.bottom
+                anchors.topMargin: divisor / 48
+                font.pointSize: divisor / 16
+                text: name
+                color: "white"
+                font.weight: Font.Light
+                font.family: "Helvetica"
+                font.letterSpacing: 5
+            }
+
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: coverFlow.currentIndex = index
+//            }
+        }
     }
 
     Image{ //Background, uses image for now
-        id: settingsBackground
+        id: historyBackground
         z: 0
         height: parent.height
         width: parent.width
@@ -51,26 +84,86 @@ Rectangle {
         }
     }
 
-    Label{
-        id: settingsLabel
-        font.pointSize: divisor / 4
-        text: "Settings"
-        color: "white"
-        x: -30;
-        font.weight: Font.Light
-        font.family: "Helvetica Neue"
+    Rectangle{
+        width: backArrow.width
+        height: backArrow.height
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.left: parent.left
+        color: "transparent"
+        Image{
+            id: backArrow
+            source:"back arrow.svg"
+            sourceSize: Qt.size(width, width)
+            width: height
+            height: settingsLabel.paintedHeight
+            MouseArea{
+                anchors.fill: parent;
+                onClicked: {
+                    settings.visible = false;
+                    mainMenu.enable();
+                }
+            }
+        }
+
+        ColorOverlay{
+            source: backArrow
+            anchors.fill: backArrow
+            color: "white"
+        }
     }
 
-    PathView{
-        id: backgroundSelection
-        height: settings.height - settingsLabel.height
-        width: settings.width
-        model: backgroundModel
-        delegate: delegate
-        path: Path {
-            startX: 120; startY: 100
-            PathQuad { x: 120; y: 25; controlX: 260; controlY: 75 }
-            PathQuad { x: 120; y: 100; controlX: -20; controlY: 75 }
+    Label{
+        id: settingsLabel
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        font.pointSize: divisor / 8
+        text: "Settings"
+        color: "white"
+        font.weight: Font.Light
+        font.family: "Helvetica"
+        font.letterSpacing: 5
+    }
+
+    Label{
+        id: selectWallpaper
+        anchors.top: settingsLabel.bottom
+        anchors.topMargin: divisor / 32
+        anchors.left: settings.left
+        anchors.leftMargin: divisor * 0.05
+        font.pointSize: divisor / 12
+        text: "Wallpaper: "
+        color: "white"
+        font.weight: Font.Light
+        font.family: "Helvetica"
+        font.letterSpacing: 5
+    }
+
+    ListView {
+        id: wallpaperSlider
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: selectWallpaper.bottom
+        anchors.topMargin: divisor / 32
+        Keys.onRightPressed: incrementCurrentIndex()
+        Keys.onLeftPressed: decrementCurrentIndex()
+        orientation: ListView.Horizontal
+        focus: true
+        model: wallpapers
+        delegate: wallpaperDelegate
+        width: divisor
+        height: divisor / 2
+        spacing: divisor * 0.05
+        interactive: true
+        flickableDirection: Flickable.HorizontalFlick
+        snapMode: ListView.SnapOneItem
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        highlightFollowsCurrentItem: true;
+        onCurrentIndexChanged: {
+            if (loaded) {
+                backgroundSource = wallpapers.get(currentIndex).image;
+                settingsHelper.setValue("background", backgroundSource);
+            }
         }
     }
 }

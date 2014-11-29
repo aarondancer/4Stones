@@ -63,7 +63,7 @@ Rectangle {
         text: player.username
         color: "white"
         font.weight: Font.Light
-        font.family: "Helvetica Neue"
+        font.family: "Helvetica"
         font.letterSpacing: 5
     }
     Column{
