@@ -155,8 +155,8 @@ Line bestOfLines(const Line &line1, const Line &line2)
 
     if (line1.length() == 0) bestLine = line2;
     else if (line2.length() == 0) bestLine = line1;
-    else if (line1 < line2) bestLine = line1;
-    else if (line1 > line2) bestLine = line2;
+    else if (line1 > line2) bestLine = line1;
+    else if (line1 < line2) bestLine = line2;
     else {
         srand(time(NULL));
         randomLine = rand() % 2 + 1;
