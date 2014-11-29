@@ -43,6 +43,7 @@ public:
     Q_INVOKABLE void loginPlayer(QString username);
     Q_INVOKABLE void registerPlayer(QString username);
     Q_INVOKABLE void updatePlayer(int wins, int losses, int draws);
+    Q_INVOKABLE void logout();
 
 signals:
     void usernameChanged();

@@ -105,3 +105,12 @@ void Player::updatePlayer(int wins, int losses, int draws){
     ParseHelper *p = new ParseHelper(this);
     p->updatePlayer(objectID, session, _wins, _losses, _draws);
 }
+
+void Player::logout(){
+    _username = "";
+    objectID = "";
+    session = "";
+    _wins = 0;
+    _losses = 0;
+    _draws = 0;
+}
