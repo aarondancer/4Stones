@@ -145,8 +145,8 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: selectWallpaper.bottom
         anchors.topMargin: divisor / 32
-        Keys.onRightPressed: if (visible) incrementCurrentIndex()
-        Keys.onLeftPressed: if (visible) decrementCurrentIndex()
+        Keys.onRightPressed: incrementCurrentIndex();
+        Keys.onLeftPressed: decrementCurrentIndex();
         orientation: ListView.Horizontal
         focus: true
         model: wallpapers
@@ -165,5 +165,10 @@ Rectangle {
                 settingsHelper.setValue("background", backgroundSource);
             }
         }
+    }
+
+    onVisibleChanged: {
+        if (settings.visible) settings.enabled = true;
+        else settings.enabled = false;
     }
 }
