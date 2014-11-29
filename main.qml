@@ -201,7 +201,6 @@ Window {
                     antialiasing: true
                     boundsBehavior: Flickable.StopAtBounds; flow: GridView.FlowLeftToRight
                     cellHeight: width / board.gridLength; cellWidth: cellHeight
-                    focus: true
                     model: gridList
                     delegate: tileDelegate
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -329,7 +328,7 @@ Window {
         onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
 
-    onMenusOpenChanged: console.log("Menus Open: " + menusOpen);
+//    onMenusOpenChanged: console.log("Menus Open: " + menusOpen);
 
     ListModel{
         id: gridList
