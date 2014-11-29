@@ -175,7 +175,7 @@ Rectangle {
         }
     }
 
-    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+    FSDialog {
         id: deleteDialog
         title: "Are you sure?"
         message: "Are you sure that you would like to delete the account: " + player.username + " ?";
@@ -189,9 +189,11 @@ Rectangle {
             visible = false;
         }
 
-        onAcceptChanged: {
+        onAccepted: {
+            login.deleted(player.username);
             player.deletePlayer();
-            visible = false;
+            history.back();
+            login.visible = true;
         }
 
         onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
@@ -201,6 +203,5 @@ Rectangle {
 
     function init(){
         historyLabel.text = player.username
-
     }
 }
