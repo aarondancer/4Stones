@@ -58,7 +58,7 @@ Rectangle {
         id: historyLabel
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: history.height / 48
         font.pointSize: divisor / 8
         text: player.username
         color: "white"
@@ -66,83 +66,111 @@ Rectangle {
         font.family: "Helvetica"
         font.letterSpacing: 5
     }
+
+    Button{
+        id: deleteButton
+        anchors.right: history.right
+        anchors.top: history.top
+        anchors.margins: history.height / 48
+        text: "Delete " + player.username
+        width: height
+        height: historyLabel.height
+        onClicked: {
+            deleteDialog.visible = true;
+        }
+
+        style: ButtonStyle{
+            label: Text {
+                renderType: Text.NativeRendering
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.family: "Helvetica"
+                font.weight: Font.Light
+                font.pointSize: control.height / 6
+                color: "white"
+                text: control.text
+                wrapMode: Text.WordWrap
+            }
+            background: Rectangle {
+                width: control.width
+                height:  control.height
+                border.width: control.activeFocus ? 2 : 1
+                border.color: "white"
+                radius: width *0.5
+                color: (!control.hovered) ? "grey" : Qt.lighter("grey")
+            }
+        }
+    }
+
     Column{
         anchors.top: historyLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        QChart{
-            id: yummyPie;
-            width: divisor * 0.75;
-            height: width;
-            chartType: Charts.ChartType.PIE;
-            opacity: 0.75
-            //      anchors.top: historyLabel.bottom
-            chartAnimated: false;
-            contextType: "2d"
-            Component.onCompleted: {
-                chartData = [{
-                               value: player.wins,
-                               color: blue
-                            }, {
-                               value: player.losses,
-                               color: red
-                            }, {
-                               value: player.draws,
-                               color: "grey"
-                           }];
-            }
-        }
-        Label{
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Wins: " + player.wins
-            color: blue
-            horizontalAlignment: Text.Center
-            font.pointSize: historyLabel.font.pointSize / 2.5
-        }
-        Label{
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Losses: " + player.losses
-            color: red
-            horizontalAlignment: Text.Center
-            font.pointSize: historyLabel.font.pointSize / 2.5
-        }
-        Label{
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Draws: " + player.draws
-            color: "grey"
-            horizontalAlignment: Text.Center
-            font.pointSize: historyLabel.font.pointSize / 2.5
+
+        Rectangle{
+            color: "transparent"
+            width: 1;
+            height: (history.height - historyContent.height - historyLabel.height - (history.height / 48)) / 2
         }
 
-        Button{
-            id: deleteButton
+        Column{
+            id: historyContent
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Delete " + player.username
-            width: height
-            height: divisor / 8
-            onClicked: {
-                deleteDialog.visible = true;
+
+            QChart{
+                id: yummyPie;
+                width: (divisor- historyLabel.height) * 0.75;
+                height: width;
+                chartType: Charts.ChartType.PIE;
+                opacity: 0.75
+                //      anchors.top: historyLabel.bottom
+                chartAnimated: false;
+                contextType: "2d"
+                Component.onCompleted: {
+                    chartData = [{
+                                   value: player.wins,
+                                   color: blue
+                                }, {
+                                   value: player.losses,
+                                   color: red
+                                }, {
+                                   value: player.draws,
+                                   color: "grey"
+                               }];
+                }
             }
 
-            style: ButtonStyle{
-                label: Text {
-                    renderType: Text.NativeRendering
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.family: "Helvetica"
-                    font.weight: Font.Light
-                    font.pointSize: control.height / 6
-                    color: "white"
-                    text: control.text
-                    wrapMode: Text.WordWrap
-                }
-                background: Rectangle {
-                    width: control.width
-                    height:  control.height
-                    border.width: control.activeFocus ? 2 : 1
-                    border.color: "white"
-                    radius: width *0.5
-                    color: (!control.hovered) ? "grey" : Qt.lighter("grey")
-                }
+            Rectangle{
+                color: "transparent"
+                width: 1;
+                height: history.height / 48
+            }
+
+            Label{
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Wins: " + player.wins
+                color: blue
+                horizontalAlignment: Text.Center
+                font.pointSize: historyLabel.font.pointSize / 2.5
+            }
+            Label{
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Losses: " + player.losses
+                color: red
+                horizontalAlignment: Text.Center
+                font.pointSize: historyLabel.font.pointSize / 2.5
+            }
+            Label{
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Draws: " + player.draws
+                color: "grey"
+                horizontalAlignment: Text.Center
+                font.pointSize: historyLabel.font.pointSize / 2.5
+            }
+
+            Rectangle{
+                color: "transparent"
+                width: 1;
+                height: history.height / 48
             }
         }
     }
