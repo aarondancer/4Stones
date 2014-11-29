@@ -43,6 +43,8 @@ string Line::directionToString() {
     return dir;
 }
 
+int Line::magnitude() const {return abs(_value);}
+
 
 // operator overloads
 void Line::operator = (const Line &line) {

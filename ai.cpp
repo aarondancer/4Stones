@@ -20,7 +20,7 @@ int randomMove(){
 }
 
 // helper function declaration
-Line bestOfLines(const Line &line1, const Line &line2);
+Line bestOfLines(const Line line1, const Line line2);
 int bestBlankCell(const Line &line);
 
 int mediumAi() {
@@ -148,21 +148,36 @@ void AI::setDifficulty(int value)
 }
 
 // helper functions
-Line bestOfLines(const Line &line1, const Line &line2)
+Line bestOfLines(Line const line1, Line const line2)
 {
     Line bestLine;
-    int randomLine;
+    int piecesToWin = board->getCountToWin();
 
-    if (line1.length() == 0) bestLine = line2;
-    else if (line2.length() == 0) bestLine = line1;
-    else if (line1 < line2) bestLine = line1;
-    else if (line1 > line2) bestLine = line2;
-    else {
-        srand(time(NULL));
-        randomLine = rand() % 2 + 1;
-        if (randomLine == 1) bestLine = line1;
-        else bestLine = line2;
-    }
+    srand(time(NULL)); // seed the rand() function
+    bool isRandomLine = rand()  % 100 + 1 <= 50; // i.e.: 50% chance to pick line
+    bool isBlocking = rand() % 100 + 1 <= 100; // i.e.: 75% chance to block
+
+
+//    qDebug() << "len: " << line1.length() << " val: " << line1.value() << " mag: " << line1.magnitude();
+
+//    if ((line2.length() == 0) // line2 is zero-length
+//            // or lines have the same value and is random line (chance)
+//            || ((line1 == line2) && isRandomLine)
+//            // or line1 is negative (i.e.: favors AI) and one piece away from winning
+//            || ((line1.value() < 0) && (piecesToWin - line1.magnitude() == 1))
+//            // or line1 is positive (i.e.: favors player), one piece away from winning, and is blocking (chance)
+//            || ((line1.value() > 0) && (piecesToWin - line1.magnitude() == 1) && isBlocking)
+//            // or line1 is more (or closer to) negative (i.e.: favors AI)
+//            || (line1 < line2)
+//        ) bestLine = line1;
+//    else bestLine = line2;
+
+    if (line2.length() == 0) bestLine = line1; // line2 is zero-length
+    else if ((line1 == line2) && isRandomLine) bestLine = line1; // lines have the same value and is random line (chance)
+    else if ((line1.value() < 0) && (piecesToWin - line1.magnitude() == 1)) bestLine = line1; // line1 is negative (i.e.: favors AI) and one piece away from winning
+    else if (!((line2.value() > 0) && (piecesToWin - line2.magnitude() == 1) && isBlocking)) bestLine = line1; // line2 is positive (i.e.: favors player), one piece away from winning, and is blocking (chance)
+    else if (line1 < line2) bestLine = line1; // line1 is more (or closer to) negative (i.e.: favors AI)
+    else bestLine = line2;
 
     return bestLine;
 }
@@ -173,11 +188,11 @@ int bestBlankCell(const Line &line) {
     int row = board->indexToRow(line.startingPos());
     int col = board->indexToColumn(line.startingPos());
     int cellWeight[25] = { //cell weight used to put x and o on the grid
-          3,4,3,4,3
-        , 4,6,6,6,4
-        , 3,6,8,6,3
-        , 4,6,6,6,4
-        , 3,4,3,4,3};
+         3,4,3,4,3
+        ,4,6,6,6,4
+        ,3,6,8,6,3
+        ,4,6,6,6,4
+        ,3,4,3,4,3};
     int randomInt;
 
     srand(time(NULL));

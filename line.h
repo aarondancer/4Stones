@@ -24,7 +24,8 @@ public:
     void initialize(int pos, Direction d, int v = 0, int l = 0, int pc = 0);
     void addPiece(const int piece);
     bool isFull() const;
-    string directionToString() ;
+    string directionToString();
+    int magnitude() const;
 
     // operator overloads
     void operator = (const Line &line);
