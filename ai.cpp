@@ -158,8 +158,6 @@ Line bestOfLines(Line const line1, Line const line2)
     bool isBlocking = rand() % 100 + 1 <= 100; // i.e.: 75% chance to block
 
 
-//    qDebug() << "len: " << line1.length() << " val: " << line1.value() << " mag: " << line1.magnitude();
-
 //    if ((line2.length() == 0) // line2 is zero-length
 //            // or lines have the same value and is random line (chance)
 //            || ((line1 == line2) && isRandomLine)
@@ -178,6 +176,19 @@ Line bestOfLines(Line const line1, Line const line2)
     else if (!((line2.value() > 0) && (piecesToWin - line2.magnitude() == 1) && isBlocking)) bestLine = line1; // line2 is positive (i.e.: favors player), one piece away from winning, and is blocking (chance)
     else if (line1 < line2) bestLine = line1; // line1 is more (or closer to) negative (i.e.: favors AI)
     else bestLine = line2;
+
+//    int randomLine;
+//
+//    if (line1.length() == 0) bestLine = line2;
+//    else if (line2.length() == 0) bestLine = line1;
+//    else if (line1 > line2) bestLine = line1;
+//    else if (line1 < line2) bestLine = line2;
+//    else {
+//        srand(time(NULL));
+//        randomLine = rand() % 2 + 1;
+//        if (randomLine == 1) bestLine = line1;
+//        else bestLine = line2;
+//    }
 
     return bestLine;
 }
