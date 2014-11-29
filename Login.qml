@@ -190,7 +190,7 @@ Rectangle {
         }
     }
 
-    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+    FSDialog {
         id: loginSuccessDialog
         title: "Login"
         message: "Would you like to proceed and login as " + usernameField.text + "?"
@@ -215,7 +215,7 @@ Rectangle {
         onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
     }
 
-    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+    FSDialog {
         id: loginFailedDialog
         title: "Login Failed"
         message: "The username " + usernameField.text + " does not exist or is invalid. Please register or try again."
@@ -234,7 +234,7 @@ Rectangle {
         onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
     }
 
-    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+    FSDialog {
         id: registerSuccessDialog
         title: "Success!"
         message: "The username " + usernameField.text + " has been successfully registered successfully!"
@@ -254,7 +254,7 @@ Rectangle {
         onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
     }
 
-    FSDialog { //Dialog box for saying when a player has won. This will probaby be replaced eventually because ugly on mobile.
+    FSDialog {
         id: registerFailedDialog
         title: "Registration Failed"
         message: "The username " + usernameField.text + " is either invalid or already taken. Please try another username or login."
@@ -271,6 +271,58 @@ Rectangle {
         }
 
         onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog {
+        property string uname;
+        id: loggedOutDialog
+        title: "Logged out"
+        message: "The username " + uname + " has been logged out."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog {
+        property string uname;
+        id: deletedDialog
+        title: "User deleted"
+        message: "The username " + uname + " has been deleted."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    function loggedOut(uname){
+        loggedOutDialog.uname = uname;
+        loggedOutDialog.visible = true;
+        disable();
+    }
+
+    function deleted(uname){
+        deletedDialog.uname = uname;
+        deletedDialog.visible = true;
+        disable();
     }
 
     function loginSuccess(){
