@@ -310,6 +310,71 @@ void AI::setDifficulty(int value)
 }
 
 // helper functions
+int forkPreventer(){
+    int bestCell = 100;
+    if (board->_grid[2][2] == 1 &&
+            board->_grid[2][3] == 1 &&
+            board->_grid[1][2] == 1 &&
+            board->_grid[1][3] == 1 &&
+            board->valueFromIndex(16) == 0){
+        bestCell = 16;
+    } else if (board->_grid[2][2] == 1 &&
+               board->_grid[2][1] == 1 &&
+               board->_grid[3][2] == 1 &&
+               board->_grid[3][1] == 1 &&
+               board->valueFromIndex(8) == 0
+               ){
+        bestCell = 8;
+    } else if (board->_grid[1][1] == 1 &&
+               board->_grid[2][1] == 1 &&
+               board->_grid[2][2] == 1 &&
+               board->valueFromIndex(13) == 0
+               ){
+        bestCell = 13;
+    } else if (board->_grid[2][2] == 1 &&
+               board->_grid[2][1] == 1 &&
+               board->_grid[3][1] == 1 &&
+               board->valueFromIndex(8) == 0
+               ){
+        bestCell = 8;
+    } else if (board->_grid[1][1] == 1 &&
+               board->_grid[2][1] == 1 &&
+               board->_grid[1][2] == 1 &&
+               board->valueFromIndex(8) == 0
+               ){
+        bestCell = 8;
+    } else if (board->_grid[1][2] == 1 &&
+               board->_grid[2][2] == 1 &&
+               board->_grid[1][3] == 1 &&
+               board->valueFromIndex(16) == 0
+               ){
+        bestCell = 16;
+    } else if (board->_grid[0][1] == 1 &&
+              board->_grid[1][1] == 1 &&
+              board->_grid[1][2] == 1 &&
+              board->_grid[2][1] == 1 &&
+              board->valueFromIndex(16) == 0
+              ){
+       bestCell = 16;
+    }
+    else if (board->_grid[0][1] == 1 &&
+              board->_grid[1][2] == 1 &&
+              board->_grid[2][1] == 1 &&
+              board->valueFromIndex(6) == 0
+              ){
+       bestCell = 6;
+    }
+
+    else if (board->_grid[1][2] == 1 &&
+              board->_grid[2][1] == 1 &&
+              board->_grid[3][2] == 1 &&
+              board->valueFromIndex(1) == 0
+              ){
+       bestCell = 1;
+    }
+    return bestCell;
+}
+
 Line bestOfLines(const Line &line1, const Line &line2)
 {
     Line bestLine;
@@ -386,66 +451,8 @@ int bestBlankCell(const Line &line, bool isHard) {
     }
 
     if (isHard){ //Hard coding some solutions to forks
-        if (board->_grid[2][2] == 1 &&
-                board->_grid[2][3] == 1 &&
-                board->_grid[1][2] == 1 &&
-                board->_grid[1][3] == 1 &&
-                board->valueFromIndex(16) == 0){
-            bestCell = 16;
-        } else if (board->_grid[2][2] == 1 &&
-                   board->_grid[2][1] == 1 &&
-                   board->_grid[3][2] == 1 &&
-                   board->_grid[3][1] == 1 &&
-                   board->valueFromIndex(8) == 0
-                   ){
-            bestCell = 8;
-        } else if (board->_grid[1][1] == 1 &&
-                   board->_grid[2][1] == 1 &&
-                   board->_grid[2][2] == 1 &&
-                   board->valueFromIndex(13) == 0
-                   ){
-            bestCell = 13;
-        } else if (board->_grid[2][2] == 1 &&
-                   board->_grid[2][1] == 1 &&
-                   board->_grid[3][1] == 1 &&
-                   board->valueFromIndex(8) == 0
-                   ){
-            bestCell = 8;
-        } else if (board->_grid[1][1] == 1 &&
-                   board->_grid[2][1] == 1 &&
-                   board->_grid[1][2] == 1 &&
-                   board->valueFromIndex(8) == 0
-                   ){
-            bestCell = 8;
-        } else if (board->_grid[1][2] == 1 &&
-                   board->_grid[2][2] == 1 &&
-                   board->_grid[1][3] == 1 &&
-                   board->valueFromIndex(16) == 0
-                   ){
-            bestCell = 16;
-        } else if (board->_grid[0][1] == 1 &&
-                  board->_grid[1][1] == 1 &&
-                  board->_grid[1][2] == 1 &&
-                  board->_grid[2][1] == 1 &&
-                  board->valueFromIndex(16) == 0
-                  ){
-           bestCell = 16;
-        }
-        else if (board->_grid[0][1] == 1 &&
-                  board->_grid[1][2] == 1 &&
-                  board->_grid[2][1] == 1 &&
-                  board->valueFromIndex(6) == 0
-                  ){
-           bestCell = 6;
-        }
-
-        else if (board->_grid[1][2] == 1 &&
-                  board->_grid[2][1] == 1 &&
-                  board->_grid[3][2] == 1 &&
-                  board->valueFromIndex(1) == 0
-                  ){
-           bestCell = 1;
-        }
+        int forkvar = forkPreventer();
+        if (forkvar != 100) bestCell = forkvar;
     }
 
     return bestCell;
