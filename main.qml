@@ -24,7 +24,7 @@ Window {
     property color redColor: "#FC2833"
 
     property int menusOpen: 1;
-    property string backgroundSource: "forest.jpg"
+    property string backgroundSource;
 
     property Grid board: Grid{
         id: board;
