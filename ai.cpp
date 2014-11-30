@@ -385,11 +385,66 @@ int bestBlankCell(const Line &line, bool isHard) {
         col += colOffset;
     }
 
-    if (isHard){ //Hard coding some solutions
-        if (board->_grid[2][2] == 1 && board->_grid[2][3] == 1 && board->_grid[1][2] == 1 && board->_grid[1][3] == 1){
+    if (isHard){ //Hard coding some solutions to forks
+        if (board->_grid[2][2] == 1 &&
+                board->_grid[2][3] == 1 &&
+                board->_grid[1][2] == 1 &&
+                board->_grid[1][3] == 1 &&
+                board->valueFromIndex(16) == 0){
             bestCell = 16;
-        } else if (board->_grid[2][2] == 1 && board->_grid[2][1] == 1 && board->_grid[3][2] == 1 && board->_grid[3][1] == 1){
+        } else if (board->_grid[2][2] == 1 &&
+                   board->_grid[2][1] == 1 &&
+                   board->_grid[3][2] == 1 &&
+                   board->_grid[3][1] == 1 &&
+                   board->valueFromIndex(8) == 0
+                   ){
             bestCell = 8;
+        } else if (board->_grid[1][1] == 1 &&
+                   board->_grid[2][1] == 1 &&
+                   board->_grid[2][2] == 1 &&
+                   board->valueFromIndex(13) == 0
+                   ){
+            bestCell = 13;
+        } else if (board->_grid[2][2] == 1 &&
+                   board->_grid[2][1] == 1 &&
+                   board->_grid[3][1] == 1 &&
+                   board->valueFromIndex(8) == 0
+                   ){
+            bestCell = 8;
+        } else if (board->_grid[1][1] == 1 &&
+                   board->_grid[2][1] == 1 &&
+                   board->_grid[1][2] == 1 &&
+                   board->valueFromIndex(8) == 0
+                   ){
+            bestCell = 8;
+        } else if (board->_grid[1][2] == 1 &&
+                   board->_grid[2][2] == 1 &&
+                   board->_grid[1][3] == 1 &&
+                   board->valueFromIndex(16) == 0
+                   ){
+            bestCell = 16;
+        } else if (board->_grid[0][1] == 1 &&
+                  board->_grid[1][1] == 1 &&
+                  board->_grid[1][2] == 1 &&
+                  board->_grid[2][1] == 1 &&
+                  board->valueFromIndex(16) == 0
+                  ){
+           bestCell = 16;
+        }
+        else if (board->_grid[0][1] == 1 &&
+                  board->_grid[1][2] == 1 &&
+                  board->_grid[2][1] == 1 &&
+                  board->valueFromIndex(6) == 0
+                  ){
+           bestCell = 6;
+        }
+
+        else if (board->_grid[1][2] == 1 &&
+                  board->_grid[2][1] == 1 &&
+                  board->_grid[3][2] == 1 &&
+                  board->valueFromIndex(1) == 0
+                  ){
+           bestCell = 1;
         }
     }
 
