@@ -4,6 +4,7 @@
 #include <iostream>
 #include <QDebug>
 #include "line.h"
+#include "grid.h"
 
 #define SIZE 5
 #define MAX_DEPTH 3
@@ -251,12 +252,32 @@ int hardAI()
            return index;
 }
 
-int maxAlgorithm(){
-    return 0;
-}
+int smartAI(){
+    Grid tempboard; //Create a temp grid
+    tempboard._gridLength = 5;
+    tempboard._countToWin = 4;
 
-int minAlgorithm(){
-    return 0;
+    //Clone the board to the temp grid
+    for (int i = 0; i < board->_gridLength * board->_gridLength; i++)
+        tempboard._grid[tempboard.indexToRow(i)][tempboard.indexToColumn(i)] = board->valueFromIndex(i);
+
+    //Loop through board to check if there is a possible win
+    for (int j = 0; j < tempboard._gridLength * tempboard._gridLength; j++){
+        int old = tempboard.valueFromIndex(j);
+        if (old == 0){
+            tempboard.placePiece(j, -1);
+            if (tempboard.checkWin(-1)) { //If there's a possible win, place it on the board and return that position
+                board->placePiece(j, -1);
+                return j;
+            }
+            tempboard.placePiece(j, old); //If not, removed that piece from the temp board
+        }
+    }
+
+    //No winning move was found
+    int medium = mediumAi(); //Run the medium AI and store value
+    board->placePiece(medium, -1); //Place the medium AI move
+    return medium; //Return the medium AI move
 }
 
 int AI::makeMove(){
@@ -268,7 +289,7 @@ int AI::makeMove(){
         return mediumAi();
         break;
     case 3: //Hard AI
-        return hardAI();
+        return smartAI();
         break;
 
     default:
