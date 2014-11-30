@@ -28,9 +28,9 @@ int randomMove(){
 
 // helper function declaration
 Line bestOfLines(const Line &line1, const Line &line2);
-int bestBlankCell(const Line &line);
+int bestBlankCell(const Line &line, bool isHard);
 
-int mediumAi() {
+int mediumAi(bool isHard) {
     Line bestLine, currentLine;
     int bestMove;
     int startR=0;
@@ -109,7 +109,7 @@ int mediumAi() {
                 bestLine = bestOfLines(currentLine, bestLine); // update bestLine
         }
 
-        bestMove = bestBlankCell(bestLine);
+        bestMove = bestBlankCell(bestLine, isHard);
     }
 
     board->placePiece(bestMove, -1);
@@ -275,7 +275,7 @@ int smartAI(){
     }
 
     //No winning move was found
-    int medium = mediumAi(); //Run the medium AI and store value
+    int medium = mediumAi(true); //Run the medium AI and store value
     board->placePiece(medium, -1); //Place the medium AI move
     return medium; //Return the medium AI move
 }
@@ -286,7 +286,7 @@ int AI::makeMove(){
         return randomMove();
         break;
     case 2: //Medium AI
-        return mediumAi();
+        return mediumAi(false);
         break;
     case 3: //Hard AI
         return smartAI();
@@ -330,7 +330,7 @@ Line bestOfLines(const Line &line1, const Line &line2)
     return bestLine;
 }
 
-int bestBlankCell(const Line &line) {
+int bestBlankCell(const Line &line, bool isHard) {
     int emptyCell = -1, bestCell = -1;
     int rowOffset, colOffset;
     int row = board->indexToRow(line.startingPos());
@@ -383,6 +383,14 @@ int bestBlankCell(const Line &line) {
         }
         row += rowOffset;
         col += colOffset;
+    }
+
+    if (isHard){ //Hard coding some solutions
+        if (board->_grid[2][2] == 1 && board->_grid[2][3] == 1 && board->_grid[1][2] == 1 && board->_grid[1][3] == 1){
+            bestCell = 16;
+        } else if (board->_grid[2][2] == 1 && board->_grid[2][1] == 1 && board->_grid[3][2] == 1 && board->_grid[3][1] == 1){
+            bestCell = 8;
+        }
     }
 
     return bestCell;
