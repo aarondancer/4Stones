@@ -21,7 +21,7 @@ public:
     void deletePlayer(QString id, QString session);
 
 private:
-    QNetworkAccessManager* netManager = new QNetworkAccessManager(this);
+    QNetworkAccessManager* netManager = new QNetworkAccessManager();
     QNetworkRequest request;
     void setContentLength(int size);
     void setSession(QString session);
