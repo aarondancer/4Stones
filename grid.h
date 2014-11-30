@@ -78,6 +78,9 @@ public:
     int lastMoveO() const;
     void setlastMoveO(int lastMoveO);
 
+    int _gridLength;
+    int _countToWin;
+
 signals:
     void idkwhattodowithnotify();
 
@@ -85,8 +88,6 @@ public slots:
 
 private:
     int _lastMove;
-    int _gridLength;
-    int _countToWin;
     int _lastMoveX;
     int _lastMoveO;
     int _moveCount;
