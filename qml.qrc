@@ -16,5 +16,8 @@
         <file>back arrow.svg</file>
         <file>QChart.qml</file>
         <file>QChart.js</file>
+        <file>rainbow.jpg</file>
+        <file>envelopes.png</file>
+        <file>cityscape.png</file>
     </qresource>
 </RCC>

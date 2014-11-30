@@ -28,6 +28,9 @@ Rectangle {
         ListElement { name: "Kite"; image: "kite.jpg" }
         ListElement { name: "Ripples"; image: "ripples.png" }
         ListElement { name: "Forest"; image: "forest.jpg" }
+        ListElement { name: "Cityscape"; image: "cityscape.png" }
+        ListElement { name: "Envelopes"; image: "envelopes.png" }
+        ListElement { name: "Rainbow"; image: "rainbow.jpg" }
     }
 
     Component {
