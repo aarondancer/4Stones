@@ -7,6 +7,7 @@ SOURCES += main.cpp \
     player.cpp \
     global.cpp \
     ai.cpp \
+    line.cpp \
     parsehelper.cpp
 
 RESOURCES += qml.qrc
@@ -22,6 +23,7 @@ HEADERS += \
     player.h \
     global.h \
     ai.h \
+    line.h \
     parsehelper.h \
     appsettings.h
 
