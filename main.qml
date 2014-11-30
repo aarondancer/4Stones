@@ -80,18 +80,23 @@ Window {
                             if(board.valueFromIndex(index) === 0 && !board.isFilled() && menusOpen === 0){
                                 var p = gridView.model.get(index);
                                 var check;
+
                                 if(turn === 1){
                                     board.placePiece(index, 1);
                                     p.backcolor = blue;
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = -1;
+
                                     check = board.checkWin(1);
-                                    if (check && winDialog.visible === false) winDialog.showWinDialog(1);
-                                    if (board.isFilled() && winDialog.visible === false) winDialog.showWinDialog(3);
+
+                                    if (check) winDialog.showWinDialog(1);
+
+                                    if (board.isFilled()) winDialog.showWinDialog(3);
+
                                     if (computer.difficulty !== 4 && check === false && !board.isFilled()){
                                         TheForce.aiMove();
-                                        if (board.isFilled() && winDialog.visible === false) winDialog.showWinDialog(3);
+                                        if(board.checkWin(-1)) winDialog.showWinDialog(2);
                                     }
                                 }
                                 else if(turn === -1){
@@ -100,9 +105,11 @@ Window {
                                     p.borderwidth = 1;
                                     p.stoneopacity = 1;
                                     turn = 1;
+                                    if(board.checkWin(-1)) winDialog.showWinDialog(2);
                                 }
-                                if(board.checkWin(-1) && winDialog.visible === false) winDialog.showWinDialog(2);
-                                if (board.isFilled() && winDialog.visible === false) winDialog.showWinDialog(3);
+
+                                if (board.isFilled()) winDialog.showWinDialog(3);
+
                                 turnColor = (turn === -1) ? red : blue;
                             }
 
@@ -249,18 +256,20 @@ Window {
         onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
 
         function showWinDialog(p){
-            winDialog.title = "Winner!";
-            winDialog.message = "Player " + p + " wins!";
-            if (p === 1){
-                if (player.username !== "") player.updatePlayer(1,0,0);
-            }else if (p === 2){
-                if (player.username !== "") player.updatePlayer(0,1,0);
-            }else if (p === 3){
-                winDialog.title = "It's a tie!"
-                winDialog.message = "Looks like nobody wins"
-                if (player.username !== "") player.updatePlayer(0,0,1);
+            if (!visible){
+                title = "Winner!";
+                message = "Player " + p + " wins!";
+                if (p ===  1){
+                    if (player.username !== "") player.updatePlayer(1,0,0);
+                }else if (p === 2){
+                    if (player.username !== "") player.updatePlayer(0,1,0);
+                }else if (p === 3){
+                    title = "It's a tie!"
+                    message = "Looks like nobody wins"
+                    if (player.username !== "") player.updatePlayer(0,0,1);
+                }
+                visible = true;
             }
-            winDialog.visible = true;
         }
     }
 
