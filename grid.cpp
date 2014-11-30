@@ -18,7 +18,10 @@ Grid::Grid(QObject *parent) : QObject(parent)
 }
 
 bool Grid::isFilled(){
-    return (_moveCount == 25);
+    int count = 0;
+    for (int i = 0; i < _gridLength * _gridLength; i++) if (valueFromIndex(i) != 0) count++;
+    return (count >= 25);
+//    return (_moveCount == 25);
 }
 
 bool Grid::checkWin(int player){
