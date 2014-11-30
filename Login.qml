@@ -31,7 +31,7 @@ Rectangle {
 
         Image{ //The logo
             id: logo
-            width: usernameField.width * .75
+            width: usernameField.width
             height: width
             fillMode: Image.PreserveAspectFit
             smooth: true
@@ -73,7 +73,7 @@ Rectangle {
 
             Rectangle{
                 color: "transparent"
-                width: (usernameField.width - (loginButton.width * 3) - 20) / 2
+                width: ((usernameField.width / 3) - guestButton.height) / 2
                 height: 1
             }
 
@@ -82,7 +82,13 @@ Rectangle {
                 text: "Login"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {player.getSetPlayer(usernameField.text);}
+                onClicked: {
+                    if (nameIsValid() === true){
+                        player.loginPlayer(usernameField.text);
+                    }else{
+                        loginFailed();
+                    }
+                }
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -101,13 +107,14 @@ Rectangle {
                         border.width: control.activeFocus ? 2 : 1
                         border.color: "white"
                         radius: width * 0.5
-                        color: (control.hovered) ? blue : Qt.lighter(blue, 1.2)
+                        color: (!control.hovered) ? blue : Qt.lighter(blue, 1.2)
                     }
-                }
+                }               
             }
             Rectangle{
                 color: "transparent"
-                width: 10
+                width: (usernameField.width / 3) - guestButton.height
+
                 height: 1
             }
 
@@ -116,7 +123,13 @@ Rectangle {
                 text: "Register"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {TheForce.showDifficulties();}
+                onClicked: {
+                    if (nameIsValid() === true){
+                        player.registerPlayer(usernameField.text);
+                    }else{
+                        registerFailed();
+                    }
+                }
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -135,7 +148,7 @@ Rectangle {
                         border.width: control.activeFocus ? 2 : 1
                         border.color: "white"
                         radius: width *0.5
-                        color: (control.hovered) ? red : Qt.lighter(red, 1.2)
+                        color: (!control.hovered) ? red : Qt.lighter(red, 1.2)
                     }
                 }
 
@@ -143,7 +156,7 @@ Rectangle {
 
             Rectangle{
                 color: "transparent"
-                width: 10
+                width: (usernameField.width / 3) - guestButton.height
                 height: 1
             }
 
@@ -152,7 +165,7 @@ Rectangle {
                 text: "Play as Guest"
                 width: height
                 height: usernameField.height * 2
-                onClicked: {TheForce.showDifficulties();}
+                onClicked: {TheForce.showDifficulties(); mainMenu.hideHistory();}
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -171,11 +184,201 @@ Rectangle {
                         border.width: control.activeFocus ? 2 : 1
                         border.color: "white"
                         radius: width *0.5
-                        color: (control.hovered) ? "grey" : Qt.lighter("grey", 1.2)
+                        color: (!control.hovered) ? "grey" : Qt.lighter("grey", 1.2)
                     }
                 }
             }
         }
+
+        Rectangle{
+            color: "transparent"
+            width: 1;
+            height: login.height / 32
+        }
+    }
+
+    FSDialog {
+        id: loginSuccessDialog
+        title: "Login"
+        message: "Would you like to proceed and login as " + usernameField.text + "?"
+        cancel: false
+        accept: true
+        decline: true
+        visible: false
+        z: 1010
+
+        onAccepted: {
+            visible = false;
+            TheForce.showDifficulties();
+            enable();
+        }
+
+        onDeclined: {
+            visible = false;
+            usernameField.text = "";
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog {
+        id: loginFailedDialog
+        title: "Login Failed"
+        message: "The username " + usernameField.text + " does not exist or is invalid. Please register or try again."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog {
+        id: registerSuccessDialog
+        title: "Success!"
+        message: "The username " + usernameField.text + " has been successfully registered successfully!"
+        cancel: false
+        accept: true
+        acceptText: "Continue"
+        decline: false
+        visible: false
+        z: 1010
+
+        onAccepted: {
+            visible = false;
+            enable();
+            TheForce.showDifficulties();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog {
+        id: registerFailedDialog
+        title: "Registration Failed"
+        message: "The username " + usernameField.text + " is either invalid or already taken. Please try another username or login."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog {
+        property string uname;
+        id: loggedOutDialog
+        title: "Logged out"
+        message: "The username " + uname + " has been logged out."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    FSDialog {
+        property string uname;
+        id: deletedDialog
+        title: "User deleted"
+        message: "The username " + uname + " has been deleted."
+        cancel: true
+        cancelText: "Okay"
+        accept: false
+        decline: false
+        visible: false
+        z: 1010
+
+        onCanceled: {
+            visible = false;
+            enable();
+        }
+
+        onVisibleChanged: { menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1; }
+    }
+
+    function loggedOut(uname){
+        loggedOutDialog.uname = uname;
+        loggedOutDialog.visible = true;
+        disable();
+    }
+
+    function deleted(uname){
+        deletedDialog.uname = uname;
+        deletedDialog.visible = true;
+        disable();
+    }
+
+    function loginSuccess(){
+        loginSuccessDialog.visible = true;
+        disable();
+    }
+
+    function loginFailed(){
+        loginFailedDialog.visible = true;
+        disable();
+    }
+
+    function registerSuccess(){
+        registerSuccessDialog.visible = true;
+        disable();
+    }
+
+    function registerFailed(){
+        registerFailedDialog.visible = true;
+        disable();
+    }
+
+    function disable(){
+        usernameField.enabled = false;
+        loginButton.enabled = false;
+        registerButton.enabled = false;
+        guestButton.enabled = false;
+    }
+
+    function enable(){
+        usernameField.enabled = true;
+        loginButton.enabled = true;
+        registerButton.enabled = true;
+        guestButton.enabled = true;
+    }
+
+    function noInternet(){
+        usernameField.enabled = false;
+        loginButton.enabled = false;
+        registerButton.enabled = false;
+    }
+
+    function nameIsValid(){
+        var validcharacters = '1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var username = usernameField.text;
+        for (var i = 0, l = username.length; i < l; ++i) {
+            if (validcharacters.indexOf(username.substr(i, 1)) == -1) return false;
+        }
+        return true;
     }
 
 }

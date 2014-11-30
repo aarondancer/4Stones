@@ -10,11 +10,16 @@ Rectangle {
 
     property string title;
     property string message;
+
     property bool cancel;
     property bool accept;
     property bool decline;
 
-    property int divisor: (parent.height < parent.width ? parent.height : parent.width)
+    property string cancelText: "Cancel";
+    property string acceptText: "Yes";
+    property string declineText: "No";
+
+    property int divisor: (height < width ? height : width)
     color: Qt.rgba(0,0,0,0.5);
     id: dialogBackground
     width: parent.width
@@ -43,7 +48,7 @@ Rectangle {
             height: parent.height
             width: parent.width
             Rectangle{
-                height: (dialog.width - buttonRow.width) / 2
+                height: buttonRow.height / 2
                 width: 1;
                 color: "transparent"
             }
@@ -53,12 +58,20 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pointSize: divisor / 16
             }
+
+            Rectangle{
+                height: buttonRow.height / 4
+                width: 1;
+                color: "transparent"
+            }
+
             Label{
                 text: message;
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pointSize: divisor / 24
+                font.pointSize: divisor / 32
                 font.weight: Font.Light
                 wrapMode: Text.WordWrap
+                horizontalAlignment: Text.Center
                 width: dialog.width - 40
             }
         }
@@ -67,11 +80,11 @@ Rectangle {
             id: buttonRow
             anchors.horizontalCenter: dialog.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: (dialog.width - width) / 2
+            anchors.bottomMargin: height / 2
             spacing: divisor / 12
             Button{
                 id: cancelButton
-                text: "Cancel"
+                text: cancelText
                 width: height
                 height: dialog.height / 4
                 onClicked: dialogBackground.canceled()
@@ -93,18 +106,18 @@ Rectangle {
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "white"
                             radius: width *0.5
-                            color: (control.hovered) ? "grey" : Qt.lighter("grey", 1.2)
+                            color: (!control.hovered) ? "grey" : Qt.lighter("grey", 1.2)
                     }
                 }
-//                Component.onCompleted: {cancelButton.destroy()}
+                visible: cancel;
             }
 
             Button{
                 id: noButton
-                text: "No"
+                text: declineText
                 width: height
                 height: dialog.height / 4
-                onClicked: dialogBackground.decline()
+                onClicked: dialogBackground.declined()
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -123,17 +136,18 @@ Rectangle {
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "white"
                             radius: width *0.5
-                            color: (control.hovered) ? red : Qt.lighter(red, 1.2)
+                            color: (!control.hovered) ? red : Qt.lighter(red, 1.2)
                     }
                 }
+                visible: decline;
             }
 
             Button{
                 id: yesButton
-                text: "Yes"
+                text: acceptText
                 width: height
                 height: dialog.height / 4
-                onClicked: dialogBackground.accept()
+                onClicked: dialogBackground.accepted()
                 style: ButtonStyle{
                     label: Text {
                         renderType: Text.NativeRendering
@@ -152,14 +166,13 @@ Rectangle {
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "white"
                             radius: width *0.5
-                            color: (control.hovered) ? blue : Qt.lighter(blue, 1.2)
+                            color: (!control.hovered) ? blue : Qt.lighter(blue, 1.2)
                     }
                 }
+                visible: accept;
             }
         }
     }
-
-
 }
 
 

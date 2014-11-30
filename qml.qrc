@@ -11,7 +11,13 @@
         <file>theForce.js</file>
         <file>GoFirst.qml</file>
         <file>Settings.qml</file>
-        <file>Parse.js</file>
         <file>FSDialog.qml</file>
+        <file>History.qml</file>
+        <file>back arrow.svg</file>
+        <file>QChart.qml</file>
+        <file>QChart.js</file>
+        <file>rainbow.jpg</file>
+        <file>envelopes.png</file>
+        <file>cityscape.png</file>
     </qresource>
 </RCC>

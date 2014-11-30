@@ -2,19 +2,20 @@
 #define PLAYER_H
 
 #include <QObject>
-#include "parserequestworker.h"
+#include "parsehelper.h"
 #include <QJsonDocument>
-#include <QJsonArray>
 #include <QJsonObject>
-#include <QJsonValue>
 
 using namespace std;
 
 class Player : public QObject{
     Q_OBJECT
+
     Q_PROPERTY(int wins READ getWins WRITE setWins NOTIFY winsChanged)
+    Q_PROPERTY(int losses READ getLosses WRITE setLosses NOTIFY lossesChanged)
+    Q_PROPERTY(int draws READ getDraws WRITE setDraws NOTIFY drawsChanged)
     Q_PROPERTY(int number READ getNumber WRITE setNumber NOTIFY numberChanged)
-    Q_PROPERTY(QString username READ getUsername WRITE setUsername)
+    Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
 
 public:
     explicit Player(QObject *parent = 0);
@@ -39,17 +40,26 @@ public:
         _username = username;
     }
 
-    Q_INVOKABLE void getSetPlayer(QString username);
-    Q_INVOKABLE bool registerPlayer(QString username);
+    Q_INVOKABLE void loginPlayer(QString username);
+    Q_INVOKABLE void registerPlayer(QString username);
+    Q_INVOKABLE void updatePlayer(int wins, int losses, int draws);
+    Q_INVOKABLE void logout();
+    Q_INVOKABLE void deletePlayer();
 
 signals:
+    void usernameChanged();
+    void drawsChanged();
+    void lossesChanged();
     void winsChanged();
     void numberChanged();
-    void setPlayerFinished();
-    void setPlayerFailed();
+    void loginFinished();
+    void loginFailed();
+    void registerFinished();
+    void registerFailed();
 
 public slots:
-    void setPlayer(ParseRequestWorker * worker);
+    void handleLogin(bool exists, QNetworkReply *reply);
+    void handleRegister(bool exists, QNetworkReply *reply);
 
 private:
     int _wins;
@@ -58,6 +68,7 @@ private:
     int _number;
     QString _username;
     QString objectID;
+    QString session;
 };
 
 #endif // PLAYER_H
