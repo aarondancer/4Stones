@@ -6,7 +6,6 @@ function aiMove(){
     c.stoneopacity = 1;
     turn = 1;
     turnColor = blue;
-    winDialog.visible = board.checkWin(-1);
 }
 
 function boardReset() {//Clear the board
