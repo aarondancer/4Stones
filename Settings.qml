@@ -14,6 +14,9 @@ Rectangle {
     SettingsHelper{
         id: settingsHelper
         Component.onCompleted: {
+            loadSettings();
+        }
+        function loadSettings(){
             for (var i = 0; i < wallpapers.count; i++){
                 if (wallpapers.get(i).image === getValue("background", "forest.jpg")){
                     wallpaperSlider.currentIndex = i;
@@ -165,13 +168,12 @@ Rectangle {
         highlightRangeMode: ListView.StrictlyEnforceRange
         highlightFollowsCurrentItem: true;
         onCurrentIndexChanged: {
-            if(settings.enabled){
-                savedIndex = currentIndex;
-            }else{
-                currentIndex = savedIndex;
-            }
-
             if (loaded) {
+                if(settings.enabled){
+                    savedIndex = currentIndex;
+                }else{
+                    currentIndex = savedIndex;
+                }
                 backgroundSource = wallpapers.get(currentIndex).image;
                 settingsHelper.setValue("background", backgroundSource);
             }
@@ -179,6 +181,7 @@ Rectangle {
     }
 
     onVisibleChanged: {
+        settingsHelper.loadSettings();
         if (settings.visible) settings.enabled = true;
         else settings.enabled = false;
     }
