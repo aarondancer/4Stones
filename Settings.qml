@@ -9,6 +9,7 @@ Rectangle {
     id: settings
     property int divisor: (height < width ? height : width)
     property bool loaded: false;
+    property int savedIndex;
 
     SettingsHelper{
         id: settingsHelper
@@ -16,7 +17,8 @@ Rectangle {
             for (var i = 0; i < wallpapers.count; i++){
                 if (wallpapers.get(i).image === getValue("background", "forest.jpg")){
                     wallpaperSlider.currentIndex = i;
-                    backgroundSource = wallpapers.get(wallpaperSlider.currentIndex).image;
+                    savedIndex = i;
+                    backgroundSource = wallpapers.get(i).image;
                     loaded = true;
                 }
             }
@@ -163,6 +165,12 @@ Rectangle {
         highlightRangeMode: ListView.StrictlyEnforceRange
         highlightFollowsCurrentItem: true;
         onCurrentIndexChanged: {
+            if(settings.enabled){
+                savedIndex = currentIndex;
+            }else{
+                currentIndex = savedIndex;
+            }
+
             if (loaded) {
                 backgroundSource = wallpapers.get(currentIndex).image;
                 settingsHelper.setValue("background", backgroundSource);
