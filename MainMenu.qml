@@ -23,6 +23,7 @@ Rectangle {
                 font.family: "Century Gothic"
                 font.weight: Font.Light
                 color: red
+                renderType: "QtRendering"
             }
             Label{
                 text: "stones"
@@ -30,6 +31,7 @@ Rectangle {
                 font.family: "Century Gothic"
                 font.weight: Font.Light
                 color: blue
+                renderType: "QtRendering"
             }
         }
 
@@ -40,6 +42,7 @@ Rectangle {
             font.pixelSize: divisor / 12
             font.family: "Helvetica"
             font.weight: Font.Light
+            renderType: "QtRendering"
             MouseArea{
                 z: 1
                 hoverEnabled: true
@@ -55,6 +58,7 @@ Rectangle {
             font.pixelSize: divisor / 12
             font.family: "Helvetica"
             font.weight: Font.Light
+            renderType: "QtRendering"
             MouseArea{
                 z: 1
                 hoverEnabled: true
@@ -79,6 +83,7 @@ Rectangle {
             font.pixelSize: divisor / 12
             font.family: "Helvetica"
             font.weight: Font.Light
+            renderType: "QtRendering"
             MouseArea{
                 z: 1
                 hoverEnabled: true
@@ -97,6 +102,7 @@ Rectangle {
             font.pixelSize: divisor / 12
             font.family: "Helvetica"
             font.weight: Font.Light
+            renderType: "QtRendering"
             MouseArea{
                 z: 1
                 hoverEnabled: true
@@ -114,6 +120,7 @@ Rectangle {
             font.pixelSize: divisor / 12
             font.family: "Helvetica"
             font.weight: Font.Light
+            renderType: "QtRendering"
             MouseArea{
                 z: 1
                 hoverEnabled: true
@@ -130,6 +137,7 @@ Rectangle {
             font.pixelSize: divisor / 12
             font.family: "Helvetica"
             font.weight: Font.Light
+            renderType: "QtRendering"
             MouseArea{
                 z: 1
                 hoverEnabled: true
