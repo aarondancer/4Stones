@@ -141,16 +141,16 @@ Window {
         antialiasing: true
 
         Column{ //Column for stacked layout
-            width: parent.width - 20
-            height: mainWindow.height - 20
             spacing: 10
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             //anchors.verticalCenterOffset: 200
 
+            property int divisorby2: (mainWindow.height / 2 < mainWindow.width ? mainWindow.height / 2 : mainWindow.width) * 0.95
+
             Row{ //This is the top quarter. Row for side-by-side layout
                 id: topRow
-                width: (mainWindow.height / 2 < mainWindow.width ? mainWindow.height / 2 : mainWindow.width)
+                width: parent.divisorby2
                 height: mainWindow.height / 4 - (howToSpacer.height / 4)
                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -191,7 +191,7 @@ Window {
 
             Rectangle{ //Rectangle houses the grid, provides the outer border
                 id: gridBorder
-                width: (mainWindow.height / 2 < mainWindow.width ? mainWindow.height / 2 : mainWindow.width) + border.width
+                width: parent.divisorby2 + border.width
                 height: width
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.preferredHeight: width
