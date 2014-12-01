@@ -35,4 +35,4 @@ CONFIG += c++11
 
 ICON = 4Stones.icns
 
-RC_FILE = 4Stones.rc
+win32:RC_ICONS += 4Stones.ico
