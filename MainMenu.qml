@@ -179,7 +179,7 @@ Rectangle {
         restartButton.enabled = false;
         newGameButton.enabled = false;
         historyButton.enabled = false;
-        logoutButton.enabled = false;
+        logButton.enabled = false;
         settingsButton.enabled = false;
     }
 
@@ -188,7 +188,7 @@ Rectangle {
         restartButton.enabled = true;
         newGameButton.enabled = true;
         historyButton.enabled = true;
-        logoutButton.enabled = true;
+        logButton.enabled = true;
         settingsButton.enabled = true;
     }
 }
