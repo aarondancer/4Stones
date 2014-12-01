@@ -1,3 +1,5 @@
+//theForce.js acts as a bridge between views.
+
 function aiMove(){
     var i = computer.makeMove();
     var c = gridView.model.get(i);
