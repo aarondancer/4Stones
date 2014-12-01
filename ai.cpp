@@ -372,6 +372,15 @@ int forkPreventer(){
               ){
        bestCell = 1;
     }
+
+    else if (board->_grid[2][1] == 1 &&
+              board->_grid[2][2] == 1 &&
+              board->_grid[3][2] == 1 &&
+              board->_grid[1][3] == 1 &&
+              board->valueFromIndex(16) == 0
+              ){
+       bestCell = 16;
+    }
     return bestCell;
 }
 
