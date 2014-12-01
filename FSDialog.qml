@@ -56,7 +56,7 @@ Rectangle {
             Label{
                 text: title;
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pointSize: divisor / 16
+                font.pixelSize: divisor / 16
             }
 
             Rectangle{
@@ -68,7 +68,7 @@ Rectangle {
             Label{
                 text: message;
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pointSize: divisor / 32
+                font.pixelSize: divisor / 32
                 font.weight: Font.Light
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.Center
@@ -95,7 +95,7 @@ Rectangle {
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
                         font.weight: Font.Light
-                        font.pointSize: control.height / 6
+                        font.pixelSize: control.height / 6
                         color: "white"
                         text: control.text
                         wrapMode: Text.WordWrap
@@ -125,7 +125,7 @@ Rectangle {
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
                         font.weight: Font.Light
-                        font.pointSize: control.height / 6
+                        font.pixelSize: control.height / 6
                         color: "white"
                         text: control.text
                         wrapMode: Text.WordWrap
@@ -155,7 +155,7 @@ Rectangle {
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
                         font.weight: Font.Light
-                        font.pointSize: control.height / 6
+                        font.pixelSize: control.height / 6
                         color: "white"
                         text: control.text
                         wrapMode: Text.WordWrap

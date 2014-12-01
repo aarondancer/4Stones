@@ -59,7 +59,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: history.height / 48
-        font.pointSize: divisor / 8
+        font.pixelSize: divisor / 8
         text: player.username
         color: "white"
         font.weight: Font.Light
@@ -86,7 +86,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 font.family: "Helvetica"
                 font.weight: Font.Light
-                font.pointSize: control.height / 6
+                font.pixelSize: control.height / 6
                 color: "white"
                 text: control.text
                 wrapMode: Text.WordWrap
@@ -150,21 +150,21 @@ Rectangle {
                 text: "Wins: " + player.wins
                 color: blue
                 horizontalAlignment: Text.Center
-                font.pointSize: historyLabel.font.pointSize / 2.5
+                font.pixelSize: historyLabel.font.pixelSize / 2.5
             }
             Label{
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Losses: " + player.losses
                 color: red
                 horizontalAlignment: Text.Center
-                font.pointSize: historyLabel.font.pointSize / 2.5
+                font.pixelSize: historyLabel.font.pixelSize / 2.5
             }
             Label{
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Draws: " + player.draws
                 color: "grey"
                 horizontalAlignment: Text.Center
-                font.pointSize: historyLabel.font.pointSize / 2.5
+                font.pixelSize: historyLabel.font.pixelSize / 2.5
             }
 
             Rectangle{

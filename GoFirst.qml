@@ -43,7 +43,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     font.family: "Helvetica"
                     font.weight: Font.Light
-                    font.pointSize: control.height / 6
+                    font.pixelSize: control.height / 6
                     color: "white"
                     text: control.text
                     wrapMode: Text.WordWrap
@@ -72,7 +72,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     font.family: "Helvetica"
                     font.weight: Font.Light
-                    font.pointSize: control.height / 6
+                    font.pixelSize: control.height / 6
                     color: "white"
                     text: control.text
                     wrapMode: Text.WordWrap
