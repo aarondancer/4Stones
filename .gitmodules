@@ -1,3 +1,0 @@
-[submodule "qml/jbQuick/Charts"]
-	path = qml/jbQuick/Charts
-	url = git://github.com/jwintz/qchart.js.git
