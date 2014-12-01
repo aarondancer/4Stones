@@ -88,5 +88,20 @@ Rectangle {
             }
         }
     }
-    onVisibleChanged: TheForce.initWhoGoesFirst();
+    onVisibleChanged: {
+        firstButton.text = (player.username !== "") ? player.username : "Player 1";
+        switch(computer.difficulty){
+        case 1:
+            secondButton.text = "Easy AI";
+            break;
+        case 2:
+            secondButton.text = "Medium AI";
+            break;
+        case 3:
+            secondButton.text = "Hard AI";
+            break;
+        case 4:
+            secondButton.text = "Player 2";
+        }
+    }
 }
