@@ -54,7 +54,7 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: wallpaper.bottom
                 anchors.topMargin: divisor / 48
-                font.pointSize: divisor / 16
+                font.pixelSize: divisor / 16
                 text: name
                 color: "white"
                 font.weight: Font.Light
@@ -121,7 +121,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: settings.height / 48
-        font.pointSize: divisor / 8
+        font.pixelSize: divisor / 8
         text: "Settings"
         color: "white"
         font.weight: Font.Light
@@ -135,7 +135,7 @@ Rectangle {
         anchors.topMargin: divisor / 32
         anchors.left: settings.left
         anchors.leftMargin: divisor * 0.05
-        font.pointSize: divisor / 12
+        font.pixelSize: divisor / 12
         text: "Wallpaper: "
         color: "white"
         font.weight: Font.Light
