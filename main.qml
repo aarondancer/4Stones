@@ -142,21 +142,19 @@ Window {
 
         Column{ //Column for stacked layout
             spacing: 10
-            anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            //anchors.verticalCenterOffset: 200
-
+            anchors.verticalCenter: parent.verticalCenter
             property int divisorby2: (mainWindow.height / 2 < mainWindow.width ? mainWindow.height / 2 : mainWindow.width) * 0.95
 
             Row{ //This is the top quarter. Row for side-by-side layout
                 id: topRow
                 width: parent.divisorby2
-                height: mainWindow.height / 4 - (howToSpacer.height / 4)
+//                height: (mainWindow.height / 4) - (howToSpacer.height - howTo.height)
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Image{ //The logo
                     id: logo
-                    width: parent.width * 0.25
+                    width: parent.width / 4
                     height: width
                     fillMode: Image.PreserveAspectFit
                     anchors.verticalCenter: parent.verticalCenter
@@ -167,7 +165,7 @@ Window {
 
                 Rectangle{ //Spacer to justify the menu button right
                     width: parent.width * 5/8
-                    height: parent.height
+                    height: 1
                     color: "transparent"
                 }
 
@@ -187,6 +185,14 @@ Window {
                 }
             }
 
+            Rectangle{
+                id: headerSpacer
+                height: gridView.width / 12
+                width: 1;
+                color: "transparent"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
+            }
 
 
             Rectangle{ //Rectangle houses the grid, provides the outer border
@@ -217,15 +223,11 @@ Window {
 
             Rectangle{
                 id: howToSpacer
-                height: gridView.width / 8
+                height: gridView.width / 12
                 width: 1;
                 color: "transparent"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
-
-                MouseArea{
-                    onClicked: {}
-                }
             }
 
             Text{ //how-to text
