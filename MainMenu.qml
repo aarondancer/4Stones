@@ -123,7 +123,8 @@ Rectangle {
         }
 
         Label{
-            id: logoutButton
+            id: logButton
+            property bool isLogout: false;
             text: "Logout"
             color: "white"
             font.pixelSize: divisor / 12
@@ -134,8 +135,10 @@ Rectangle {
                 hoverEnabled: true
                 anchors.fill: parent
                 onClicked: {
-                    login.loggedOut(player.username);
-                    player.logout();
+                    if (logButton.isLogout){
+                        login.loggedOut(player.username);
+                        player.logout();
+                    }
                     login.visible = true;
                 }
             }
@@ -158,6 +161,13 @@ Rectangle {
 
     onVisibleChanged: {
         historyButton.text = player.username;
+        if (player.username === ""){
+            logButton.isLogout = false;
+            logButton.text = "Login";
+        }else{
+            logButton.isLogout = true;
+            logButton.text = "Logout";
+        }
     }
 
     function hideHistory(){
