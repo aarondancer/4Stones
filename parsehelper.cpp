@@ -2,6 +2,20 @@
 #include <QDebug>
 #include <QUrlQuery>
 
+
+ParseHelper::ParseHelper(QObject *parent) : QObject(parent)
+{
+    netManager = new QNetworkAccessManager(this);
+    request.setRawHeader("User-Agent", "4Stones");
+    request.setRawHeader("X-Custom-User-Agent", "4Stones");
+    request.setRawHeader("X-Parse-Application-Id", "BCb5kAR9qnajuBhXpzoA8e8dOdzOdMds04sEUJJd");
+    request.setRawHeader("X-Parse-REST-API-Key","Orlu3hoJgkINylZBUoiDaQRjQmpC31a1D4qoZa2D");
+}
+
+ParseHelper::~ParseHelper() {
+    delete netManager;
+}
+
 void ParseHelper::setContentLength(int size){
     request.setRawHeader("Content-Type", "application/json");
     request.setRawHeader("Content-Length", QByteArray(QString::number(size).toUtf8()));
@@ -9,14 +23,6 @@ void ParseHelper::setContentLength(int size){
 
 void ParseHelper::setSession(QString session){
     request.setRawHeader("X-Parse-Session-Token", QByteArray(session.toUtf8()));
-}
-
-ParseHelper::ParseHelper(QObject *parent) : QObject(parent)
-{
-    request.setRawHeader("User-Agent", "4Stones");
-    request.setRawHeader("X-Custom-User-Agent", "4Stones");
-    request.setRawHeader("X-Parse-Application-Id", "BCb5kAR9qnajuBhXpzoA8e8dOdzOdMds04sEUJJd");
-    request.setRawHeader("X-Parse-REST-API-Key","Orlu3hoJgkINylZBUoiDaQRjQmpC31a1D4qoZa2D");
 }
 
 void ParseHelper::login(QString username){

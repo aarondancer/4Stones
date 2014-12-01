@@ -14,6 +14,7 @@ class ParseHelper : public QObject {
     Q_OBJECT
 public:
     explicit ParseHelper(QObject *parent = 0);
+    ~ParseHelper();
 
     void login(QString username);
     void registerPlayer(QString username);
@@ -21,7 +22,7 @@ public:
     void deletePlayer(QString id, QString session);
 
 private:
-    QNetworkAccessManager* netManager = new QNetworkAccessManager();
+    QNetworkAccessManager* netManager;
     QNetworkRequest request;
     void setContentLength(int size);
     void setSession(QString session);

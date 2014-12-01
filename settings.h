@@ -10,7 +10,8 @@ class settings : public QObject
     Q_OBJECT
 public:
     explicit settings(QObject *parent = 0);
-    QSettings* q = new QSettings(QCoreApplication::applicationDirPath() + "/settings.ini", QSettings::IniFormat);
+    ~settings();
+    QSettings* q;
 
     Q_INVOKABLE void setValue(QString key, QVariant value) {
         q->setValue(key, value);
