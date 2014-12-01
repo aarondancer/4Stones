@@ -175,6 +175,7 @@ Window {
                     text: "≡"
                     font.pixelSize: parent.width / 8
                     font.bold: true
+                    renderType: "QtRendering"
 
                     MouseArea{ //Makes the Label clickable
                         z: 1
@@ -202,8 +203,7 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.preferredHeight: width
                 Layout.preferredWidth: width
-                color: Qt.rgba(0,0,0,0.15)
-                border.color: "black"
+                color: Qt.rgba(0,0,0,0.15);
                 border.width: 3
                 radius: 5
 
@@ -230,21 +230,37 @@ Window {
                 anchors.horizontalCenterOffset: (-gridView.width / 2) + (width / 2)
             }
 
-            Text{ //how-to text
-                id: howTo
+            Item{
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: Text.contentHeight
                 width: gridView.width
-                horizontalAlignment: Text.AlignHCenter
-                text: "<html><b><u>How to play:</b></u> Players take turns placing stones. The first player to get 4 stones in a row wins!</html>"
-                wrapMode: Text.WordWrap
-                font.pixelSize: ((mainWindow.width > mainWindow.height)? mainWindow.height :mainWindow.width) / 32
-                font.family: "Helvetica"
-                color: "white"
+                height: children[0].height
+                Label{ //how-to text
+                    id: howTo
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: contentHeight
+                    width: gridView.width
+                    horizontalAlignment: Text.AlignHCenter
+                    text: "<html><b><u>How to play:</b></u> Players take turns placing stones. The first player to get 4 stones in a row wins!</html>"
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: ((mainWindow.width > mainWindow.height)? mainWindow.height :mainWindow.width) / 32
+                    font.family: "Helvetica"
+    //                color:  //(backgroundSource == "forest.jpg" || backgroundSource == "ripples.png") ? "white" : "black"
+                    renderType: "QtRendering"
+                }
+
+                Glow {
+                    anchors.fill: howTo
+                    radius: 8.0
+                    samples: 32
+                    color: Qt.rgba(1,1,1,0.6)
+                    source: howTo
+                }
             }
 
         }
     }
+
+    //All of the views are initialized here as objects
 
     FSDialog {
         id: winDialog
@@ -284,8 +300,6 @@ Window {
         onCanceled: {visible = false;}
         onVisibleChanged: {menusOpen = (visible) ? menusOpen + 1 : menusOpen - 1;}
     }
-
-    //All of the views are initialized here as objects
 
     MainMenu{ //Main Menu
         id: mainMenu

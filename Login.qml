@@ -1,6 +1,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
+import QtGraphicalEffects 1.0
 import "theForce.js" as TheForce
 
 Rectangle {
@@ -28,16 +29,26 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         spacing: 20
-
-        Image{ //The logo
-            id: logo
+        Item{
             width: usernameField.width
             height: width
-            fillMode: Image.PreserveAspectFit
-            smooth: true
-            source: "4Stones.png"
-        }
+            Image{ //The logo
+                id: logo
+                width: parent.width
+                height: width
+                fillMode: Image.PreserveAspectFit
+                smooth: true
+                source: "4Stones.png"
+            }
 
+            Glow {
+                anchors.fill: logo
+                radius: 16.0
+                samples: 32
+                color: Qt.rgba(1,1,1,0.6)
+                source: logo
+            }
+        }
 
         Label{
             id: usernameLabel
@@ -91,7 +102,7 @@ Rectangle {
                 }
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
@@ -132,7 +143,7 @@ Rectangle {
                 }
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
@@ -168,7 +179,7 @@ Rectangle {
                 onClicked: {TheForce.showDifficulties(); mainMenu.hideHistory();}
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
