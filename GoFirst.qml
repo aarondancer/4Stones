@@ -38,7 +38,7 @@ Rectangle {
             onClicked: {TheForce.whoGoesFirst(1);}
             style: ButtonStyle{
                 label: Text {
-                    renderType: Text.NativeRendering
+                    renderType: Text.QtRendering
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.family: "Helvetica"
@@ -67,7 +67,7 @@ Rectangle {
             onClicked: {TheForce.whoGoesFirst(-1);}
             style: ButtonStyle{
                 label: Text {
-                    renderType: Text.NativeRendering
+                    renderType: Text.QtRendering
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.family: "Helvetica"

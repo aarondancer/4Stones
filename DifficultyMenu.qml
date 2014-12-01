@@ -40,7 +40,7 @@ Rectangle {
                 onClicked: {TheForce.selectDifficulty(1);}
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
@@ -69,7 +69,7 @@ Rectangle {
                 onClicked: {TheForce.selectDifficulty(2);}
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
@@ -102,7 +102,7 @@ Rectangle {
                 onClicked: {TheForce.selectDifficulty(3);}
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
@@ -131,7 +131,7 @@ Rectangle {
                 onClicked: {TheForce.selectDifficulty(4);}
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"

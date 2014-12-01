@@ -30,12 +30,12 @@ Rectangle {
 
     ListModel {
         id: wallpapers
-        ListElement { name: "Kite"; image: "kite.jpg" }
-        ListElement { name: "Ripples"; image: "ripples.png" }
-        ListElement { name: "Forest"; image: "forest.jpg" }
-        ListElement { name: "Cityscape"; image: "cityscape.png" }
-        ListElement { name: "Envelopes"; image: "envelopes.png" }
-        ListElement { name: "Rainbow"; image: "rainbow.jpg" }
+        ListElement { name: "Kite"; image: "kite.jpg"; }
+        ListElement { name: "Ripples"; image: "ripples.png"; }
+        ListElement { name: "Forest"; image: "forest.jpg"; }
+        ListElement { name: "Cityscape"; image: "cityscape.png"; }
+        ListElement { name: "Envelopes"; image: "envelopes.png"; }
+        ListElement { name: "Rainbow"; image: "rainbow.jpg"; }
     }
 
     Component {
@@ -65,6 +65,7 @@ Rectangle {
                 font.weight: Font.Light
                 font.family: "Helvetica"
                 font.letterSpacing: 5
+                renderType: "QtRendering"
             }
 
 //            MouseArea {
@@ -132,6 +133,7 @@ Rectangle {
         font.weight: Font.Light
         font.family: "Helvetica"
         font.letterSpacing: 5
+        renderType: "QtRendering"
     }
 
     Label{
@@ -146,6 +148,7 @@ Rectangle {
         font.weight: Font.Light
         font.family: "Helvetica"
         font.letterSpacing: 5
+        renderType: "QtRendering"
     }
 
     ListView {

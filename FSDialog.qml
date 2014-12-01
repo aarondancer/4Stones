@@ -57,6 +57,7 @@ Rectangle {
                 text: title;
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: divisor / 16
+                renderType: "QtRendering"
             }
 
             Rectangle{
@@ -73,6 +74,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.Center
                 width: dialog.width - 40
+                renderType: "QtRendering"
             }
         }
 
@@ -90,7 +92,7 @@ Rectangle {
                 onClicked: dialogBackground.canceled()
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
@@ -120,7 +122,7 @@ Rectangle {
                 onClicked: dialogBackground.declined()
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
@@ -150,7 +152,7 @@ Rectangle {
                 onClicked: dialogBackground.accepted()
                 style: ButtonStyle{
                     label: Text {
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.family: "Helvetica"
