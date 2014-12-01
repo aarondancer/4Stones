@@ -32,3 +32,7 @@ LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin
 
 CONFIG += c++11
+
+ICON = 4Stones.icns
+
+RC_FILE = 4Stones.rc

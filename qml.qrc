@@ -19,5 +19,8 @@
         <file>rainbow.jpg</file>
         <file>envelopes.png</file>
         <file>cityscape.png</file>
+        <file>4Stones.icns</file>
+        <file>4Stones.rc</file>
+        <file>4Stones.ico</file>
     </qresource>
 </RCC>
