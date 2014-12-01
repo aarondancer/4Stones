@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     global.cpp \
     ai.cpp \
     line.cpp \
-    parsehelper.cpp
+    parsehelper.cpp \
+    settings.cpp
 
 RESOURCES += qml.qrc
 
@@ -25,7 +26,7 @@ HEADERS += \
     ai.h \
     line.h \
     parsehelper.h \
-    appsettings.h
+    settings.h
 
 LIBS += -L$$[QT_INSTALL_LIBS]/../qml/QtQuick.2/
 QTPLUGIN += QtQuick2Plugin
