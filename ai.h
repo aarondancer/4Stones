@@ -10,7 +10,7 @@ class AI : public QObject
     Q_PROPERTY(int difficulty READ getDifficulty WRITE setDifficulty)
 public:
     explicit AI(QObject *parent = 0);
-    Q_INVOKABLE int makeMove();
+    Q_INVOKABLE int makeMove(); //AI makes its move
     Q_INVOKABLE int getDifficulty() const;
     Q_INVOKABLE void setDifficulty(int value);
 signals:

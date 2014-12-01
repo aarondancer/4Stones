@@ -45,7 +45,7 @@ public:
 
     //Player Related
 
-    Q_INVOKABLE void placePiece(const int index, const int player);
+    Q_INVOKABLE void placePiece(const int index, const int player); //Places a piece on the board given a 1D index and player value
 
     //Win Checking
 
@@ -64,13 +64,13 @@ public:
 
     Q_INVOKABLE int valueFromIndex(int index); //get the value from the 2D array given the index of the 1D array
 
-    Q_INVOKABLE bool isFilled();
+    Q_INVOKABLE bool isFilled(); //Checks to see if the board is filled
 
-    Q_INVOKABLE bool moveIsValid(int index);
+    Q_INVOKABLE bool moveIsValid(int index); //Checks to see if a spot on the board is taken given a 1D index
 
     QList< QList<int> > _grid;
 
-    Q_INVOKABLE void boardReset();
+    Q_INVOKABLE void boardReset(); //Resets _grid
 
     int lastMoveX() const;
     void setLastMoveX(int lastMoveX);
