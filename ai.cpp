@@ -387,7 +387,7 @@ int smartAI(){
 
                         if (board->valueFromIndex(board->_lastMove) == -1) return board->_lastMove;
                     }
-                }else if (i != 4) { //4 is bugged for some reason
+                }/*else if (i != 4 && i != 5) { //4 is bugged for some reason
                     QList<int> l; //Holds the 1D indexes of that line
                     QList<int> v; //Holds the values of that line
                     for (int z = 0; z < 4; z++) { l.append(0); v.append(0); }
@@ -407,7 +407,7 @@ int smartAI(){
                         board->placePiece(l[(cellWeight[l[0]] > cellWeight[l[3]]) ? l[0] : l[3]], -1);
 
                     if (board->valueFromIndex(board->_lastMove) == -1) return board->_lastMove;
-                }
+                }*/
             }
         }
     }
