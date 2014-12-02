@@ -274,6 +274,61 @@ int smartAI(){
         }
     }
 
+    //Find fork
+    //Horizontal
+    for (int k = 0; k <=20; k+= 5){
+        if (tempboard.valueFromIndex(k) == 0 && tempboard.valueFromIndex(k + 4) == 0){
+            int count = 0;
+            for (int l = k + 1; l <= k + 3; l++) if (tempboard.valueFromIndex(l) == -1) count++;
+            if (count == 2) for (int l = k + 1; l <= k + 3; l++){
+                if (tempboard.valueFromIndex(l) == 0){
+                    board->placePiece(l, -1);
+                    return l;
+                }
+            }
+
+        }
+    }
+
+    //Vertical
+    for (int k = 0; k <=4; k++){
+        if (tempboard.valueFromIndex(k) == 0 && tempboard.valueFromIndex(k + 20) == 0){
+            int count = 0;
+            for (int l = k + 5; l <= k + 15; l+=5) if (tempboard.valueFromIndex(l) == -1) count++;
+            if (count == 2) for (int l = k + 5; l <= k + 15; l+=5){
+                if (tempboard.valueFromIndex(l) == 0){
+                    board->placePiece(l, -1);
+                    return l;
+                }
+            }
+
+        }
+    }
+
+    //\Diagonal
+    if (tempboard.valueFromIndex(0) == 0 && tempboard.valueFromIndex(24) == 0){
+        int count = 0;
+        for (int l = 6; l <= 18; l+=6) if (tempboard.valueFromIndex(l) == -1) count++;
+        if (count == 2) for (int l = 6; l <= 18; l+=6){
+            if (tempboard.valueFromIndex(l) == 0){
+                board->placePiece(l, -1);
+                return l;
+            }
+        }
+    }
+
+    ///Diagonal
+    if (tempboard.valueFromIndex(4) == 0 && tempboard.valueFromIndex(20) == 0){
+        int count = 0;
+        for (int l = 8; l <= 16; l+=4) if (tempboard.valueFromIndex(l) == -1) count++;
+        if (count == 2) for (int l = 8; l <= 16; l+=4){
+            if (tempboard.valueFromIndex(l) == 0){
+                board->placePiece(l, -1);
+                return l;
+            }
+        }
+    }
+
     //No winning move was found
     int medium = mediumAi(true); //Run the medium AI and store value
     board->placePiece(medium, -1); //Place the medium AI move
