@@ -376,8 +376,6 @@ int smartAI(){
                             v[looped] = tempboard.valueFromIndex(j);
                             looped++;
                         }
-                        qDebug() << l;
-                        qDebug() << v;
                         for (int a = 0; a < 2; a++){ //Stagger checks
                             if (v[0 + a] == -1 && v[1 + a] == 0 && v[2 + a] == -1 && v[3 + a] == 0) board->placePiece(l[1 + a], -1);
                             else if (v[0 + a] == -1 && v[1 + a] == -1 && v[2 + a] == 0 && v[3 + a] == 0) board->placePiece(l[2 + a], -1);
@@ -389,19 +387,18 @@ int smartAI(){
 
                         if (board->valueFromIndex(board->_lastMove) == -1) return board->_lastMove;
                     }
-                }else{
+                }else if (i != 4) { //4 is bugged for some reason
                     QList<int> l; //Holds the 1D indexes of that line
                     QList<int> v; //Holds the values of that line
-                    for (int z = 0; z < 5; z++) { l.append(0); v.append(0); }
+                    for (int z = 0; z < 4; z++) { l.append(0); v.append(0); }
                     int looped = 0; //Keep track of how many times the loop has looped
                     for (int j = steps[i][0]; j <= steps[i][1]; j+= steps[i][2]){ //Iterate through every space in that line and store it into l and v
                         l[looped] = j;
                         v[looped] = tempboard.valueFromIndex(j);
                         looped++;
                     }
-                    qDebug() << l;
-                    qDebug() << v;
-
+//                    qDebug() << l;
+//                    qDebug() << v;
                     if (v[0] == -1 && v[1] == 0 && v[2] == -1 && v[3] == 0) board->placePiece(l[1], -1);
                     else if (v[0] == -1 && v[1] == -1 && v[2] == 0 && v[3] == 0) board->placePiece(l[2], -1);
                     else if (v[0] == 0 && v[1] == -1 && v[2] == 0 && v[3] == -1) board->placePiece(l[2], -1);
