@@ -80,6 +80,7 @@ public:
 
     int _gridLength;
     int _countToWin;
+    int _lastMove;
 
 signals:
     void idkwhattodowithnotify();
@@ -87,7 +88,6 @@ signals:
 public slots:
 
 private:
-    int _lastMove;
     int _lastMoveX;
     int _lastMoveO;
     int _moveCount;
