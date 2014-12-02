@@ -13,6 +13,13 @@ static unsigned int  best_move[2];
 inline static int    abs_sub(int, int);
 static int           negamax(int, int);
 
+int cellWeight[25] = { //cell weight used to put x and o on the grid
+      3,4,3,4,3
+    , 4,6,6,6,4
+    , 3,6,8,6,3
+    , 4,6,6,6,4
+    , 3,4,3,4,3};
+
 AI::AI(QObject *parent) : QObject(parent) {
 }
 
@@ -274,57 +281,136 @@ int smartAI(){
         }
     }
 
-    //Find fork
-    //Horizontal
-    for (int k = 0; k <=20; k+= 5){
-        if (tempboard.valueFromIndex(k) == 0 && tempboard.valueFromIndex(k + 4) == 0){
-            int count = 0;
-            for (int l = k + 1; l <= k + 3; l++) if (tempboard.valueFromIndex(l) == -1) count++;
-            if (count == 2) for (int l = k + 1; l <= k + 3; l++){
-                if (tempboard.valueFromIndex(l) == 0){
-                    board->placePiece(l, -1);
-                    return l;
+    for (int j = 0; j < tempboard._gridLength * tempboard._gridLength; j++){ //For some reason this really only works if I make a totally separate loop
+        int old = tempboard.valueFromIndex(j);
+        if (old == 0){
+            tempboard.placePiece(j, 1);
+            if (tempboard.checkWin(1)) { //If there's a possible win, place it on the board and return that position
+                board->placePiece(j, -1);
+                return j;
+            }
+            tempboard.placePiece(j, old); //If not, removed that piece from the temp board
+        }
+    }
+
+    for (int x = -1; x <= 1; x++){
+        if (abs(x) == 1){
+            //Find fork
+            //Horizontal
+            for (int k = 0; k <=20; k+= 5){
+                if (tempboard.valueFromIndex(k) == 0 && tempboard.valueFromIndex(k + 4) == 0){
+                    int count = 0;
+                    for (int l = k + 1; l <= k + 3; l++) if (tempboard.valueFromIndex(l) == x) count++;
+                    if (count == 2) for (int l = k + 1; l <= k + 3; l++){
+                        if (tempboard.valueFromIndex(l) == 0){
+                            qDebug() << "placed";
+                            board->placePiece(l, -1);
+                            return l;
+                        }
+                    }
+
                 }
             }
 
-        }
-    }
+            //Vertical
+            for (int k = 0; k <=4; k++){
+                if (tempboard.valueFromIndex(k) == 0 && tempboard.valueFromIndex(k + 20) == 0){
+                    int count = 0;
+                    for (int l = k + 5; l <= k + 15; l+=5) if (tempboard.valueFromIndex(l) == x) count++;
+                    if (count == 2) for (int l = k + 5; l <= k + 15; l+=5){
+                        if (tempboard.valueFromIndex(l) == 0){
+                            qDebug() << "placed";
+                            board->placePiece(l, -1);
+                            return l;
+                        }
+                    }
 
-    //Vertical
-    for (int k = 0; k <=4; k++){
-        if (tempboard.valueFromIndex(k) == 0 && tempboard.valueFromIndex(k + 20) == 0){
-            int count = 0;
-            for (int l = k + 5; l <= k + 15; l+=5) if (tempboard.valueFromIndex(l) == -1) count++;
-            if (count == 2) for (int l = k + 5; l <= k + 15; l+=5){
-                if (tempboard.valueFromIndex(l) == 0){
-                    board->placePiece(l, -1);
-                    return l;
                 }
             }
 
-        }
-    }
-
-    //\Diagonal
-    if (tempboard.valueFromIndex(0) == 0 && tempboard.valueFromIndex(24) == 0){
-        int count = 0;
-        for (int l = 6; l <= 18; l+=6) if (tempboard.valueFromIndex(l) == -1) count++;
-        if (count == 2) for (int l = 6; l <= 18; l+=6){
-            if (tempboard.valueFromIndex(l) == 0){
-                board->placePiece(l, -1);
-                return l;
+            //\Diagonal
+            if (tempboard.valueFromIndex(0) == 0 && tempboard.valueFromIndex(24) == 0){
+                int count = 0;
+                for (int l = 6; l <= 18; l+=6) if (tempboard.valueFromIndex(l) == x) count++;
+                if (count == 2) for (int l = 6; l <= 18; l+=6){
+                    if (tempboard.valueFromIndex(l) == 0){
+                        qDebug() << "placed";
+                        board->placePiece(l, -1);
+                        return l;
+                    }
+                }
             }
-        }
-    }
 
-    ///Diagonal
-    if (tempboard.valueFromIndex(4) == 0 && tempboard.valueFromIndex(20) == 0){
-        int count = 0;
-        for (int l = 8; l <= 16; l+=4) if (tempboard.valueFromIndex(l) == -1) count++;
-        if (count == 2) for (int l = 8; l <= 16; l+=4){
-            if (tempboard.valueFromIndex(l) == 0){
-                board->placePiece(l, -1);
-                return l;
+            ///Diagonal
+            if (tempboard.valueFromIndex(4) == 0 && tempboard.valueFromIndex(20) == 0){
+                int count = 0;
+                for (int l = 8; l <= 16; l+=4) if (tempboard.valueFromIndex(l) == x) count++;
+                if (count == 2) for (int l = 8; l <= 16; l+=4){
+                    if (tempboard.valueFromIndex(l) == 0){
+                        qDebug() << "placed";
+                        board->placePiece(l, -1);
+                        return l;
+                    }
+                }
+            }
+        }else{
+            int steps [8][3] = {{0, 4, 1}, //Horizontal
+                                {0, 20, 5}, //Vertical
+                                {0, 24, 6}, // \ Diags
+                                {1, 19, 6},
+                                {5, 23, 6},
+                                {3, 15, 4}, // /Diags
+                                {4, 20, 4},
+                                {9, 21, 4}};
+            for(int i = 0; i < 8; i++){ //Horizontal and Vertical
+                if (i < 2){
+                    int val1 = (i == 0) ? 21 : 5;
+                    int val2 = (i == 0) ? 5 : 1;
+                    for (int k = 0; k < val1; k+= val2){ //Loop through rows or columns
+                        QList<int> l; //Holds the 1D indexes of that line
+                        QList<int> v; //Holds the values of that line
+                        for (int z = 0; z < 5; z++) { l.append(0); v.append(0); }
+                        int looped = 0; //Keep track of how many times the loop has looped
+                        for (int j = steps[i][0] + k; j <= steps[i][1] + k; j+= steps[i][2]){ //Iterate through every space in that line and store it into l and v
+                            l[looped] = j;
+                            v[looped] = tempboard.valueFromIndex(j);
+                            looped++;
+                        }
+                        qDebug() << l;
+                        qDebug() << v;
+                        for (int a = 0; a < 2; a++){ //Stagger checks
+                            if (v[0 + a] == -1 && v[1 + a] == 0 && v[2 + a] == -1 && v[3 + a] == 0) board->placePiece(l[1 + a], -1);
+                            else if (v[0 + a] == -1 && v[1 + a] == -1 && v[2 + a] == 0 && v[3 + a] == 0) board->placePiece(l[2 + a], -1);
+                            else if (v[0 + a] == 0 && v[1 + a] == -1 && v[2 + a] == 0 && v[3 + a] == -1) board->placePiece(l[2 + a], -1);
+                            else if (v[0 + a] == 0 && v[1 + a] == 0 && v[2 + a] == -1 && v[3 + a] == -1) board->placePiece(l[1 + a], -1);
+                            else if (v[0 + a] == 0 && v[1 + a] == -1 && v[2 + a] == -1 && v[3 + a] == 0)
+                                board->placePiece(l[(cellWeight[l[0 + a]] > cellWeight[l[3 + a]]) ? l[0 + a] : l[3 + a]], -1);
+                        }
+
+                        if (board->valueFromIndex(board->_lastMove) == -1) return board->_lastMove;
+                    }
+                }else{
+                    QList<int> l; //Holds the 1D indexes of that line
+                    QList<int> v; //Holds the values of that line
+                    for (int z = 0; z < 5; z++) { l.append(0); v.append(0); }
+                    int looped = 0; //Keep track of how many times the loop has looped
+                    for (int j = steps[i][0]; j <= steps[i][1]; j+= steps[i][2]){ //Iterate through every space in that line and store it into l and v
+                        l[looped] = j;
+                        v[looped] = tempboard.valueFromIndex(j);
+                        looped++;
+                    }
+                    qDebug() << l;
+                    qDebug() << v;
+
+                    if (v[0] == -1 && v[1] == 0 && v[2] == -1 && v[3] == 0) board->placePiece(l[1], -1);
+                    else if (v[0] == -1 && v[1] == -1 && v[2] == 0 && v[3] == 0) board->placePiece(l[2], -1);
+                    else if (v[0] == 0 && v[1] == -1 && v[2] == 0 && v[3] == -1) board->placePiece(l[2], -1);
+                    else if (v[0] == 0 && v[1] == 0 && v[2] == -1 && v[3] == -1) board->placePiece(l[1], -1);
+                    else if (v[0] == 0 && v[1] == -1 && v[2] == -1 && v[3] == 0)
+                        board->placePiece(l[(cellWeight[l[0]] > cellWeight[l[3]]) ? l[0] : l[3]], -1);
+
+                    if (board->valueFromIndex(board->_lastMove) == -1) return board->_lastMove;
+                }
             }
         }
     }
@@ -482,12 +568,6 @@ int bestBlankCell(const Line &line, bool isHard) {
     int rowOffset, colOffset;
     int row = board->indexToRow(line.startingPos());
     int col = board->indexToColumn(line.startingPos());
-    int cellWeight[25] = { //cell weight used to put x and o on the grid
-          3,4,3,4,3
-        , 4,6,6,6,4
-        , 3,6,8,6,3
-        , 4,6,6,6,4
-        , 3,4,3,4,3};
     int randomInt;
 
     srand(time(NULL));
