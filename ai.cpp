@@ -11,7 +11,7 @@
 
 static unsigned int  best_move[2];
 inline static int    abs_sub(int, int);
-static int           negamax(int, int);
+ int           negamax(int *iBoard, int, int);
 
 AI::AI(QObject *parent) : QObject(parent) {
 }
@@ -29,6 +29,9 @@ int randomMove(){
 // helper function declaration
 Line bestOfLines(const Line &line1, const Line &line2);
 int bestBlankCell(const Line &line, bool isHard);
+int eval_position(int iBoard[], int player);
+void cloneBoard(int iBoard[], int clone[]);
+void cloneBoard(Grid *grid, int clone[]);
 
 int mediumAi(bool isHard) {
     Line bestLine, currentLine;
@@ -125,131 +128,273 @@ inline static int abs_sub(int minuend, int subtrahend)
     return (abs(minuend) - subtrahend) * minuend/abs(minuend);
 }
 
-static int eval_grid(bool only_win) // Determines all possible moves to a specific depth
+//static int eval_grid(bool only_win) // Determines all possible moves to a specific depth
+//{
+//    int eval            = 0;
+//    int sum[2*SIZE+2]   = {0};
+//    int count[2*SIZE+2] = {0};
+
+//    for(unsigned int i=0; i<SIZE*SIZE; i++) // Generates list of possible moves
+//    {
+//        sum[i/SIZE]        += /*_grid[indexToRow(i)][indexToColumn(i)];*/board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i)));//_grid[indexToRow(i)][indexToColumn(i)];
+//        sum[i/SIZE+SIZE]   += /*_grid[indexToColumn(i)][indexToRow(i)];*/board->valueFromIndex(board->coordinateToIndex(board->indexToColumn(i), board->indexToRow(i)));//grid[i%SIZE][i/SIZE];
+//        count[i/SIZE]      += /*_grid[indexToRow(i)][indexToColumn(i)] !=0;*/board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) !=0;//grid[i/SIZE][i%SIZE] != 0;
+//        count[i/SIZE+SIZE] += /*_grid[indexToColumn(i)][indexToRow(i)] !=0;*/board->valueFromIndex(board->coordinateToIndex(board->indexToColumn(i), board->indexToRow(i))) !=0;//grid[i%SIZE][i/SIZE] != 0;
+//        //std::cout << "Check me out forreal:::::: " << _grid[indexToRow(i)][indexToColumn(i)] << "\n";
+//        //std::cout << "Or check me out::::::: " << board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) << "\n";
+
+//    }
+
+//    for(unsigned int i=0; i<SIZE; i++) // Evaluates individual lines
+//    {
+//        sum[2*SIZE]     += /*_grid[i][i];*/board->valueFromIndex(board->coordinateToIndex(i, i));//grid[i][i];
+//        count[2*SIZE]   += /*_grid[i][i] !=0;*/board->valueFromIndex(board->coordinateToIndex(i, i)) != 0;//grid[i][i] != 0;
+//        sum[2*SIZE+1]   += /*_grid[i][SIZE-1-i];*/board->valueFromIndex(board->coordinateToIndex(i, SIZE-1-i));//grid[i][SIZE-1-i];
+//        count[2*SIZE+1] += /*_grid[i][SIZE-1-i] !=0;*/board->valueFromIndex(board->coordinateToIndex(i, SIZE-1-i)) !=0;//grid[i][SIZE-1-i] != 0;
+//        //std::cout << "Or check me out::::::: " << board->valueFromIndex(board->coordinateToIndex(i, i)) << "\n";
+//    }
+
+//    for(unsigned int i=0; i<2*SIZE+2; i++) // Determines best possible score based on # of stone
+//    {
+//        if(abs(sum[i]) == 4)
+//        {
+//            if(only_win)
+//                return (1000 * sum[i]) / SIZE;
+//            eval += (1000 * sum[i]) / SIZE;
+//        }
+//        else if(only_win)
+//            continue;
+//        else if(sum[i] != 0 && abs(sum[i]) == count[i])
+//            eval += sum[i];
+//    }
+
+//    return eval;
+//}
+
+// ///////////////////
+void cloneBoard(int boardToClone[], int clone[])
 {
-    int eval            = 0;
-    int sum[2*SIZE+2]   = {0};
-    int count[2*SIZE+2] = {0};
+    //int clone[25];
 
-    for(unsigned int i=0; i<SIZE*SIZE; i++) // Generates list of possible moves
+    for(int j = 0 ; j < 25; j++)
     {
-        sum[i/SIZE]        += /*_grid[indexToRow(i)][indexToColumn(i)];*/board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i)));//_grid[indexToRow(i)][indexToColumn(i)];
-        sum[i/SIZE+SIZE]   += /*_grid[indexToColumn(i)][indexToRow(i)];*/board->valueFromIndex(board->coordinateToIndex(board->indexToColumn(i), board->indexToRow(i)));//grid[i%SIZE][i/SIZE];
-        count[i/SIZE]      += /*_grid[indexToRow(i)][indexToColumn(i)] !=0;*/board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) !=0;//grid[i/SIZE][i%SIZE] != 0;
-        count[i/SIZE+SIZE] += /*_grid[indexToColumn(i)][indexToRow(i)] !=0;*/board->valueFromIndex(board->coordinateToIndex(board->indexToColumn(i), board->indexToRow(i))) !=0;//grid[i%SIZE][i/SIZE] != 0;
-        //std::cout << "Check me out forreal:::::: " << _grid[indexToRow(i)][indexToColumn(i)] << "\n";
-        //std::cout << "Or check me out::::::: " << board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) << "\n";
-
+        clone[j] = boardToClone[j];
     }
 
-    for(unsigned int i=0; i<SIZE; i++) // Evaluates individual lines
-    {
-        sum[2*SIZE]     += /*_grid[i][i];*/board->valueFromIndex(board->coordinateToIndex(i, i));//grid[i][i];
-        count[2*SIZE]   += /*_grid[i][i] !=0;*/board->valueFromIndex(board->coordinateToIndex(i, i)) != 0;//grid[i][i] != 0;
-        sum[2*SIZE+1]   += /*_grid[i][SIZE-1-i];*/board->valueFromIndex(board->coordinateToIndex(i, SIZE-1-i));//grid[i][SIZE-1-i];
-        count[2*SIZE+1] += /*_grid[i][SIZE-1-i] !=0;*/board->valueFromIndex(board->coordinateToIndex(i, SIZE-1-i)) !=0;//grid[i][SIZE-1-i] != 0;
-        //std::cout << "Or check me out::::::: " << board->valueFromIndex(board->coordinateToIndex(i, i)) << "\n";
-    }
-
-    for(unsigned int i=0; i<2*SIZE+2; i++) // Determines best possible score based on # of stone
-    {
-        if(abs(sum[i]) == 4)
-        {
-            if(only_win)
-                return (1000 * sum[i]) / SIZE;
-            eval += (1000 * sum[i]) / SIZE;
-        }
-        else if(only_win)
-            continue;
-        else if(sum[i] != 0 && abs(sum[i]) == count[i])
-            eval += sum[i];
-    }
-
-    return eval;
 }
 
-static int negamax(int depth, int sign)
+void cloneBoard(Grid *grid, int clone[])
+{
+    for(int j = 0 ; j < 25; j++)
     {
-        int max = -INT_MAX;
-        //cout << "Depth = " << depth << endl;
-        //int temp;//
-        //int place;//
+        clone[j] = grid->valueFromIndex(j);
+    }
+}
 
-        if(depth == MAX_DEPTH)
-            //return sign*abs_sub(board->checkWin(false),depth);
-           return sign * abs_sub(eval_grid(false), depth);
+#define Possible_Wins 28
 
-        //cout << "abs_sub::: " << sign * abs_sub(board->eval_grid(false), depth) << endl;
+const int Heuristic_Array[5][5] =
+{
+    {0, -10, -100, -1000, -10000},
+    {10, 0, -10, -100, -1000},
+    {100, 10, 0, -10, -100},
+    {1000, 100, 10, 0, -10},
+    {10000, 1000, 100, 10, 0}
+};
 
-        for(unsigned int i=0; i<SIZE*SIZE; i++)
+//const int Heuristic_Array[5][5] =
+//{
+//    {0, -10, -100, -1000, -10000},
+//    {10, 0, 0, 0, 0},
+//    {100, 0, 0, 0, 0},
+//    {1000, 0, 0, 0, 0},
+//    {10000, 0, 0, 0, 0}
+//};
+//const int Heuristic_Array[5][5] =
+//{
+//    {0, 10, 100, 1000, 10000},
+//    {-10, 0, 10, 100, 1000},
+//    {-100, -10, 0, 10, 100},
+//    {-1000, -100, -10, 0, 10},
+//    {-10000, -1000, -100, -10, 0}
+//};
+
+//const int Heuristic_Array[5][5] =
+//{
+//    {0, 10, 100, 1000, 10000},
+//    {100000, 0, 10, 100, 1000},
+//    {1000000, 100000, 0, 10, 100},
+//    {10000000, 1000000, 100000, 0, 10},
+//    {100000000, 10000000, 1000000, 100000, 0}
+//};
+
+const int Four_in_a_Row[Possible_Wins][4] =
+{
+    {0,1,2,3},
+    {1,2,3,4},
+    {5,6,7,8},
+    {6,7,8,9},
+    {10,11,12,13},
+    {11,12,13,14},
+    {15,16,17,18},
+    {16,17,18,19},
+    {20,21,22,23},
+    {21,22,23,24},
+    {0,5,10,15},
+    {5,10,15,20},
+    {1,6,11,16},
+    {6,11,16,21},
+    {2,7,12,17},
+    {7,12,17,22},
+    {3,8,13,18},
+    {8,13,18,23},
+    {4,9,14,19},
+    {9,14,19,24},
+    {0,6,12,18},
+    {6,12,18,24},
+    {1,7,13,19},
+    {5,11,17,23},
+    {4,8,12,16},
+    {8,12,16,20},
+    {3,7,11,15},
+    {9,13,17,21}
+};
+
+//static int eval_grid(int grid[25])
+//{
+//    int gridLength = board->getGridLength();
+//    int gridValue = 0;
+
+//    bool isPossibleMove[25] = false;
+//    for(int i = 0; i < gridLength; i++)
+//    {
+//        if(board->valueFromIndex(i) == 0)
+//        {
+//            isPossibleMove[i] = true;
+//        }
+//    }
+
+//    int tempBoard[25];
+
+//    for(int i = 0; i < gridLength; i++)
+//    {
+//        if(isPossibleMove[i])
+//        {
+////            for(j = 0 ; j < gridLength; j++)
+////            {
+////                tempBoard[j] = board->valueFromIndex(j);
+////            }
+//            cloneBoard(grid, tempBoard);
+
+//            tempBoard[i] = -1;
+
+//            gridValue = eval_position(tempBoard, -1);
+
+//            int tempBoardValue = gridValue;
+//            if ()
+//        }
+//    }
+
+//    return gridValue;
+//}
+
+
+int eval_position(int *board, int player)
+{
+    int opponent = (player == 1) ? -1 : 1;
+    int stone;
+    int playerStones, opponentStones;
+    int val = 0;
+    int heuristicVal = 0;
+
+    for(int i = 0; i < 28; i++)
+    {
+        playerStones = opponentStones = 0;
+
+        for(int j = 0; j < 4; j++)
         {
-            int val;
-
-
-            if(board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) != 0)
-                continue;
-
-
-           // // board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i))) = sign;
-
-            board->placePiece(board->coordinateToIndex(board->indexToRow(i),board->indexToColumn(i)),sign);
-
-
-
-            val = -negamax(depth+1, -sign);
-
-
-           // // board->valueFromIndex(board->coordinateToIndex(board->indexToRow(i), board->indexToColumn(i)) = 0;
-            board->placePiece(board->coordinateToIndex(board->indexToRow(i),board->indexToColumn(i)),0);
-
-            std::cout << "val: " << val << "\n";
-            std::cout << "max: " << max << "\n";
-
-            if(val >= max)
+            stone = board[Four_in_a_Row[i][j]];
+            if (stone == player)
             {
-               if(val == max && rand()%2)
-                    continue;
-
-                max = val;
-                if(depth == 0)
-                {
-                    //best_move[0] = ROW(i);
-                    best_move[0] = board->indexToRow(i);
-                    //best_move[1] = COL(i);
-                    best_move[1] = board->indexToColumn(i);
-                    //printf("best move is: %u:%u\n", best_move[0],
-                      //      best_move[1]);
-                            //std::cout << "Printing max: " << max << "\n";
-                }
+                playerStones++;
+            }
+            else if(stone == opponent)
+            {
+                opponentStones++;
             }
         }
-
-
-        //place = board->coordinateToIndex(board->indexToRow(best_move[0]), board->indexToColumn(best_move[1]));
-        //board->placePiece(place,-1);
-        //printf("best move final loop is: %u:%u\n", best_move[0], best_move[1]);
-
-        //return max;
-        //cout << "placePiece: " << place << endl;
-        return max;
-
+        heuristicVal = Heuristic_Array[playerStones][opponentStones];
+        val += heuristicVal;
     }
+
+    return val;
+
+}
+
+int negamax(int *iBoard, int depth, int sign)
+{
+    int max = -INT_MAX;
+    int val;
+    int bestValue = max;
+    int piece;
+
+    if(depth == 0)
+        return sign * eval_position(iBoard, sign);
+    else
+        for(unsigned int i=0; i<25; i++)
+        {
+            int tempBoard[25] = {0};
+
+            piece = iBoard[i];
+            if(piece == 0)
+            {
+                cloneBoard(iBoard,tempBoard);
+                tempBoard[i] = sign;
+                val = -negamax(tempBoard, depth-1, -sign);
+                // possible undo
+                tempBoard[i] = 0;
+                if(val > bestValue)
+                {
+                    bestValue = val;
+                }
+             }
+        }
+    return bestValue;
+}
 
 
 int hardAI()
 {
-    unsigned int row, col, index;
+    int max = -INT_MAX;
+    int val;
+    int bestValue = max;
+    int bestMove = -1;
+    int sign = -1;
+    int piece;
 
-           // negamax(depth, sign);
-           //return negamax(0,-1);
-           negamax(0,-1);
-           row = best_move[0];
-           col = best_move[1];
-           std::cout << "ROW:::: " << row << "   COL::::" << col << "\n";
-           index = board->coordinateToIndex(row,col);
-           std::cout << "index::::: " << index << "\n";
-           board->placePiece(index, -1);
-           return index;
+    for(int i=0; i<SIZE*SIZE; i++)
+    {
+        int tempBoard[25] = {0};
+        int depth = MAX_DEPTH;
+
+        piece = board->valueFromIndex(i);
+
+        if(piece == 0)
+        {
+            cloneBoard(board,tempBoard);
+            tempBoard[i] = sign;
+            val = negamax(tempBoard, depth, -sign);
+            // possible undo
+//            tempBoard[i] = 0;
+            if(val > bestValue || bestMove == -1)
+            {
+                bestValue = val;
+                bestMove = i;
+            }
+         }
+    }
+    board->placePiece(bestMove, -1);
+    return bestMove;
 }
 
 int smartAI(){
@@ -289,7 +434,8 @@ int AI::makeMove(){
         return mediumAi(false);
         break;
     case 3: //Hard AI
-        return smartAI();
+        //return smartAI();
+        return hardAI();
         break;
 
     default:
