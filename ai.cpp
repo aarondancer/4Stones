@@ -153,7 +153,6 @@ int smartAI(){
                     for (int l = k + 1; l <= k + 3; l++) if (tempboard.valueFromIndex(l) == x) count++;
                     if (count == 2) for (int l = k + 1; l <= k + 3; l++){
                         if (tempboard.valueFromIndex(l) == 0){
-                            qDebug() << "placed";
                             board->placePiece(l, -1);
                             return l;
                         }
@@ -169,7 +168,6 @@ int smartAI(){
                     for (int l = k + 5; l <= k + 15; l+=5) if (tempboard.valueFromIndex(l) == x) count++;
                     if (count == 2) for (int l = k + 5; l <= k + 15; l+=5){
                         if (tempboard.valueFromIndex(l) == 0){
-                            qDebug() << "placed";
                             board->placePiece(l, -1);
                             return l;
                         }
@@ -184,7 +182,6 @@ int smartAI(){
                 for (int l = 6; l <= 18; l+=6) if (tempboard.valueFromIndex(l) == x) count++;
                 if (count == 2) for (int l = 6; l <= 18; l+=6){
                     if (tempboard.valueFromIndex(l) == 0){
-                        qDebug() << "placed";
                         board->placePiece(l, -1);
                         return l;
                     }
@@ -197,7 +194,6 @@ int smartAI(){
                 for (int l = 8; l <= 16; l+=4) if (tempboard.valueFromIndex(l) == x) count++;
                 if (count == 2) for (int l = 8; l <= 16; l+=4){
                     if (tempboard.valueFromIndex(l) == 0){
-                        qDebug() << "placed";
                         board->placePiece(l, -1);
                         return l;
                     }
