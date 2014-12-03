@@ -40,16 +40,6 @@ void Player::setDraws(int value)
     _draws = value;
 }
 
-int Player::getNumber() const
-{
-    return _number;
-}
-
-void Player::setNumber(int number)
-{
-    _number = number;
-}
-
 void Player::loginPlayer(QString username)
 {
     _username = username;

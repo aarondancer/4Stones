@@ -14,7 +14,6 @@ class Player : public QObject{
     Q_PROPERTY(int wins READ getWins WRITE setWins NOTIFY winsChanged)
     Q_PROPERTY(int losses READ getLosses WRITE setLosses NOTIFY lossesChanged)
     Q_PROPERTY(int draws READ getDraws WRITE setDraws NOTIFY drawsChanged)
-    Q_PROPERTY(int number READ getNumber WRITE setNumber NOTIFY numberChanged)
     Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
 
 public:
@@ -28,9 +27,6 @@ public:
 
     int getDraws() const;
     void setDraws(int value);
-
-    int getNumber() const;
-    void setNumber(int number);
 
     QString getUsername() const{
         return _username;
@@ -65,7 +61,6 @@ private:
     int _wins;
     int _losses;
     int _draws;
-    int _number;
     QString _username;
     QString objectID;
     QString session;
