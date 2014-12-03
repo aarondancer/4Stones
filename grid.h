@@ -63,8 +63,6 @@ public:
 
     Q_INVOKABLE bool isFilled(); //Checks to see if the board is filled
 
-    Q_INVOKABLE bool moveIsValid(int index); //Checks to see if a spot on the board is taken given a 1D index
-
     QList< QList<int> > _grid;
 
     Q_INVOKABLE void boardReset(); //Resets _grid

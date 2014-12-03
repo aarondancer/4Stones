@@ -21,7 +21,6 @@ bool Grid::isFilled(){
     int count = 0;
     for (int i = 0; i < _gridLength * _gridLength; i++) if (valueFromIndex(i) != 0) count++;
     return (count >= 25);
-//    return (_moveCount == 25);
 }
 
 bool Grid::checkWin(int player){
@@ -176,12 +175,4 @@ int Grid::getFirstPlayer() const {
 void Grid::setFirstPlayer(int player) {
     _firstPlayer = player;
     qDebug() << "First player set: " << _firstPlayer;
-}
-
-bool Grid::moveIsValid(int index)//Check me out
-{
-    //if(valueFromIndex(index) == 1 || valueFromIndex(index) == -1)
-    if(valueFromIndex(index) == 0)
-        return true;
-    else return false;
 }
